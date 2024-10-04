@@ -84,7 +84,7 @@ button {
     border: none;
 
 }
-button:hover {
+button:hover, button.checked {
     background-color: var(--hilite);
     color: var(--color);
 }
@@ -116,7 +116,7 @@ h2 {
     margin: 0;
 }
 
-input[type=text], input[type=number], textarea, select {
+input[type=text], input[type=number], input[type=datetime-local], textarea, select {
     padding: 8px 15px;
     font-size: 20px;
     border-radius: 7px;
@@ -158,6 +158,8 @@ input[type="checkbox"] {
     border-radius: 0.35em;
     display: grid;
     place-content: center;
+    width: 21px;
+    min-width: 21px;
 }
 
 input[type="checkbox"]::before {
@@ -183,4 +185,12 @@ textarea {
 
 input[type=text]:focus, textarea:focus {
     color: #0b9176;
+}
+
+.itemtitle {
+    color: var(--base);
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 2px;
 }

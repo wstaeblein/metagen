@@ -1,6 +1,5 @@
 <script>
 // @ts-nocheck
-
     import { lang, supportedLangs } from '../stores.js';
 
     export let data = [];
@@ -49,7 +48,7 @@
                     </label>
                 
                 {:else if meta.type == 'text'}
-                    <div>{$lang.metas.tags[meta.id]}</div>
+                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <input type="text" list="{meta.id}" bind:value={meta.value} />
                     {#if meta.datalist}
                     <datalist id="{meta.id}">
@@ -60,7 +59,7 @@
                     {/if}
 
                 {:else if meta.type == 'longtext'}
-                    <div>{$lang.metas.tags[meta.id]}</div>
+                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <textarea class="len" cols="3" bind:value={meta.value}></textarea>
 
                 {:else if meta.type == 'wordlist'}
@@ -83,7 +82,7 @@
                     </div>
 
                 {:else if meta.type == 'list'}
-                    <div>{$lang.metas.tags[meta.id]}</div>
+                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <select bind:value={meta.value}>
                         {#each meta.list as item}
                             <option value="{item}">{item}</option>
@@ -91,7 +90,7 @@
                     </select>  
 
                 {:else if meta.type == 'dbllist'}
-                    <div>{$lang.metas.tags[meta.id]}</div>
+                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <select bind:value={meta.value} on:change={() => meta.value2 = ''}>
                         {#each $lang.metas[meta.list] as item}
                             <option value="{item}">{item.name}</option>
@@ -107,7 +106,7 @@
                     {/if}
                            
                 {:else if meta.type == 'txtnum'}
-                    <div>{$lang.metas.tags[meta.id]}</div>
+                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <div class="txtnum">
                         <input type="number" min="0" bind:value={meta.value} />
                         <input type="text" bind:value={meta.value2} />
@@ -223,13 +222,7 @@
         color: var(--base);
     }
 
-    .item > div:first-child {
-        color: var(--base);
-        text-transform: uppercase;
-        font-size: 14px;
-        font-weight: bold;
-        padding-bottom: 2px;
-    }
+
 
     .item:has(input[type=checkbox]):not(:last-of-type) {
         padding-bottom: 5px;

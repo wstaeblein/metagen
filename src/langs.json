@@ -43,6 +43,31 @@
                 "max-video-preview": "Máximo de segundos para vídeos desta página nos resultados da pesquisa",
                 "unavailable_after": "Não exibir esta página nos resultados da pesquisa após certa data e hora"
             }
+        },
+        "bots": {
+            "tags": {
+                "all": "Sem restrições para indexar e exibir",
+                "noindex": "Não mostrar esta página, mídia ou recurso nos resultados da pesquisa",
+                "nofollow": "Não seguir os links nesta página",
+                "none": "Equivalente as últimas 2 regras acima",
+                "noarchive": "Não exibir um link em cache nos resultados da pesquisa",
+                "notranslate": "Não oferecer tradução desta página nos resultados da pesquisa",
+                "noimageindex": "Não indexar imagens nesta página",
+                "indexifembedded": "Indexar apenas se incorporada em outra página",
+                "nosnippet": "Não exibir um snippet de texto ou uma visualização de vídeo nos resultados da pesquisa",
+                "max_snippet": "Máximo de caracteres para um snippet textual",
+                "max_image_preview": "Tamanho máximo de uma visualização de imagem",
+                "max_video_preview": "Máximo de segundos para uma visualização de vídeo",
+                "unavailable_after": "Não exibir após a data especificada",
+                "nocache": "Não armazene a página em cache",
+                "xtra_nosnippet": "Não Exibir",
+                "xtra_auto": "Tamanho Automático",
+                "xtra_static": "Usar Imagem Estática",
+                "xtra_nolimit": "Sem Limites",
+                "ch_none": "Sem Visualização",
+                "ch_standard": "Tamanho Padrão",
+                "ch_large": "Tamanho Grande"
+            }
         }
 
     },

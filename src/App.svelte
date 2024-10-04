@@ -3,6 +3,9 @@
     import { langCode, lang, supportedLangs } from './stores.js';
 	import Metas from './ui/metas.svelte';
 	import Bots from './ui/bots.svelte';
+	import Social from './ui/social.svelte';
+	import Images from './ui/images.svelte';
+	import Google from './ui/google.svelte';
     import hljs from 'highlight.js/lib/core';
     import 'highlight.js/styles/github.css';
     import xml from 'highlight.js/lib/languages/xml';
@@ -10,7 +13,7 @@
     hljs.registerLanguage('xml', xml);
 
     // https://developers.google.com/search/docs/crawling-indexing/special-tags?hl=pt-br
-    let mode = 0;
+    let menuOpt = 0;
     let respCode = '';
 
     let websoft = ['Dreamweaver', 'EditPlus', 'Frontpage', 'Ghost', 'Joomla', 'WordPress'];
@@ -25,10 +28,19 @@
         { id: 'noimageindex', type: 'bool' }, 
         { id: 'indexifembedded', type: 'bool' }, 
         { id: 'nosnippet', type: 'bool' }, 
-        { id: 'max-snippet', type: 'int' }, 
-        { id: 'max-image-preview',  type: 'list', list: ['none', 'standard', 'large'] },
-        { id: 'max-video-preview',  type: 'int', xtras: [{ id: 'static', val: 0 }, { id: 'nolimit', val: -1 }] },
+        { id: 'max-snippet', type: 'int', xtras: [{ id: 'nosnippet', val: 0 }, { id: 'auto', val: -1 }], min: -1 }, 
+        { id: 'max-video-preview',  type: 'int', xtras: [{ id: 'static', val: 0 }, { id: 'nolimit', val: -1 }], min: -1 },
+        { id: 'max-image-preview',  type: 'choice', list: ['none', 'standard', 'large'] },
         { id: 'unavailable_after',  type: 'datetime' }
+    ]
+    let bingbotlist = [
+        { id: 'noindex', type: 'bool' },
+        { id: 'nocache', type: 'bool' }, 
+        { id: 'noarchive', type: 'bool' }, 
+        { id: 'nosnippet', type: 'bool' }, 
+        { id: 'max-snippet', type: 'int', xtras: [{ id: 'nosnippet', val: 0 }, { id: 'auto', val: -1 }], min: -1  }, 
+        { id: 'max-video-preview',  type: 'intx', xtras: [{ id: 'static', val: 0 }, { id: 'nolimit', val: -1 }] },
+        { id: 'max-image-preview',  type: 'list', list: ['none', 'standard', 'large'] }
     ]
 
     let cats = {
@@ -37,22 +49,38 @@
             { id: 'view',   tagspec: '<meta name="viewport" content="width=device-width, initial-scale=1" />', value: true, type: 'bool', half: true },
             { id: 'spc1',   type: 'spacer' },
             { id: 'title',  tag: 'title', value: '', type: 'text' },
-            { id: 'desc',   tag: 'meta', name: 'description', attr: 'content', value: '', type: 'longtext' },
-            { id: 'keys',   tag: 'meta', name: 'keywords', attr: 'content', value: '', type: 'wordlist' },
-            { id: 'author', tag: 'meta', name: 'author', attr: 'content', value: '', type: 'text', half: true },
-            { id: 'gener',  tag: 'meta',  name: 'generator', attr: 'content', value: '', type: 'text', datalist: websoft, half: true },
-            { id: 'copy',   tag: 'meta', name: 'copyright', attr: 'content', value: '', type: 'text' },
-            { id: 'lang',   tag: 'meta', httpequiv: 'content-language', attr: 'content', value: '', type: 'dbllist', list: 'langlist', auto: true },
-            { id: 'chars',  tag: 'meta', httpequiv: 'Content-Type', attr: 'content', value: 'utf-8', type: 'list', list: charsets, template: 'text/html; charset=$$$', auto: true },
-            { id: 'refr',   tag: 'meta', httpequiv: 'referesh', attr: 'content', value: '', type: 'txtnum' },
-            { id: 'canon',  tag: 'link', rel: 'canonical', attr: 'href', value: '', type: 'text' },
-            { id: 'gglver', tag: 'meta', name: 'google-site-verification', attr: 'content', value: '', type: 'text' }
-            
+            { id: 'desc',   tag: 'meta',  name: 'description', attr: 'content', value: '', type: 'longtext' },
+            { id: 'keys',   tag: 'meta',  name: 'keywords', attr: 'content', value: '', type: 'wordlist' },
+            { id: 'author', tag: 'meta',  name: 'author', attr: 'content', value: '', type: 'text', half: true },
+            { id: 'gener',  tag: 'meta',   name: 'generator', attr: 'content', value: '', type: 'text', datalist: websoft, half: true },
+            { id: 'copy',   tag: 'meta',  name: 'copyright', attr: 'content', value: '', type: 'text' },
+            { id: 'lang',   tag: 'meta',  httpequiv: 'content-language', attr: 'content', value: '', type: 'dbllist', list: 'langlist', auto: true },
+            { id: 'chars',  tag: 'meta',  httpequiv: 'Content-Type', attr: 'content', value: 'utf-8', type: 'list', list: charsets, template: 'text/html; charset=$$$', auto: true },
+            { id: 'refr',   tag: 'meta',  httpequiv: 'referesh', attr: 'content', value: '', type: 'txtnum' },
+            { id: 'canon',  tag: 'link',  rel: 'canonical', attr: 'href', value: '', type: 'text' },
+            { id: 'gglver', tag: 'meta',  name: 'google-site-verification', attr: 'content', value: '', type: 'text' }
         ],
         bots: [
-            { id: 'robots',    tag: 'meta', name: 'robots', attr: 'content', value: '', type: 'multi', list: botlist },
-            { id: 'googlebot', tag: 'meta', name: 'robots', attr: 'content', value: '', type: 'multi', list: botlist },
-        ]
+            { id: 'robots',        tag: 'meta', name: 'robots',         attr: 'content', value: '', type: 'multi', list: botlist },
+            { id: 'googlebot',     tag: 'meta', name: 'googlebot',      attr: 'content', value: '', type: 'multi', list: botlist },
+            { id: 'googlebotnews', tag: 'meta', name: 'googlebot-news', attr: 'content', value: '', type: 'multi', list: botlist },
+            { id: 'bingbot',       tag: 'meta', name: 'bingbot',        attr: 'content', value: '', type: 'multi', list: bingbotlist },
+        ],
+        social: {
+            og: [
+                { id: 'title', prop: 'og:title', value: '' },
+                { id: 'desc', prop: 'og:description', value: '' },
+                { id: 'url', prop: 'og:url', value: '' },
+                { id: 'image', prop: 'og:image', value: '' },
+                { id: 'imaget', prop: 'og:image:type', value: '' },
+                { id: 'imagew', prop: 'og:image:width', value: '' },
+                { id: 'imageh', prop: 'og:image:height', value: '' },
+                { id: 'type', prop: 'og:type', value: '', type: 'list', list: []  },
+                { id: 'locale', prop: 'og:locale', value: '' },
+                { id: 'fbappid', prop: 'fb:app_id', value: '' }
+            ]
+        }
+
     }
     let debounceProcess = debounce(process, 500);
     $: debounceProcess(cats);
@@ -66,8 +94,7 @@
 // https://www.ciawebsites.com.br/ferramentas-de-seo/gerador-de-meta-tags/
 // https://easyretro.io/tools/meta-tag-generator/
 
-// https://phantomjscloud.com/docs/
-// https://www.browserless.io/blog/puppeteer-netlify
+
 
     function process(dataObj) {
         let html = '';
@@ -145,34 +172,63 @@
     
     <article>
         <nav class="bkg">
-            <ul>
-                <li>Home</li>
-                <li>Meta Tags</li>
-                <li>Bots</li>
-                <li>Social</li>
-                <li>Ícones & Imagens</li>
+            <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+            <ul class="menu">
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <li class:sel={menuOpt == 0} on:click={() => menuOpt = 0}>Home</li>
+                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <li class:sel={menuOpt == 1} on:click={() => menuOpt = 1}>Meta Tags</li>
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <li class:sel={menuOpt == 2} on:click={() => menuOpt = 2}>Bots</li>
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <li class:sel={menuOpt == 3} on:click={() => menuOpt = 3}>Social</li>
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <li class:sel={menuOpt == 4} on:click={() => menuOpt = 4}>Ícones & Imagens</li>
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <li class:sel={menuOpt == 5} on:click={() => menuOpt = 5}>Google</li>
                 
             </ul>
         </nav>
         <section >
             <div class="bkg2">
-                {#if mode == 0}
-                    <Metas bind:data={cats.metas}></Metas>
+                {#if menuOpt == 0}
+                <div>
+                    <h1>Welcome</h1>
+                </div>
+                    
                 
-                {:else if mode == 1}
-                    <Metas bind:data={cats.bots}></Metas>
+                {:else if menuOpt == 1}
+                    <Metas bind:data={cats.metas}></Metas>
+
+                {:else if menuOpt == 2}
+                    <Bots bind:data={cats.bots}></Bots>
+
+                {:else if menuOpt == 3}
+                    <Social bind:data={cats.social}></Social>
+
+                {:else if menuOpt == 4}
+                    <Images bind:data={cats.images}></Images>
+
+                {:else if menuOpt == 5}
+                    <Google bind:data={cats.google}></Google>
+
 
                 {/if}
 
             </div>
 
-
-            <div class="code bkg2">
-                <h2>Resultado</h2>
-                <div>
-                    <pre><code>{@html respCode}</code></pre> 
+            {#if menuOpt > 0}
+                <div class="code bkg2">
+                    <h2>Resultado</h2>
+                    
+                        <div>
+                            <pre><code>{@html respCode}</code></pre> 
+                        </div>
+                    
                 </div>
-            </div>
+            {/if}
         </section>
 
     </article>
@@ -181,10 +237,28 @@
 
 
 <style>
+    ul.menu {
+        text-transform: uppercase;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 0;
+    }
+
+    ul.menu > li {
+        padding: 5px 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    ul.menu > li:hover, ul.menu > li.sel {
+        background-color: var(--hilite);
+        color: var(--base);
+    }
+
     .bkg {
         background-color: var(--bars);
         align-self: auto;
-        padding: 20px;
+        padding: 0;
     }
 
     .bkg2 {
@@ -217,7 +291,8 @@
     }
 
     article > nav {
-        width: 250px;
+        width: 200px;
+        min-width: 200px;
         flex-grow: 0;
         transition: all 0.3s ease;
     }
