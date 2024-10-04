@@ -1,0 +1,54 @@
+{
+    "pt": {
+        "name": "Português",
+        "metas": {
+            "langlist": [
+                { "name": "Português", "val": "pt", "vars": [{ "name": "Brasil", "val": "BR" }, { "name": "Portugal", "val": "PT" }, { "name": "Angola", "val": "AO" }, { "name": "Moçambique", "val": "MZ" }]},
+                { "name": "Inglês", "val": "en", "vars": [{ "name": "EUA", "val": "US" }, { "name": "Reino Unido", "val": "GB" }, { "name": "Canadá", "val": "CA" }, { "name": "Austrália", "val": "AU" }, { "name": "Nova Zelândia", "val": "NZ" }, { "name": "Quênia", "val": "KE" }, { "name": "África do Sul", "val": "ZA" }] },
+                { "name": "Francês", "val": "fr", "vars": [{ "name": "França", "val": "FR" }, { "name": "Bélgica", "val": "BE" }, { "name": "Canadá", "val": "CA" }, { "name": "Marrocos", "val": "MA" }, { "name": "Argélia", "val": "DZ" }, { "name": "Suíça", "val": "CH" }] },
+                { "name": "Espanhol", "val": "es", "vars": [{ "name": "Espanha", "val": "ES" }, { "name": "México", "val": "MX" }, { "name": "Argentina", "val": "AR" }, { "name": "Uruguai", "val": "UY" }, { "name": "Chile", "val": "CL" }, { "name": "Colombia", "val": "CO" }] },
+                { "name": "Italiano", "val": "it", "vars": [{ "name": "Itália", "val": "IT" }, { "name": "Suíça", "val": "CH" }] },
+                { "name": "Alemão", "val": "de", "vars": [{ "name": "Alemanha", "val": "DE" }, { "name": "Austria", "val": "AT" }, { "name": "Suíça", "val": "CH" }] },
+                { "name": "Holandês", "val": "nl", "vars": [{ "name": "Holanda", "val": "NL" }] },
+                { "name": "Húngaro", "val": "hu", "vars": [{ "name": "Hungria", "val": "HU" }] },
+                { "name": "Norueguês", "val": "no", "vars": [{ "name": "Noruega", "val": "NO" }] }
+            ],
+            "tags": {
+                "html": "Inserir Esqueleto HTML",
+                "view": "Inserir Tag de Viewport",
+                "title": "Titulo da Página",
+                "desc": "Descrição",
+                "keys": "Palavras Chave",
+                "author": "Autor",
+                "copy": "Copyright",
+                "gener": "Software Gerador",
+                "lang": "Língua e Cultura",
+                "chars": "Charset",
+                "canon": " URL Canônico",
+                "gglver": "Verificação de Sites do Google",
+                "refr": "Recarregamento Automático"
+            },
+            "botlist": {
+                "all": "Sem restrições para a indexação e exibição. Valor padrão",
+                "noindex": "Não mostrar esta página, mídia ou recurso nos resultados da pesquisa",
+                "nofollow": "Não seguir os links nesta página",
+                "none": "Equivalente a noindex, nofollow",
+                "noarchive": "Não exibir um link em cache nos resultados da pesquisa",
+                "notranslate": "Não oferecer tradução desta página nos resultados da pesquisa",
+                "noimageindex": "Não indexar imagens nesta página",
+                "indexifembedded": "Indexa o conteúdo de uma página quando ela está incorporada em outra",
+                "nosnippet": "Não exibir um snippet de texto ou uma visualização de vídeo nos resultados da pesquisa para esta página",
+                "max-snippet": "Máximo de caracteres para o texto desse resultado da pesquisa",
+                "max-image-preview": "Tamanho máximo de uma visualização de imagem para esta página em um resultado da pesquisa",
+                "max-video-preview": "Máximo de segundos para vídeos desta página nos resultados da pesquisa",
+                "unavailable_after": "Não exibir esta página nos resultados da pesquisa após certa data e hora"
+            }
+        }
+
+    },
+    "en": {
+        "name": "English"
+    }
+
+}
+
