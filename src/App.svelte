@@ -110,7 +110,7 @@
         ]
 
     }
-    let debounceProcess = debounce(process, 500);
+    let debounceProcess = debounce(process, 300);
     $: debounceProcess(cats);
 
     onMount(() => {
@@ -246,10 +246,10 @@
 <main>
     <header>
         <nav>
+            <img src="/img/logo.png" alt="logo" />
             <div>
 
             </div>
-            <img src="/public/img/logo.png" alt="logo" />
         </nav>
     </header>
     

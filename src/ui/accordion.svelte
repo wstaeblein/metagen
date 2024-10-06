@@ -63,7 +63,7 @@
 
     
     div.details {
-        padding: 0.5rem 1rem 1rem;
+        padding: 0.5rem 1rem 0;
     }
 </style>
   

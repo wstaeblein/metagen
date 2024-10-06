@@ -250,7 +250,7 @@
         }
     
         .item {
-            padding: 0 10px 30px 0;
+            padding: 15px 10px 15px 0;
             width: 100%;
         }
     
