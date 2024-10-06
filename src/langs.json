@@ -1,6 +1,12 @@
 {
     "pt": {
         "name": "Português",
+        "ui": {
+            "result": "Resultado",
+            "mtgen": "Gerador de Meta Tags",
+            "botgen": "Gerador de Tags de Bots",
+            "socialgen": "Gerador de Tags Sociais"
+        },
         "metas": {
             "langlist": [
                 { "name": "Português", "val": "pt", "vars": [{ "name": "Brasil", "val": "BR" }, { "name": "Portugal", "val": "PT" }, { "name": "Angola", "val": "AO" }, { "name": "Moçambique", "val": "MZ" }]},
@@ -12,6 +18,19 @@
                 { "name": "Holandês", "val": "nl", "vars": [{ "name": "Holanda", "val": "NL" }] },
                 { "name": "Húngaro", "val": "hu", "vars": [{ "name": "Hungria", "val": "HU" }] },
                 { "name": "Norueguês", "val": "no", "vars": [{ "name": "Noruega", "val": "NO" }] }
+            ],
+            "ratelist": [
+                { "name": "Geral", "val": "general" },
+                { "name": "Audiência madura", "val": "mature" },
+                { "name": "Para adultos", "val": "adult" },
+                { "name": "Restrito", "val": "restricted" },
+                { "name": "A partir de 14 anos", "val": "14 years" },
+                { "name": "Ok para crianças", "val": "safe for kids" }
+            ],
+            "applestylelist": [
+                { "name": "Padrão", "val": "default" },
+                { "name": "Preto", "val": "black" },
+                { "name": "Preto Translúcido", "val": "black-translucent" }
             ],
             "tags": {
                 "html": "Inserir Esqueleto HTML",
@@ -26,7 +45,22 @@
                 "chars": "Charset",
                 "canon": " URL Canônico",
                 "gglver": "Verificação de Sites do Google",
-                "refr": "Recarregamento Automático"
+                "refr": "Recarregamento Automático",
+                "thclr": "Cor do Tema",
+                "amwac": "Roda no iOS em tela inteira",
+                "wasbs": "Estilo da Barra de Status (Apple)",
+                "rate": "Classificação",
+                "nocac": "Não armazenar em cache",
+                "url": "URL da Página",
+                "image": "Imagem (URL)",
+                "imaget": "Tipo MIME da Imagem",
+                "imagealt": "Texto Explicativo da Imagem",
+                "imagew": "Largura da Imagem",
+                "imageh": "Altura da Imagem",
+                "type": "Tipo de Conteúdo",
+                "locale": "Local",
+                "fbappid": "ID do Facebook",
+                "twtsite": "Nome de Usuário"
             },
             "botlist": {
                 "all": "Sem restrições para a indexação e exibição. Valor padrão",

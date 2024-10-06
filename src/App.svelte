@@ -18,8 +18,9 @@
 
     let websoft = ['Dreamweaver', 'EditPlus', 'Frontpage', 'Ghost', 'Joomla', 'WordPress'];
     let charsets = ['utf-8','big5','euc-kr','iso-8859-1','iso-8859-2','iso-8859-3','iso-8859-4','iso-8859-5','iso-8859-6','iso-8859-7','iso-8859-8','koi8-r','shift-jis','x-euc','windows-1250','windows-1251','windows-1252','windows-1253','windows-1254','windows-1255','windows-1256','windows-1257','windows-1258','windows-874']
+    let mimes = ['image/jpeg', 'image/png', 'image/apng', 'image/gif', 'image/webp', 'image/bmp', 'image/heic', 'image/heif'];
+
     let botlist = [
-        { id: 'all', type: 'bool' }, 
         { id: 'noindex', type: 'bool' },
         { id: 'nofollow', type: 'bool' }, 
         { id: 'none', type: 'bool' },
@@ -47,39 +48,66 @@
         metas: [
             { id: 'html',   tagspec: '<!doctype html>\n<html lang="##">\n\t<head>\n$$$\n\t</head>\n\t<body>\n\n\n\t</body>\n</html>', value: false, type: 'bool', half: true },
             { id: 'view',   tagspec: '<meta name="viewport" content="width=device-width, initial-scale=1" />', value: true, type: 'bool', half: true },
+            { id: 'amwac',  tag: 'meta',  name: 'apple-mobile-web-app-capable', attr: 'content', value: false, type: 'bool', def: 'yes', half: true },
+            { id: 'nocac',  tag: 'meta',  httpequiv: 'Pragma', attr: 'content', value: false, type: 'bool', def: 'no-cache', half: true },
             { id: 'spc1',   type: 'spacer' },
             { id: 'title',  tag: 'title', value: '', type: 'text' },
             { id: 'desc',   tag: 'meta',  name: 'description', attr: 'content', value: '', type: 'longtext' },
             { id: 'keys',   tag: 'meta',  name: 'keywords', attr: 'content', value: '', type: 'wordlist' },
             { id: 'author', tag: 'meta',  name: 'author', attr: 'content', value: '', type: 'text', half: true },
             { id: 'gener',  tag: 'meta',   name: 'generator', attr: 'content', value: '', type: 'text', datalist: websoft, half: true },
-            { id: 'copy',   tag: 'meta',  name: 'copyright', attr: 'content', value: '', type: 'text' },
+            { id: 'copy',   tag: 'meta',  name: 'copyright', attr: 'content', value: '', type: 'text', auto: true, fill: true },
+            { id: 'thclr',  tag: 'meta',  name: 'theme-color', attr: 'content', value: '', type: 'color', auto: true },
+            { id: 'canon',  tag: 'link',  rel: 'canonical', attr: 'href', value: '', type: 'text' },
             { id: 'lang',   tag: 'meta',  httpequiv: 'content-language', attr: 'content', value: '', type: 'dbllist', list: 'langlist', auto: true },
             { id: 'chars',  tag: 'meta',  httpequiv: 'Content-Type', attr: 'content', value: 'utf-8', type: 'list', list: charsets, template: 'text/html; charset=$$$', auto: true },
-            { id: 'refr',   tag: 'meta',  httpequiv: 'referesh', attr: 'content', value: '', type: 'txtnum' },
-            { id: 'canon',  tag: 'link',  rel: 'canonical', attr: 'href', value: '', type: 'text' },
-            { id: 'gglver', tag: 'meta',  name: 'google-site-verification', attr: 'content', value: '', type: 'text' }
+            { id: 'refr',   tag: 'meta',  httpequiv: 'refresh', attr: 'content', value: '', type: 'txtnum' },
+            { id: 'wasbs',   tag: 'meta',  name: 'apple-mobile-web-app-status-bar-style', attr: 'content', value: '', type: 'objlist', list: 'applestylelist', auto: true },
+            { id: 'rate',    tag: 'meta',  name: 'rating', attr: 'content', value: '', type: 'objlist', list: 'ratelist', auto: true }
+
+            
         ],
         bots: [
-            { id: 'robots',        tag: 'meta', name: 'robots',         attr: 'content', value: '', type: 'multi', list: botlist },
-            { id: 'googlebot',     tag: 'meta', name: 'googlebot',      attr: 'content', value: '', type: 'multi', list: botlist },
-            { id: 'googlebotnews', tag: 'meta', name: 'googlebot-news', attr: 'content', value: '', type: 'multi', list: botlist },
+            { id: 'robots',        tag: 'meta', name: 'robots',         attr: 'content', value: '', type: 'multi', list: structuredClone(botlist) },
+            { id: 'googlebot',     tag: 'meta', name: 'googlebot',      attr: 'content', value: '', type: 'multi', list: structuredClone(botlist) },
+            { id: 'googlebotnews', tag: 'meta', name: 'googlebot-news', attr: 'content', value: '', type: 'multi', list: structuredClone(botlist) },
             { id: 'bingbot',       tag: 'meta', name: 'bingbot',        attr: 'content', value: '', type: 'multi', list: bingbotlist },
         ],
-        social: {
-            og: [
-                { id: 'title', prop: 'og:title', value: '' },
-                { id: 'desc', prop: 'og:description', value: '' },
-                { id: 'url', prop: 'og:url', value: '' },
-                { id: 'image', prop: 'og:image', value: '' },
-                { id: 'imaget', prop: 'og:image:type', value: '' },
-                { id: 'imagew', prop: 'og:image:width', value: '' },
-                { id: 'imageh', prop: 'og:image:height', value: '' },
-                { id: 'type', prop: 'og:type', value: '', type: 'list', list: []  },
-                { id: 'locale', prop: 'og:locale', value: '' },
-                { id: 'fbappid', prop: 'fb:app_id', value: '' }
-            ]
-        }
+        social: [
+            { 
+                name: 'Open Graph (Facebook)',
+                items: [
+                    { id: 'title', prop: 'og:title', value: '' },
+                    { id: 'desc', prop: 'og:description', value: '', type: 'longtext' },
+                    { id: 'url', prop: 'og:url', value: '' },
+                    { id: 'image', prop: 'og:image', value: '' },
+                    { id: 'imaget', prop: 'og:image:type', value: '', type: 'list', list: mimes, half: true  },
+                    { id: 'imagealt', prop: 'og:image:alt', value: '', half: true  },
+                    { id: 'imagew', prop: 'og:image:width', value: '', type: 'int', auto: true },
+                    { id: 'imageh', prop: 'og:image:height', value: '', type: 'int' , auto: true},
+                    { id: 'type', prop: 'og:type', value: '', type: 'list', list: [], auto: true },
+                    { id: 'locale', prop: 'og:locale', value: '', half: true },
+                    { id: 'fbappid', prop: 'fb:app_id', value: '', half: true }
+                ]
+            }, {
+                name: 'Twitter Cards',
+                items: [
+                    { id: 'title', prop: 'twitter:title', value: '' },
+                    { id: 'desc', prop: 'twitter:description', value: '', type: 'longtext' },
+                    { id: 'image', prop: 'twitter:image', value: '' },
+                    { id: 'url', prop: 'twitter:url', value: '' },
+                    { id: 'type', prop: 'twitter:card', value: '', half: true },
+                    { id: 'twtsite', prop: 'twitter:site', value: '', half: true },
+
+                ]
+            }
+        ],
+        images: [
+
+        ],
+        google: [
+            { id: 'gglver', tag: 'meta',  name: 'google-site-verification', attr: 'content', value: '', type: 'text' },
+        ]
 
     }
     let debounceProcess = debounce(process, 500);
@@ -102,10 +130,13 @@
         let lang = dataObj.metas.find(m => m.id == 'lang')?.value;
         let indent = hasSkeleton ? '\t\t' : '';
         let metatags = '';
+        let bottags = '';
                                 
-        if (lang.val) { lang = lang.val; } else { lang = navigator.language.split('-').shift(); }
+        if (lang.val) { lang = lang.val; } 
 
-        console.log(dataObj.metas)
+        console.log(dataObj.bots)
+
+        // METATAGS
         dataObj.metas.forEach((meta) => {
             let value = structuredClone(meta.value);
 
@@ -114,9 +145,15 @@
                     if (meta.id == 'html') {
                         html = value ? meta.tagspec.replace('##', lang) : '';
                     } else {
-                        if (value && meta.tagspec) {
-                            metatags += indent + meta.tagspec + '\n';
-                        }                        
+                        if (value) {
+                            if (meta.tagspec) {
+                                metatags += indent + meta.tagspec + '\n';
+                            } else {
+                                let tagAttr = meta.name ? 'name' : 'http-equiv';
+                                let tagAttrCtt = meta.name || meta.httpequiv;
+                                metatags += indent + '<' + meta.tag + ' ' + tagAttr + '="' + tagAttrCtt + '" ' + meta.attr + '="' + meta.def + '" />\n';
+                            }
+                        }
                     }
                     break;
 
@@ -126,8 +163,19 @@
                         value = lang + (cult ? '-' + cult : '');                         
                     }
 
+                case 'txtnum':
+                    if (value) {
+                        metatags += indent + '<' + meta.tag;
+                        let v2 = (meta.value2 || '').trim();
+                        let v = value + (v2 ? '; ' + v2 : '');
+                        metatags += ' http-equiv="' + meta.httpequiv + '" ' + meta.attr + '="' + v + '" />\n';                        
+                    }
+                    break;
+
                 case 'text':
                 case 'list':
+                case 'color':
+                case 'objlist':
                 case 'wordlist':
                 case 'longtext':
                     if (value) {
@@ -149,8 +197,40 @@
             }
         })
 
-        if (metatags) { metatags = ((hasSkeleton ? '\t\t' : '') + '<!-- Metatags -->\n') + metatags }
-        respCode = hljs.highlight(html ? html.replace('$$$', metatags) : metatags, {language: 'xml'}).value;
+        if (metatags) { metatags = ((hasSkeleton ? '\t\t' : '') + '<!-- Metatags -->\n') + metatags + '\n'}
+
+        // BOT TAGS
+        dataObj.bots.forEach((bot) => {
+            let botVal = [];
+
+            bot.list.forEach((ll) => {
+                switch(ll.type) {
+                    case 'bool': 
+                        if (ll.value) { botVal.push(ll.id); }
+                        break;
+
+                    case 'int':
+                        if (ll.value != null) { botVal.push(ll.id + ':' + ll.value); }
+                        break;
+
+                    case 'choice':
+                    case 'datetime':
+                        if (ll.value) { botVal.push(ll.id + ':' + ll.value); }
+                        break;
+                }
+            })
+
+            if (botVal.length) {
+                bottags += indent + '<' + bot.tag;
+                bottags += ' name="' + bot.name + '" ' + bot.attr + '="' + botVal.join(', ') + '" />\n';
+            }
+        });
+
+        if (bottags) { bottags = '<!-- Bot Tags -->\n' + bottags + '\n' }
+
+        let finalContent = metatags + indent + bottags;
+
+        respCode = hljs.highlight(html ? html.replace('$$$', finalContent) : finalContent, {language: 'xml'}).value;
     }
 
     function debounce(func, timeout = 300) {
@@ -166,6 +246,9 @@
 <main>
     <header>
         <nav>
+            <div>
+
+            </div>
             <img src="/public/img/logo.png" alt="logo" />
         </nav>
     </header>
@@ -194,8 +277,17 @@
         <section >
             <div class="bkg2">
                 {#if menuOpt == 0}
-                <div>
-                    <h1>Welcome</h1>
+                <div class="home">
+                    <h3>Gerador de Metatags</h3>
+                    <h5>Gere mais tráfego criando as meta tags corretamente com este app gratuito e completo</h5>
+                    <br>
+
+                    <div  style="columns: 600px auto; column-gap: 30px; text-align: justify; column-fill: balance;">
+                        <p>Os meta tags são uma ferramenta essencial no universo da Otimização para Mecanismos de Busca (SEO) e têm um impacto significativo na visibilidade online das páginas web. Embora muitas pessoas não estejam cientes da sua importância, os meta tags desempenham um papel crucial ao ajudar os mecanismos de busca a indexarem corretamente as páginas web.</p>
+
+                        <p>Os meta tags são etiquetas adicionais em HTML (Hypertext Markup Language) que fornecem informações detalhadas sobre uma página, como título, descrição e palavras-chave. Essas tags são "metadados" ou dados que não visuais para o usuário final, mas que são fundamentais para os mecanismos de busca.</p>
+
+                    </div>
                 </div>
                     
                 
@@ -221,7 +313,7 @@
 
             {#if menuOpt > 0}
                 <div class="code bkg2">
-                    <h2>Resultado</h2>
+                    <h2>{$lang.ui.result}</h2>
                     
                         <div>
                             <pre><code>{@html respCode}</code></pre> 
@@ -237,6 +329,25 @@
 
 
 <style>
+    code {
+        white-space: pre-wrap;
+    }
+    .home {
+        padding: 20px;
+    }
+
+    h3 {
+        margin: 0;
+        color: var(--base);
+        text-transform: uppercase;
+    }
+
+    h5 {
+        margin: 0;
+        font-size: 16px;
+        color: var(--base);
+    }
+
     ul.menu {
         text-transform: uppercase;
         font-size: 16px;
@@ -312,6 +423,8 @@
     header > nav {
         display: flex;
         gap: 10px;
+        justify-content: space-between;
+        align-items: center;
     }
 
     header > nav > img {

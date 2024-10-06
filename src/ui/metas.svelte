@@ -34,10 +34,10 @@
 </script>
 
 <section>
-    <h2>Meta Tags Generator</h2>
-    <div>
+    <h2>{$lang.ui.mtgen}</h2>
+    <div class="metas">
         {#each data as meta}
-            <div class="item" class:half={meta.half} class:auto={meta.auto}>
+            <div class="item" class:half={meta.half} class:auto={meta.auto} class:filler={meta.fill}>
                 {#if meta.type == 'spacer'}
                     <div class="spacer"></div>
 
@@ -60,10 +60,10 @@
 
                 {:else if meta.type == 'longtext'}
                     <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
-                    <textarea class="len" cols="3" bind:value={meta.value}></textarea>
+                    <textarea class="len" bind:value={meta.value}></textarea>
 
                 {:else if meta.type == 'wordlist'}
-                    <div>{$lang.metas.tags[meta.id]}</div>
+                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <div class="keywords rel">
                         <input type="text" bind:value={wordLists[meta.id].newVal} on:keydown={procWordlist.bind(this, meta) } />
@@ -80,6 +80,13 @@
                         {/each}
 
                     </div>
+                {:else if meta.type == 'objlist'}
+                <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
+                    <select bind:value={meta.value}>
+                        {#each $lang.metas[meta.list] as item}
+                            <option value="{item.val}">{item.name}</option>
+                        {/each}
+                    </select>
 
                 {:else if meta.type == 'list'}
                     <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
@@ -112,6 +119,12 @@
                         <input type="text" bind:value={meta.value2} />
                     </div>
 
+                {:else if meta.type == 'color'}
+                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
+                    <div class="txtnum">
+                        <input type="color" min="0" bind:value={meta.value} />
+                        
+                    </div>
                 {/if}
             </div>
 
@@ -121,6 +134,11 @@
 
 
 <style>
+    textarea {
+        height: 64px;
+        resize: none;
+    }
+
     .txtnum {
         display: flex;
         gap: 10px;
@@ -209,6 +227,10 @@
 
     .item.auto {
         width: auto;
+    }
+
+    .item.filler {
+        flex-grow: 1;
     }
 
 

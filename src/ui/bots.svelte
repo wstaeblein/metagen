@@ -11,11 +11,11 @@
 </script>
 
 <section>
-    <h2>Bot Tags Generator</h2>
+    <h2>{$lang.ui.botgen}</h2>
     <div>
         {#each data as bot}
             <Accordion title="{bot.id}" bind:open={bot.open}>
-                <ul slot="details">
+                <ul slot="details" id="{bot.id}">
                     {#each bot.list as item}
                        <li class="item">
                             {#if item.type == 'bool'}

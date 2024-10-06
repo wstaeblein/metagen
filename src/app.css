@@ -3,6 +3,7 @@
     --color: #16163F;
     --base: #16163F;
     --bars: #00133377;
+    --text: #414850;
 }
 
 html {
@@ -116,7 +117,7 @@ h2 {
     margin: 0;
 }
 
-input[type=text], input[type=number], input[type=datetime-local], textarea, select {
+input[type=text], input[type=number], input[type=datetime-local], input[type=color], textarea, select {
     padding: 8px 15px;
     font-size: 20px;
     border-radius: 7px;
@@ -125,6 +126,7 @@ input[type=text], input[type=number], input[type=datetime-local], textarea, sele
     width: 100%;
     outline: none;
     background-color: #fff;
+    height: 39px;
 }
 
 textarea.len {
@@ -193,4 +195,9 @@ input[type=text]:focus, textarea:focus {
     font-size: 14px;
     font-weight: bold;
     padding-bottom: 2px;
+}
+
+p {
+    color: var(--text);
+    margin: 0 0 20px;
 }
