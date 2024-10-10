@@ -48,8 +48,16 @@
                     </label>
                 
                 {:else if meta.type == 'text'}
-                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
-                    <input type="text" list="{meta.id}" bind:value={meta.value} />
+                    <div class="itemtitle">
+                        <div>{$lang.metas.tags[meta.id]}</div>
+                        {#if meta.max}<b>{meta.value.length}</b>{/if}
+                    </div>
+                    <input type="text" list="{meta.id}" bind:value={meta.value} placeholder="{$lang.metas.pl[meta.pl] || ''}" />
+                    {#if meta.max}
+                        <div>
+                            <meter min={0} max={meta.max[1] * 2} low={meta.max[0]} high={meta.max[1]} value={meta.value.length}></meter>
+                        </div>
+                    {/if}
                     {#if meta.datalist}
                     <datalist id="{meta.id}">
                         {#each meta.datalist as dl}
@@ -59,8 +67,16 @@
                     {/if}
 
                 {:else if meta.type == 'longtext'}
-                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
+                    <div class="itemtitle">
+                        <div>{$lang.metas.tags[meta.id]}</div>
+                        {#if meta.max}<b>{meta.value.length}</b>{/if}
+                    </div>
                     <textarea class="len" bind:value={meta.value}></textarea>
+                    {#if meta.max}
+                        <div>
+                            <meter min={0} max={meta.max[1] * 2} low={meta.max[0]} high={meta.max[1]} value={meta.value.length}></meter>
+                        </div>
+                    {/if}
 
                 {:else if meta.type == 'wordlist'}
                     <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
@@ -83,6 +99,7 @@
                 {:else if meta.type == 'objlist'}
                 <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <select bind:value={meta.value}>
+                        <option value=""></option>
                         {#each $lang.metas[meta.list] as item}
                             <option value="{item.val}">{item.name}</option>
                         {/each}
@@ -91,6 +108,7 @@
                 {:else if meta.type == 'list'}
                     <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <select bind:value={meta.value}>
+                        <option value=""></option>
                         {#each meta.list as item}
                             <option value="{item}">{item}</option>
                         {/each}
@@ -115,8 +133,8 @@
                 {:else if meta.type == 'txtnum'}
                     <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <div class="txtnum">
-                        <input type="number" min="0" bind:value={meta.value} />
-                        <input type="text" bind:value={meta.value2} />
+                        <input type="number" min="0" step="1" bind:value={meta.value} placeholder="{meta.pl ? $lang.metas.pl[meta.pl[0]] : ''}" />
+                        <input type="text" bind:value={meta.value2} placeholder="{meta.pl ? $lang.metas.pl[meta.pl[1]] : ''}" />
                     </div>
 
                 {:else if meta.type == 'color'}
@@ -124,6 +142,25 @@
                     <div class="txtnum">
                         <input type="color" min="0" bind:value={meta.value} />
                         
+                    </div>
+
+                {:else if meta.type == 'region'}
+                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
+                    <div class="txtnum">
+                        <select bind:value={meta.value}>
+                            <option value=""></option>
+                            {#each $lang.countries as ctry}
+                                <option value="{ctry.id}">{ctry.val}</option>
+                            {/each}
+                        </select>
+                        <input type="text" bind:value={meta.value2} placeholder="{$lang.metas.pl[meta.pl] || ''}" />
+                        
+                    </div>           
+                {:else if meta.type == 'latlon'}      
+                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
+                    <div class="latlon">
+                        <input type="number" bind:value={meta.value} placeholder="{$lang.metas.pl.latitude}"/>
+                        <input type="number" bind:value={meta.value2} placeholder="{$lang.metas.pl.longitude}" />
                     </div>
                 {/if}
             </div>
@@ -134,9 +171,22 @@
 
 
 <style>
+    meter {
+        width: 100%;
+        transform: translateY(-10px);
+        height: 12px;
+        border-radius: 6px;
+    }
+
     textarea {
         height: 64px;
         resize: none;
+        vertical-align: top;
+    }
+
+    .latlon {
+        display: flex;
+        gap: 10px;
     }
 
     .txtnum {
@@ -174,7 +224,7 @@
         cursor: pointer;
         transition: color 0.3s ease;
         color: #777;
-        transform: translateY(2px);
+        transform: translateY(7px);
     }
 
     .keywords > input {
@@ -189,6 +239,7 @@
         padding: 2px 6px;
         display: flex;
         gap: 10px;
+        align-items: center;
     }
 
     .keywords > span > i {
@@ -238,6 +289,7 @@
         display: flex;
         gap: 12px;
         align-items: center;
+        font-size: 16px;
     }
 
     .item > label > span {
@@ -248,6 +300,10 @@
 
     .item:has(input[type=checkbox]):not(:last-of-type) {
         padding-bottom: 5px;
+    }
+
+    .item > div:has(meter) {
+        height: 12px;
     }
 
     h2 {

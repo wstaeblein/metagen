@@ -54,6 +54,10 @@
     h4 > span.rotate:first-child {
         transform: rotate(90deg);
     }
+
+    h4 > span:last-child {
+        text-shadow: 1px 1px 0 #000;
+    }
     
     div.header .text {
         flex: 1;

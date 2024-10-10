@@ -11,7 +11,7 @@
 
 
 <section>
-    <h2> Generator</h2>
+    <h2>{$lang.ui.googlegen}</h2>
 
 </section>
 

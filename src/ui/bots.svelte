@@ -64,12 +64,7 @@
 
 
 <style>
-    .byside {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        flex-wrap: wrap;
-    }
+
 
     section {
         display: flex;

@@ -1,24 +1,31 @@
 <script>
     import { onMount } from 'svelte';
+    // @ts-ignore
     import { langCode, lang, supportedLangs } from './stores.js';
 	import Metas from './ui/metas.svelte';
 	import Bots from './ui/bots.svelte';
 	import Social from './ui/social.svelte';
 	import Images from './ui/images.svelte';
-	import Google from './ui/google.svelte';
+
     import hljs from 'highlight.js/lib/core';
     import 'highlight.js/styles/github.css';
+    // @ts-ignore
     import xml from 'highlight.js/lib/languages/xml';
 
     hljs.registerLanguage('xml', xml);
 
     // https://developers.google.com/search/docs/crawling-indexing/special-tags?hl=pt-br
     let menuOpt = 0;
+    let menuOpen = false;
     let respCode = '';
+    let respCodeText = '';
+    let cbCopyStatus = 0;
 
     let websoft = ['Dreamweaver', 'EditPlus', 'Frontpage', 'Ghost', 'Joomla', 'WordPress'];
     let charsets = ['utf-8','big5','euc-kr','iso-8859-1','iso-8859-2','iso-8859-3','iso-8859-4','iso-8859-5','iso-8859-6','iso-8859-7','iso-8859-8','koi8-r','shift-jis','x-euc','windows-1250','windows-1251','windows-1252','windows-1253','windows-1254','windows-1255','windows-1256','windows-1257','windows-1258','windows-874']
-    let mimes = ['image/jpeg', 'image/png', 'image/apng', 'image/gif', 'image/webp', 'image/bmp', 'image/heic', 'image/heif'];
+    let mimes = ['', 'image/jpeg', 'image/png', 'image/apng', 'image/gif', 'image/webp', 'image/bmp', 'image/heic', 'image/heif'];
+    let ogTypes = ['article', 'book', 'profile', 'website'];
+    let tcTypes = ['summary', 'summary_large_image', 'app']
 
     let botlist = [
         { id: 'noindex', type: 'bool' },
@@ -48,11 +55,12 @@
         metas: [
             { id: 'html',   tagspec: '<!doctype html>\n<html lang="##">\n\t<head>\n$$$\n\t</head>\n\t<body>\n\n\n\t</body>\n</html>', value: false, type: 'bool', half: true },
             { id: 'view',   tagspec: '<meta name="viewport" content="width=device-width, initial-scale=1" />', value: true, type: 'bool', half: true },
-            { id: 'amwac',  tag: 'meta',  name: 'apple-mobile-web-app-capable', attr: 'content', value: false, type: 'bool', def: 'yes', half: true },
             { id: 'nocac',  tag: 'meta',  httpequiv: 'Pragma', attr: 'content', value: false, type: 'bool', def: 'no-cache', half: true },
+            { id: 'hhfri',  tag: 'meta',  name: 'HandheldFriendly', attr: 'content', value: false, type: 'bool', def: 'true', half: true },
             { id: 'spc1',   type: 'spacer' },
-            { id: 'title',  tag: 'title', value: '', type: 'text' },
-            { id: 'desc',   tag: 'meta',  name: 'description', attr: 'content', value: '', type: 'longtext' },
+            { id: 'title',  tag: 'title', value: '', type: 'text', max: [60, 70] },
+            { id: 'desc',   tag: 'meta',  name: 'description', attr: 'content', value: '', type: 'longtext', max: [150, 160] },
+            { id: 'asbt',   tag: 'meta',  name: 'abstract', attr: 'content', value: '', type: 'longtext', max: [150, 160] },
             { id: 'keys',   tag: 'meta',  name: 'keywords', attr: 'content', value: '', type: 'wordlist' },
             { id: 'author', tag: 'meta',  name: 'author', attr: 'content', value: '', type: 'text', half: true },
             { id: 'gener',  tag: 'meta',   name: 'generator', attr: 'content', value: '', type: 'text', datalist: websoft, half: true },
@@ -61,57 +69,87 @@
             { id: 'canon',  tag: 'link',  rel: 'canonical', attr: 'href', value: '', type: 'text' },
             { id: 'lang',   tag: 'meta',  httpequiv: 'content-language', attr: 'content', value: '', type: 'dbllist', list: 'langlist', auto: true },
             { id: 'chars',  tag: 'meta',  httpequiv: 'Content-Type', attr: 'content', value: 'utf-8', type: 'list', list: charsets, template: 'text/html; charset=$$$', auto: true },
-            { id: 'refr',   tag: 'meta',  httpequiv: 'refresh', attr: 'content', value: '', type: 'txtnum' },
-            { id: 'wasbs',   tag: 'meta',  name: 'apple-mobile-web-app-status-bar-style', attr: 'content', value: '', type: 'objlist', list: 'applestylelist', auto: true },
-            { id: 'rate',    tag: 'meta',  name: 'rating', attr: 'content', value: '', type: 'objlist', list: 'ratelist', auto: true }
-
+            { id: 'rate',    tag: 'meta',  name: 'rating', attr: 'content', value: '', type: 'objlist', list: 'ratelist', auto: true },
+            { id: 'refr',   tag: 'meta',  httpequiv: 'refresh', attr: 'content', value: '', type: 'txtnum', pl: ['secs', 'url'] }
             
         ],
         bots: [
-            { id: 'robots',        tag: 'meta', name: 'robots',         attr: 'content', value: '', type: 'multi', list: structuredClone(botlist) },
+            { id: 'robots',        tag: 'meta', name: 'robots',         attr: 'content', value: '', type: 'multi', list: structuredClone(botlist), open: true },
             { id: 'googlebot',     tag: 'meta', name: 'googlebot',      attr: 'content', value: '', type: 'multi', list: structuredClone(botlist) },
             { id: 'googlebotnews', tag: 'meta', name: 'googlebot-news', attr: 'content', value: '', type: 'multi', list: structuredClone(botlist) },
             { id: 'bingbot',       tag: 'meta', name: 'bingbot',        attr: 'content', value: '', type: 'multi', list: bingbotlist },
         ],
         social: [
             { 
+                id: 'og',
                 name: 'Open Graph (Facebook)',
+                open: true,
                 items: [
-                    { id: 'title', prop: 'og:title', value: '' },
-                    { id: 'desc', prop: 'og:description', value: '', type: 'longtext' },
+                    { id: 'title', prop: 'og:title', value: '', max: [60, 70] },
+                    { id: 'desc', prop: 'og:description', value: '', type: 'longtext', max: [160, 200] },
                     { id: 'url', prop: 'og:url', value: '' },
-                    { id: 'image', prop: 'og:image', value: '' },
+                    { id: 'image', prop: 'og:image', value: '' , action: getMime.bind(this, 'og', 'image', 'imaget') },
                     { id: 'imaget', prop: 'og:image:type', value: '', type: 'list', list: mimes, half: true  },
                     { id: 'imagealt', prop: 'og:image:alt', value: '', half: true  },
                     { id: 'imagew', prop: 'og:image:width', value: '', type: 'int', auto: true },
                     { id: 'imageh', prop: 'og:image:height', value: '', type: 'int' , auto: true},
-                    { id: 'type', prop: 'og:type', value: '', type: 'list', list: [], auto: true },
+                    { id: 'type', prop: 'og:type', value: '', type: 'text', datalist: ogTypes, auto: true },
                     { id: 'locale', prop: 'og:locale', value: '', half: true },
                     { id: 'fbappid', prop: 'fb:app_id', value: '', half: true }
                 ]
             }, {
+                id: 'tc',
                 name: 'Twitter Cards',
                 items: [
+                    { id: 'autofill', type: 'btn', action: copyFromOG },
                     { id: 'title', prop: 'twitter:title', value: '' },
                     { id: 'desc', prop: 'twitter:description', value: '', type: 'longtext' },
                     { id: 'image', prop: 'twitter:image', value: '' },
                     { id: 'url', prop: 'twitter:url', value: '' },
-                    { id: 'type', prop: 'twitter:card', value: '', half: true },
+                    { id: 'twtcreator', prop: 'twitter:creator', value: '', half: true },
                     { id: 'twtsite', prop: 'twitter:site', value: '', half: true },
-
+                    { id: 'type', prop: 'twitter:card', value: '', type: 'list', list: tcTypes, half: true },
                 ]
             }
         ],
         images: [
+            { id: 'fav',  tag: 'link',  rel: 'favicon', attr: 'href', value: '', type: 'text', icontype: 'auto' },
+            { id: 'mask',  tag: 'link',  rel: 'mask-icon', attr: 'href', value: '', type: 'text', icontype: 'auto' },
+            { id: 'short',  tag: 'link',  rel: 'shortcut icon', attr: 'href', value: '', type: 'text', icontype: 'auto' },
+            { id: 'apple',  tag: 'link',  rel: 'apple-touch-icon', attr: 'href', value: '', type: 'icons', sizes: 'applesizes' },
+            { id: 'splash',  tag: 'link',  rel: 'apple-touch-startup-image', attr: 'href', value: '', type: 'splash', sizes: 'splashsizes' },
 
         ],
-        google: [
+        other: [
+            { id: 'mwac',  tag: 'meta',  name: 'mobile-web-app-capable', attr: 'content', value: false, type: 'bool', def: 'yes', half: true },
+            { id: 'amwac',  tag: 'meta', name: 'apple-mobile-web-app-capable', attr: 'content', value: false, type: 'bool', def: 'yes', half: true },
+            { id: 'fmtd1',  tag: 'meta',  name: 'format-detection', attr: 'content', value: false, type: 'bool', def: 'telephone=no', half: true },
+            { id: 'fmtd2',  tag: 'meta', name: 'format-detection', attr: 'content', value: false, type: 'bool', def: 'email=no', half: true },
+
+            { id: 'spc1',   type: 'spacer' },
+
+            { id: 'amwat',  tag: 'meta', name: 'apple-mobile-web-app-title', attr: 'content', value: '', type: 'text', half: true },
+            { id: 'wasbs',  tag: 'meta', name: 'apple-mobile-web-app-status-bar-style', attr: 'content', value: '', type: 'objlist', list: 'applestylelist', half: true },
+
+            { id: 'appnm',  tag: 'meta', name: 'application-name', attr: 'content', value: '', type: 'text', half: true  },
+            { id: 'base', tag: 'base',  attr: 'href', value: '', type: 'text', half: true  },
+
+            { id: 'region', tag: 'meta', name: 'geo.region', attr: 'content', value: '', type: 'region', pl: 'state' },
+            { id: 'place', tag: 'meta', name: 'geo.placename', attr: 'content', value: '', type: 'text', pl: 'city' },
+            { id: 'posit', tag: 'meta', name: 'geo.position', attr: 'content', value: '', type: 'latlon', half: true },
+            { id: 'icbm', tag: 'meta', name: 'ICBM', attr: 'content', value: '', type: 'latlon', half: true },
+
+            
             { id: 'gglver', tag: 'meta',  name: 'google-site-verification', attr: 'content', value: '', type: 'text' },
+
         ]
 
     }
     let debounceProcess = debounce(process, 300);
-    $: debounceProcess(cats);
+
+
+   // @ts-ignore
+     $: debounceProcess(cats);
 
     onMount(() => {
 
@@ -123,6 +161,68 @@
 // https://easyretro.io/tools/meta-tag-generator/
 
 
+    function getMime(socid, id, targetid) {
+        let socItem = cats.social[socid == 'og' ? 0 : 1].items;
+        let imgItem = socItem.find(m => m.id == id);
+        let value = imgItem?.value;
+        let mime = getMimeString(value);
+
+        if (mime) {
+            let targetItem = socItem.find(m => m.id == targetid); 
+
+            if (targetItem) { 
+                targetItem.value = mime; 
+                cats = cats;
+            }
+        }
+    }
+
+    function getMimeString(path) {
+        
+        if (path) {
+            let ext = path.split('.').pop().trim().toLowerCase(); 
+            switch (ext) {
+                case 'jpg':
+                case 'jpeg':
+                    return 'image/jpeg';
+                case 'gif':
+                case 'png':
+                case 'apng':
+                case 'webp':
+                case 'heic':
+                case 'heif':
+                case 'bmp':
+                    return 'image/' + ext;
+                case 'ico':
+                    return 'image/x-icon';
+            }
+        }
+        return '';
+    }
+
+    function copyFromOG() {
+        let ogItems = finder(cats.social, 'og').items;
+        let tcItems = finder(cats.social, 'tc').items;
+
+        let tcTitle = finder(tcItems, 'title');
+        if (tcTitle && !tcTitle.value) { tcTitle.value = finder(ogItems, 'title').value || ''; }
+
+        let tcDesc = finder(tcItems, 'desc');
+        if (tcDesc && !tcDesc.value) { tcDesc.value = finder(ogItems, 'desc').value || ''; }        
+        
+        let tcURL = finder(tcItems, 'url');
+        if (tcURL && !tcURL.value) { tcURL.value = finder(ogItems, 'url').value || ''; }  
+        
+        let tcImg = finder(tcItems, 'image');
+        if (tcImg && !tcImg.value) { tcImg.value = finder(ogItems, 'image').value || ''; }        
+
+        cats = cats;
+    }
+
+    function finder(obj, id) {
+        return obj.find(i => i.id == id);
+    }
+
 
     function process(dataObj) {
         let html = '';
@@ -131,6 +231,10 @@
         let indent = hasSkeleton ? '\t\t' : '';
         let metatags = '';
         let bottags = '';
+        let soctags = '';
+        let imgtags = '';
+        let othertags = '';
+        let manifest = '';
                                 
         if (lang.val) { lang = lang.val; } 
 
@@ -160,8 +264,11 @@
                 case 'dbllist':
                     if (meta.id == 'lang') {
                         let cult = meta.value2;
-                        value = lang + (cult ? '-' + cult : '');                         
+                        value = lang + (cult ? '-' + cult : '');     
+                        metatags += indent + '<' + meta.tag;       
+                        metatags += ' http-equiv="' + meta.httpequiv + '" ' + meta.attr + '="' + value + '" />\n';                     
                     }
+                    break;
 
                 case 'txtnum':
                     if (value) {
@@ -195,7 +302,7 @@
                     break;
 
             }
-        })
+        });
 
         if (metatags) { metatags = ((hasSkeleton ? '\t\t' : '') + '<!-- Metatags -->\n') + metatags + '\n'}
 
@@ -228,9 +335,100 @@
 
         if (bottags) { bottags = '<!-- Bot Tags -->\n' + bottags + '\n' }
 
-        let finalContent = metatags + indent + bottags;
 
-        respCode = hljs.highlight(html ? html.replace('$$$', finalContent) : finalContent, {language: 'xml'}).value;
+        // SOCIAL
+        dataObj.social.forEach((social) => {
+            social.items.forEach((si) => {
+                if (si.value) {
+                    switch (si.type) {
+
+                        default:
+                            soctags += indent + '<meta property="' + si.prop + '" content="' + si.value + '" />\n'
+                    }
+                }
+            });
+        });
+
+        if (soctags) { soctags = '<!-- Social Tags -->\n' + soctags + '\n' }
+
+        // IMAGES & ICONS
+        dataObj.images.forEach((img) => {
+            if ((img.type != 'icons' && img.type != 'splash') && img.value) {
+                imgtags += indent + '<link rel="' + img.rel + '" href="' + img.value + '"';
+                if (img.size) { imgtags += ' sizes="' + img.size  + '"'; }
+                if (img.icontype) {
+                    let icoType = getMimeString(img.value);
+                    if (icoType) { imgtags += ' type="' + icoType + '"'; }
+                }
+                let media = img.media ? ' media="' + img.media + '"' : '';
+                imgtags += media + ' />\n' 
+            }
+        });        
+
+        if (imgtags) { imgtags = '<!-- Icon & Image Tags -->\n' + imgtags + '\n' }
+
+        // OTHER
+        dataObj.other.forEach((other) => {
+            let value = structuredClone(other.value);
+
+            switch (other.type) {
+                case 'bool':
+                    if (other.id == 'html') {
+                        html = value ? other.tagspec.replace('##', lang) : '';
+                    } else {
+                        if (value) {
+                            if (other.tagspec) {
+                                othertags += indent + other.tagspec + '\n';
+                            } else {
+                                let tagAttr = other.name ? 'name' : 'http-equiv';
+                                let tagAttrCtt = other.name || other.httpequiv;
+                                othertags += indent + '<' + other.tag + ' ' + tagAttr + '="' + tagAttrCtt + '" ' + other.attr + '="' + other.def + '" />\n';
+                            }
+                        }
+                    }
+                    break;
+
+                case 'objlist':
+                case 'text':
+                    if (value) {
+                        othertags += indent + '<' + other.tag;
+                        value = value.replace(/\s/g, ' ').trim();
+
+                        if (other.name) {
+                            othertags += ' name="' + other.name + '" ' + other.attr + '="' + value + '" />\n';
+                        } else if (other.rel) {
+                            othertags += ' rel="' + other.rel + '" ' + other.attr + '="' + value + '" />\n';
+                        } else if (other.httpequiv) {
+                            othertags += ' http-equiv="' + other.httpequiv + '" ' + other.attr + '="' + value + '" />\n';
+                        } else {
+                            othertags += '>' + value + '</' + other.tag + '>\n'
+                        }
+                    }
+                    break;
+
+                case 'latlon':
+                case 'region':
+                    if (value && other.value2) {
+                        let sep = other.type == 'region' ? '-' : ';';
+                        othertags += indent + '<' + other.tag + ' name="' + other.name + '" ' + other.attr + '="' + (value + sep + other.value2).toUpperCase() + '" />\n';
+                    }
+                
+                }
+
+        });
+
+        if (othertags) { othertags = '<!-- Other Tags -->\n' + othertags + '\n' }
+        
+
+
+
+
+        // MANIFEST
+
+        let finalContent = metatags + indent + bottags + indent + soctags + indent + imgtags + indent + othertags;
+
+        respCodeText = html ? html.replace('$$$', finalContent) : finalContent;
+        respCode = hljs.highlight(respCodeText, {language: 'xml'}).value;
     }
 
     function debounce(func, timeout = 300) {
@@ -240,37 +438,61 @@
             timer = setTimeout(() => { func.apply(this, args); }, timeout);
         };
     }
+
+    function write2Clipboard() {
+        navigator.clipboard.writeText(respCodeText).then(() => {
+                /* clipboard successfully set */
+                cbCopyStatus = 1;
+                setTimeout(() => cbCopyStatus = 0, 1500);
+            }, () => {
+                /* clipboard write failed */
+                cbCopyStatus = 2;
+                setTimeout(() => cbCopyStatus = 0, 1500);
+            },
+        );
+    }
+
+    function toggleMenu() {
+        menuOpen = !menuOpen;
+    }
 </script>
 
 
-<main>
+<main on:click={() => menuOpen = false}>
     <header>
         <nav>
-            <img src="/img/logo.png" alt="logo" />
             <div>
-
+                <span class="hamburguer" on:click|stopPropagation={toggleMenu}><i class="icon-menu"></i></span>
+                <img src="/img/logo.png" alt="logo" />
+            </div>
+            
+            <div>
+                <span><i class="icon-trash-2"></i></span>
             </div>
         </nav>
     </header>
     
     <article>
-        <nav class="bkg">
+        <nav class="bkg" class:open={menuOpen}>
             <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
             <ul class="menu">
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-                <li class:sel={menuOpt == 0} on:click={() => menuOpt = 0}>Home</li>
+                <li class:sel={menuOpt == 0} on:click={() => menuOpt = 0}><i class="icon-home"></i><span>{$lang.ui.menu.home}</span></li>
                 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 1} on:click={() => menuOpt = 1}>Meta Tags</li>
+                <li class:sel={menuOpt == 1} on:click={() => menuOpt = 1}><i class="icon-tag"></i><span>{$lang.ui.menu.meta}</span></li>
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 2} on:click={() => menuOpt = 2}>Bots</li>
+                <li class:sel={menuOpt == 2} on:click={() => menuOpt = 2}><i class="icon-bot"></i><span>{$lang.ui.menu.bots}</span></li>
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 3} on:click={() => menuOpt = 3}>Social</li>
+                <li class:sel={menuOpt == 3} on:click={() => menuOpt = 3}><i class="icon-share-2"></i><span>{$lang.ui.menu.social}</span></li>
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 4} on:click={() => menuOpt = 4}>Ícones & Imagens</li>
+                <li class:sel={menuOpt == 4} on:click={() => menuOpt = 4}><i class="icon-image"></i><span>{$lang.ui.menu.icons}</span></li>
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 5} on:click={() => menuOpt = 5}>Google</li>
+                <li class:sel={menuOpt == 5} on:click={() => menuOpt = 5}><i class="icon-tag"></i><span>{$lang.ui.menu.other}</span></li>                        
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <li class:sel={menuOpt == 6} on:click={() => menuOpt = 6}><i class="icon-file-text"></i><span>{$lang.ui.menu.manifest}</span></li>
+
                 
             </ul>
         </nav>
@@ -298,13 +520,13 @@
                     <Bots bind:data={cats.bots}></Bots>
 
                 {:else if menuOpt == 3}
-                    <Social bind:data={cats.social}></Social>
+                    <Social bind:data={cats.social} metas={cats.metas}></Social>
 
                 {:else if menuOpt == 4}
                     <Images bind:data={cats.images}></Images>
 
                 {:else if menuOpt == 5}
-                    <Google bind:data={cats.google}></Google>
+                    <Metas bind:data={cats.other}></Metas>
 
 
                 {/if}
@@ -313,12 +535,35 @@
 
             {#if menuOpt > 0}
                 <div class="code bkg2">
-                    <h2>{$lang.ui.result}</h2>
+                    <h2 class="between">
+                        <span>{$lang.ui.result}</span>
+                        {#if cbCopyStatus == 0}
+                        <button on:click={write2Clipboard} title="{$lang.ui.copy}"><i class="icon-copy"></i></button>
+                        {:else if cbCopyStatus == 1}
+                            <span class="msg copyok">{$lang.ui.ok}</span>
+                        {:else}
+                            <span class="msg copyerr">{$lang.ui.error}</span>
+                        {/if}
+                    </h2>
                     
-                        <div>
-                            <pre><code>{@html respCode}</code></pre> 
+                    <div>
+                        <pre><code>{@html respCode}</code></pre> 
+                    </div>
+                    {#if menuOpt == 6}
+
+                        <div class="code bkg2">
+                            <h2 class="between">
+                                <span>{$lang.ui.manifest}</span>
+                                {#if cbCopyStatus == 0}
+                                <button on:click={write2Clipboard} title="{$lang.ui.copy}"><i class="icon-copy"></i></button>
+                                {:else if cbCopyStatus == 1}
+                                    <span class="msg copyok">{$lang.ui.ok}</span>
+                                {:else}
+                                    <span class="msg copyerr">{$lang.ui.error}</span>
+                                {/if}
+                            </h2>                        
                         </div>
-                    
+                    {/if}
                 </div>
             {/if}
         </section>
@@ -329,6 +574,25 @@
 
 
 <style>
+    .hamburguer {
+        display: none;
+    }
+
+    .msg {
+        display: inline-block;
+        font-size: 16px;
+        width: 60px;
+        text-align: center;
+        padding: 3px 10px;
+        border-radius: 7px;
+    }
+    .copyok {
+        background-color: forestgreen;
+    }
+    .copyerr {
+        background-color: crimson;
+    }
+
     code {
         white-space: pre-wrap;
     }
@@ -359,6 +623,9 @@
         padding: 5px 15px;
         cursor: pointer;
         transition: all 0.3s ease;
+        display: flex;
+        gap: 8px;
+        align-items: center;
     }
 
     ul.menu > li:hover, ul.menu > li.sel {
@@ -387,7 +654,8 @@
     }
 
     header {
-        padding: 10px;
+        height: 64px;
+        padding: 10px 10px 0; 
         background: #fff;
         position: fixed;
         width: 100%;
@@ -406,6 +674,7 @@
         min-width: 200px;
         flex-grow: 0;
         transition: all 0.3s ease;
+        z-index: 111;
     }
 
     article > section {
@@ -427,7 +696,19 @@
         align-items: center;
     }
 
-    header > nav > img {
+    header > nav > div {
+        display: flex;
+        gap: 10px;
+        font-size: 36px;
+        color: var(--base);
+        font-weight: bold;
+    }
+
+    header > nav > div:last-child {
+        font-size: 24px;
+    }
+
+    header > nav > div > img {
         height: 44px;
     }
 
@@ -442,6 +723,7 @@
     }
 
     .code h2 {
+        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
         background: var(--bars);
         padding: 5px 15px;
     }
@@ -459,16 +741,40 @@
         position: absolute;
         left: -250px;
         height: 100%;
+        transition: all 0.4s ease;
+        background-color: var(--solidbars) !important;
+    }
+
+    article > nav.open {
+        left: 0;
+        bottom: 0;
+        top: 64px;
+        position: fixed;
+    }
+
+    .hamburguer {
+        display: block;
     }
 
 }
 
 @media (max-width: 800px) {
-    article > section {
-        flex-direction: column;
+
+    header {
+        box-shadow: 0 2px 6px 0px #b3b3b3;
     }
+
+    article > section {
+        display: block;
+    }
+
     article > section > div {
         width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .code {
+        font-size: smaller;
     }
 }
 </style>

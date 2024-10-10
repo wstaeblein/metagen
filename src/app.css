@@ -3,6 +3,7 @@
     --color: #16163F;
     --base: #16163F;
     --bars: #00133377;
+    --solidbars: #2c3b54;
     --text: #414850;
 }
 
@@ -83,11 +84,18 @@ button {
     cursor: pointer;
     transition: all 0.4s ease;
     border: none;
-
 }
 button:hover, button.checked {
     background-color: var(--hilite);
     color: var(--color);
+}
+
+button.small {
+    font-size: 12px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .glass {
@@ -117,9 +125,23 @@ h2 {
     margin: 0;
 }
 
+.byside {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.between {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
 input[type=text], input[type=number], input[type=datetime-local], input[type=color], textarea, select {
     padding: 8px 15px;
-    font-size: 20px;
+    font-size: 16px;
     border-radius: 7px;
     border: none;
     color: #3f62a3;
@@ -190,11 +212,22 @@ input[type=text]:focus, textarea:focus {
 }
 
 .itemtitle {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.itemtitle, .itemtitle > div, .itemtitle > b {
     color: var(--base);
     text-transform: uppercase;
     font-size: 14px;
     font-weight: bold;
     padding-bottom: 2px;
+}
+
+.itemtitle > b {
+    color: #777;
 }
 
 p {

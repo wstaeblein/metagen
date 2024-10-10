@@ -4,6 +4,7 @@
     	import Accordion from './accordion.svelte';
 
         export let data = [];
+        export let metas = [];
     
         let wordLists = {};
         let fbOpen = true;
@@ -34,13 +35,50 @@
     
             obj.value = wordLists[obj.id].list.join(', ');
         }
+
+
+
+        function autoFill() {
+            let ogTitle = getSocial('og', 'title');
+            let ogDesc = getSocial('og', 'desc');
+            let ogURL = getSocial('og', 'url');
+
+            let tcTitle = getSocial('tc', 'title');
+            let tcDesc = getSocial('tc', 'desc');
+            let tcURL = getSocial('tc', 'url');
+
+            let title = getMeta('title').value;
+            let desc = getMeta('desc').value; 
+            let url = getMeta('canon').value; 
+
+            ogTitle.value = tcTitle.value = title;
+            ogDesc.value  = tcDesc.value  = desc;
+            ogURL.value   = tcURL.value   = url;
+
+            data = data;
+        }
+
+        function getMeta(id) {
+            return metas.find(m => m.id == id);
+        }
+
+        function getSocial(socid, id) {
+            let social;
+            if (socid == 'og') { 
+                social = data[data[0].id == 'og' ? 0 : 1];
+            } else { 
+                social = data[data[1].id == 'tc' ? 1 : 0];
+            }
+            console.log(social)
+            return social.items.find(s => s.id == id);
+        }
     </script>
     
     <section>
         <h2>{$lang.ui.mtgen}</h2>
         <div class="metas">
             <nav>
-                <button>Auto Preencher</button>
+                <button on:click={autoFill}>{$lang.ui.autofill}</button>
             </nav>
             {#each data as social}
                 <Accordion title="{social.name}" bind:open={social.open}>
@@ -48,46 +86,19 @@
                         {#each social.items as meta}
 
                             <div class="item" class:half={meta.half} class:auto={meta.auto} class:filler={meta.fill}>
-                                {#if meta.type == 'spacer'}
-                                    <div class="spacer"></div>
-                
-                                {:else if meta.type == 'bool'}
-                                    <label>
-                                        <input type="checkbox" bind:checked={meta.value} />
-                                        <span>{$lang.metas.tags[meta.id]}</span>
-                                    </label>
-
-                
-                                {:else if meta.type == 'longtext'}
-                                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
+               
+                                {#if meta.type == 'longtext'}
+                                    <div class="itemtitle">
+                                        <div>{$lang.metas.tags[meta.id]}</div>
+                                        {#if meta.max}<b>{meta.value.length}</b>{/if}
+                                    </div>     
                                     <textarea class="len" rows="3" bind:value={meta.value}></textarea>
-                
-                                {:else if meta.type == 'wordlist'}
-                                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
-                                    <!-- svelte-ignore a11y-click-events-have-key-events -->
-                                    <div class="keywords rel">
-                                        <input type="text" bind:value={wordLists[meta.id].newVal} on:keydown={procWordlist.bind(this, meta) } />
-                                        <!-- svelte-ignore a11y-click-events-have-key-events -->
-                                        <b on:click={procWordlist.bind(this, meta)} role="button" tabindex="0">✓</b>
-                
-                                        {#each wordLists[meta.id].list as kw, index}
-                                            <span>
-                                                <b>{kw}</b>
-                                                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                                                <!-- svelte-ignore a11y-no-static-element-interactions -->
-                                                <i on:click={delWordList.bind(this, meta, index)}>✖</i>
-                                            </span>
-                                        {/each}
-                
-                                    </div>
-                                {:else if meta.type == 'objlist'}
-                                <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
-                                    <select bind:value={meta.value}>
-                                        {#each $lang.metas[meta.list] as item}
-                                            <option value="{item.val}">{item.name}</option>
-                                        {/each}
-                                    </select>
-                
+                                    {#if meta.max}
+                                        <div>
+                                            <meter min={0} max={meta.max[1] * 2} low={meta.max[0]} high={meta.max[1]} value={meta.value.length}></meter>
+                                        </div>
+                                    {/if}
+
                                 {:else if meta.type == 'list'}
                                     <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                                     <select bind:value={meta.value}>
@@ -118,22 +129,27 @@
                                         <input type="number" min="0" bind:value={meta.value} />
                                         <input type="text" bind:value={meta.value2} />
                                     </div>
-                
-                                {:else if meta.type == 'color'}
-                                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
-                                    <div class="txtnum">
-                                        <input type="color" min="0" bind:value={meta.value} />
-                                        
-                                    </div>
 
-                                    {:else if meta.type == 'int'}
+                                {:else if meta.type == 'int'}
                                     <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                                     <input type="number" style="width: 150px" list="{meta.id}" bind:value={meta.value} />
             
 
+                                {:else if meta.type == 'btn'}
+                                    <div>
+                                        <button on:click={meta.action}>{$lang.metas.tags[meta.id]}</button>
+                                    </div>
                                 {:else }
-                                    <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
-                                    <input type="text" list="{meta.id}" bind:value={meta.value} />
+                                    <div class="itemtitle">
+                                        <div>{$lang.metas.tags[meta.id]}</div>
+                                        {#if meta.max}<b>{meta.value.length}</b>{/if}
+                                    </div>                                    
+                                    <input type="text" list="{meta.id}" bind:value={meta.value} on:blur={meta.action || null} />
+                                    {#if meta.max}
+                                        <div>
+                                            <meter min={0} max={meta.max[1] * 2} low={meta.max[0]} high={meta.max[1]} value={meta.value.length}></meter>
+                                        </div>
+                                    {/if}
                                     {#if meta.datalist}
                                     <datalist id="{meta.id}">
                                         {#each meta.datalist as dl}
@@ -153,6 +169,14 @@
     
     
     <style>
+
+        meter {
+            width: 100%;
+            transform: translateY(-10px);
+            height: 12px;
+            border-radius: 6px;
+        }
+
         nav {
             margin-bottom: 20px;
         }
@@ -164,6 +188,7 @@
         textarea {
             height: 64px;
             resize: none;
+            vertical-align: top;
         }
 
         .txtnum {
@@ -175,59 +200,7 @@
             width: 100px;
         }
     
-        .spacer {
-            height: 0;
-            width: 100%;
-        }
-    
-        .keywords {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 8px 15px;
-            font-size: 16px;
-            border-radius: 7px;
-            border: none;
-            color: #3f62a3;
-            width: 100%;
-            outline: none;
-            background-color: #fff;
-        }
-    
-        .keywords.rel > b {
-            position: absolute;
-            left: 145px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            color: #777;
-            transform: translateY(2px);
-        }
-    
-        .keywords > input {
-            padding: 2px 25px 2px 5px;
-            background-color: #eee;
-            width: 150px;
-        }
-    
-        .keywords > span {
-            border: 1px dotted #777;
-            border-radius: 5px;
-            padding: 2px 6px;
-            display: flex;
-            gap: 10px;
-        }
-    
-        .keywords > span > i {
-            cursor: pointer;   
-            transition: color 0.3s ease;
-            color: #777;
-        }
-    
-        .keywords > span > i:hover, .keywords.rel > b:hover {
-            color: var(--base);
-        }
-    
+
         
         section {
             display: flex;
@@ -282,6 +255,10 @@
         .item:has(input[type=checkbox]):not(:last-of-type) {
             padding-bottom: 5px;
         }
+
+        .item > div:has(meter) {
+            height: 12px;
+        }
     
         h2 {
             background: var(--bars);
@@ -296,4 +273,15 @@
                 width: 100%;
             }
         }
+
+        /*   TARGET ONLY FIREFOX   */
+        @media all and (min--moz-device-pixel-ratio:0) and (min-resolution: 3e1dpcm) {
+            meter {
+                transform: translateY(3px);
+                height: 6px;
+                border-radius: 6px;
+                vertical-align: top;
+            }
+        }
+
     </style>
