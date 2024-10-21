@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?265fkf');
-  src:  url('fonts/icomoon.eot?265fkf#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?265fkf') format('truetype'),
-    url('fonts/icomoon.woff?265fkf') format('woff'),
-    url('fonts/icomoon.svg?265fkf#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?rdu4uo');
+  src:  url('fonts/icomoon.eot?rdu4uo#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?rdu4uo') format('truetype'),
+    url('fonts/icomoon.woff?rdu4uo') format('woff'),
+    url('fonts/icomoon.svg?rdu4uo#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -37,14 +37,32 @@
 .icon-check-square:before {
   content: "\e911";
 }
+.icon-chevron-down:before {
+  content: "\e923";
+}
+.icon-chevron-right:before {
+  content: "\e924";
+}
+.icon-chevrons-down:before {
+  content: "\e926";
+}
+.icon-circle:before {
+  content: "\e91f";
+}
 .icon-coffee:before {
   content: "\e902";
 }
 .icon-copy:before {
   content: "\e903";
 }
+.icon-corner-up-left:before {
+  content: "\e919";
+}
 .icon-download:before {
   content: "\e904";
+}
+.icon-feather:before {
+  content: "\e91b";
 }
 .icon-file-text:before {
   content: "\e905";
@@ -64,17 +82,32 @@
 .icon-info:before {
   content: "\e909";
 }
+.icon-layers:before {
+  content: "\e91a";
+}
 .icon-loader:before {
   content: "\e913";
 }
 .icon-menu:before {
   content: "\e90a";
 }
+.icon-message-square:before {
+  content: "\e91c";
+}
 .icon-moon:before {
   content: "\e914";
 }
 .icon-play:before {
   content: "\e915";
+}
+.icon-refresh-ccw:before {
+  content: "\e925";
+}
+.icon-repeat:before {
+  content: "\e91d";
+}
+.icon-rotate-ccw:before {
+  content: "\e91e";
 }
 .icon-save:before {
   content: "\e90b";
@@ -88,11 +121,20 @@
 .icon-square:before {
   content: "\e916";
 }
+.icon-star:before {
+  content: "\e922";
+}
 .icon-sun:before {
   content: "\e917";
 }
 .icon-tag:before {
   content: "\e90e";
+}
+.icon-thumbs-down:before {
+  content: "\e920";
+}
+.icon-thumbs-up:before {
+  content: "\e921";
 }
 .icon-trash-2:before {
   content: "\e90f";

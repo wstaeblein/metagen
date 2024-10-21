@@ -1,6 +1,20 @@
 {
     "pt": {
         "name": "Português",
+        "hero": {
+            "title": "Gerador de Metatags",
+            "subtitle": "Gere mais tráfego criando as meta tags corretamente com este app gratuito e completo",
+            "text1": "Os meta tags são uma ferramenta essencial no universo da Otimização para Mecanismos de Busca (SEO) e têm um impacto significativo na visibilidade online das páginas web. Embora muitas pessoas não estejam cientes da sua importância, os meta tags desempenham um papel crucial ao ajudar os mecanismos de busca a indexarem corretamente as páginas web.",
+            "text2": "Os meta tags são etiquetas adicionais em HTML (Hypertext Markup Language) que fornecem informações detalhadas sobre uma página, como título, descrição e palavras-chave. Essas tags são \"metadados\" ou dados que não visuais para o usuário final, mas que são fundamentais para os mecanismos de busca.",
+            "cards": [
+                { "title": "Metatags", "icon": "icon-tag", "text": "Lista completa dos Tags mais comuns e mais usados"},
+                { "title": "Bots", "icon": "icon-bot", "text": "Tags padrão para bots + Google e Bing bots"},
+                { "title": "Social", "icon": "icon-share-2", "text": "Tags Open Graph e Twitter Cards para fácil integração com redes sociais"},
+                { "title": "Imagens", "icon": "icon-image", "text": "Gerencie ícons e imagens para sites, web apps e PWAs"},
+                { "title": "Outros", "icon": "icon-layers", "text": "Mais uma pletora de outros tags menos usados mas úteis"},
+                { "title": "Manifesto", "icon": "icon-file-text", "text": "Crie um web manifest para seus apps e PWAs com facilidade e rapidez"}
+            ]
+        },
         "ui": {
             "result": "Resultado",
             "manifest": "Manifesto Web",
@@ -13,13 +27,14 @@
             "ok": "OK",
             "error": "Erro!",
             "all": "Todos",
+            "none": "Nenhum",
             "definefolder": "Defina primeiro a pasta e o nome do arquivo",
             "choosesizes": "Escolha os tamanhos",
             "nosize": "Sem Tamanho Definido",
             "autofill": "Auto Preencher",
             "menu": {
                 "home": "Início",
-                "meta": "Meta Tags",
+                "meta": "Tags da Página",
                 "bots": "Bots",
                 "social": "Social",
                 "icons": "Ícones & Imagens",
@@ -111,7 +126,20 @@
                 "posit": "Coordenadas",
                 "icbm": "Endereço ICBM",
                 "fmtd1": "Sem habilitar links em telefones - iOS",
-                "fmtd2": "Sem habilitar links em emails - iOS"
+                "fmtd2": "Sem habilitar links em emails - iOS",
+
+                "name": "Nome do app", 
+                "short_name": "Nome curto do app", 
+                "id": "Identificador Único", 
+                "description": "Descrição", 
+                "start_url": "URL inicial", 
+                "scope": "Escopo", 
+                "display": "Tipo de exibição", 
+                "display_override": "Alternativas de exibição", 
+                "orientation": "Orientação",
+                "theme_color": "Cor do tema",
+                "background_color": "Cor de fundo",
+                "icons": "Ícones"
             },
             "pl": {
                 "LatLon": "Lat;Lon",

@@ -5,6 +5,8 @@
     --bars: #00133377;
     --solidbars: #2c3b54;
     --text: #414850;
+    --manifborder: #666;
+    --mono: "Roboto Mono", monospace;
 }
 
 html {
@@ -44,7 +46,8 @@ body {
 }
 
 .mono {
-    font-family: "M PLUS Code Latin", monospace;
+    font-family: var(--mono);
+    font-weight: 400;
 }
 
 h1 {
@@ -139,7 +142,7 @@ h2 {
     align-items: center;
 }
 
-input[type=text], input[type=number], input[type=datetime-local], input[type=color], textarea, select {
+input[type=text], input[type=number], input[type=datetime-local], input[type=color], textarea, select, .box {
     padding: 8px 15px;
     font-size: 16px;
     border-radius: 7px;
@@ -233,4 +236,57 @@ input[type=text]:focus, textarea:focus {
 p {
     color: var(--text);
     margin: 0 0 20px;
+}
+
+
+
+
+.delim {
+    color: maroon
+}
+
+.prop {
+    color: #005cc5;;
+}
+
+.val {
+    color: #032f62;
+    flex-grow: 1;
+    display: flex;
+}
+
+.ind1 {
+    margin-left: 30px;
+}
+
+.ind2 {
+    margin-left: 60px;
+}
+
+.ok {
+    color: forestgreen;
+}
+
+.req {
+    color: rgb(221, 56, 27);
+}
+
+span:has(.req) {
+    pointer-events: none;
+}
+
+.disabled > *:not(:first-child), .disabled > div:first-child > .prop {
+/*     pointer-events: none; */
+    opacity: 0.6;
+    filter: grayscale(1);
+}
+
+input.manif {
+    background-color: transparent;
+    padding: 2px 0;
+    height: auto;
+    width: auto;
+    color: inherit;
+    border: 1px dotted #8f959b;
+    border-radius: 3px;
 }

@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
     import { onMount } from 'svelte';
     // @ts-ignore
     import { langCode, lang, supportedLangs } from './stores.js';
@@ -6,6 +8,8 @@
 	import Bots from './ui/bots.svelte';
 	import Social from './ui/social.svelte';
 	import Images from './ui/images.svelte';
+	import Manifest from './ui/manifest2.svelte';
+	import Ctxmenu from './ui/ctxmenu.svelte';
 
     import hljs from 'highlight.js/lib/core';
     import 'highlight.js/styles/github.css';
@@ -20,6 +24,12 @@
     let respCode = '';
     let respCodeText = '';
     let cbCopyStatus = 0;
+    let currLang = 'pt';
+    let availableLangs = [
+        { label: 'Português', value: 'pt', img: 'img/flags/pt.png' },
+        { label: 'English', value: 'en', img: 'img/flags/en.png' },
+        { label: 'Español', value: 'es', img: 'img/flags/es.png' }
+    ]
 
     let websoft = ['Dreamweaver', 'EditPlus', 'Frontpage', 'Ghost', 'Joomla', 'WordPress'];
     let charsets = ['utf-8','big5','euc-kr','iso-8859-1','iso-8859-2','iso-8859-3','iso-8859-4','iso-8859-5','iso-8859-6','iso-8859-7','iso-8859-8','koi8-r','shift-jis','x-euc','windows-1250','windows-1251','windows-1252','windows-1253','windows-1254','windows-1255','windows-1256','windows-1257','windows-1258','windows-874']
@@ -142,6 +152,21 @@
             
             { id: 'gglver', tag: 'meta',  name: 'google-site-verification', attr: 'content', value: '', type: 'text' },
 
+        ],
+        manifest: [
+            { id: 'name', value: '', type: 'text', req: true },
+            { id: 'short_name', value: '', type: 'text', req: true, half: true },
+            { id: 'id', value: '', type: 'text', req: true, half: true },
+            { id: 'description', value: '', type: 'longtext' },
+            { id: 'start_url', value: '', type: 'text', req: true },
+            { id: 'scope', value: '', type: 'text' },
+            { id: 'display', value: '', type: 'list', req: true, list: ['browser', 'fullscreen', 'minimal-ui', 'standalone'], auto: true },
+            { id: 'display_override', value: [], type: 'multichoice', list: ['browser', 'fullscreen', 'minimal-ui', 'standalone', 'tabbed', 'window-controls-overlay'], fill: true },
+            { id: 'orientation', value: '', type: 'list', list: ['any', 'natural', 'portrait', 'portrait-primary', 'portrait-secondary', 'landscape', 'landscape-primary', 'landscape-secondary'], auto: true },
+            { id: 'theme_color', value: '', type: 'color', auto: true },
+            { id: 'background_color', value: '', type: 'color', auto: true },
+            { id: 'icons', value: [], type: 'icons' },
+
         ]
 
     }
@@ -152,7 +177,9 @@
      $: debounceProcess(cats);
 
     onMount(() => {
-
+        let ll = ''
+        cats.manifest.forEach(m => { ll += '"' + m.id + '": "", \n' });
+        console.log(ll)
     })
 
 // https://rockcontent.com/ferramentas/gerador-de-metatags/
@@ -455,19 +482,32 @@
     function toggleMenu() {
         menuOpen = !menuOpen;
     }
+
+    function changeLang(evt) {
+        alert(evt.detail.label)
+    }
 </script>
 
 
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <main on:click={() => menuOpen = false}>
     <header>
         <nav>
             <div>
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <span class="hamburguer" on:click|stopPropagation={toggleMenu}><i class="icon-menu"></i></span>
-                <img src="/img/logo.png" alt="logo" />
+                <img src="/img/logo.png" alt="logo" class="lrglogo" />
+                <img src="/img/icon-128.png" alt="logo" class="smllogo" />
             </div>
             
             <div>
+                <span><i class="icon-coffee"></i></span>
+                <span><i class="icon-info"></i></span>
                 <span><i class="icon-trash-2"></i></span>
+                <Ctxmenu items={availableLangs} bind:sel={currLang} align="right bottom" on:menuchoice={changeLang}></Ctxmenu>
+                
             </div>
         </nav>
     </header>
@@ -489,7 +529,7 @@
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <li class:sel={menuOpt == 4} on:click={() => menuOpt = 4}><i class="icon-image"></i><span>{$lang.ui.menu.icons}</span></li>
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 5} on:click={() => menuOpt = 5}><i class="icon-tag"></i><span>{$lang.ui.menu.other}</span></li>                        
+                <li class:sel={menuOpt == 5} on:click={() => menuOpt = 5}><i class="icon-layers"></i><span>{$lang.ui.menu.other}</span></li>                        
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <li class:sel={menuOpt == 6} on:click={() => menuOpt = 6}><i class="icon-file-text"></i><span>{$lang.ui.menu.manifest}</span></li>
 
@@ -497,19 +537,32 @@
             </ul>
         </nav>
         <section >
-            <div class="bkg2">
+            <div class="bkg2 scroll">
                 {#if menuOpt == 0}
                 <div class="home">
-                    <h3>Gerador de Metatags</h3>
-                    <h5>Gere mais tráfego criando as meta tags corretamente com este app gratuito e completo</h5>
+                    <h3>{$lang.hero.title}</h3>
+                    <h5>{$lang.hero.subtitle}</h5>
                     <br>
 
-                    <div  style="columns: 600px auto; column-gap: 30px; text-align: justify; column-fill: balance;">
-                        <p>Os meta tags são uma ferramenta essencial no universo da Otimização para Mecanismos de Busca (SEO) e têm um impacto significativo na visibilidade online das páginas web. Embora muitas pessoas não estejam cientes da sua importância, os meta tags desempenham um papel crucial ao ajudar os mecanismos de busca a indexarem corretamente as páginas web.</p>
+                    <div class="hero">
+                        <img src="/img/rocket.png" alt="SEO" />
+                        <div >
+                            <p>{$lang.hero.text1}</p>
 
-                        <p>Os meta tags são etiquetas adicionais em HTML (Hypertext Markup Language) que fornecem informações detalhadas sobre uma página, como título, descrição e palavras-chave. Essas tags são "metadados" ou dados que não visuais para o usuário final, mas que são fundamentais para os mecanismos de busca.</p>
+                            <p>{$lang.hero.text2}</p>
+                            <ol class="cards">
+                                {#each $lang.hero.cards as card}
+                                    <li>
+                                        <h6>{card.title}</h6>
+                                        <div><i class="{card.icon}"></i></div>
+                                        <div>{card.text}</div>
+                                    </li>
+                                {/each}                                                          
+                            </ol>
+                        </div>
 
                     </div>
+  
                 </div>
                     
                 
@@ -528,7 +581,8 @@
                 {:else if menuOpt == 5}
                     <Metas bind:data={cats.other}></Metas>
 
-
+                {:else if menuOpt == 6}
+                    <Manifest bind:data={cats.manifest}></Manifest>
                 {/if}
 
             </div>
@@ -574,6 +628,79 @@
 
 
 <style>
+    .lrglogo {
+        display: block;
+    }
+
+    .smllogo {
+        display: none;
+    }
+
+    .scroll {
+        overflow-y: auto !important;
+        overflow-x: hidden;
+    }
+
+    ol.cards {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 2em;
+        color: var(--text);
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+
+    ol.cards > li {
+        width: 28%;
+        background-color: #f9f9f9;
+        border-radius: 9px;
+        padding: 10px 5px;
+        box-shadow: 3px 3px 10px 2px #777;
+    }
+
+    ol.cards > li > h6 {
+        font-size: 20px;
+        margin: 0;
+        text-transform: uppercase;
+        color: var(--base);
+    }
+
+    ol.cards > li > div:has(i) {
+        margin: 10px 0 5px;
+    }
+
+    ol.cards > li > div:last-child {
+        font-size: smaller;
+    }
+
+    ol.cards > li > div > i {
+        font-size: 52px;
+        color: var(--hilite);
+        text-shadow: 2px 2px 0 #444;
+    }
+
+    .hero {
+        display: flex; 
+        gap: 3em;
+    }
+
+    .hero > img {
+        min-height: 260px;
+        max-height: 400px;
+        align-self: self-start;
+        height: auto;
+    }
+
+    .hero > div {
+        text-align: justify; 
+        max-width: 640px;
+    }
+
+
+
     .hamburguer {
         display: none;
     }
@@ -702,6 +829,7 @@
         font-size: 36px;
         color: var(--base);
         font-weight: bold;
+        position: relative;
     }
 
     header > nav > div:last-child {
@@ -714,7 +842,7 @@
 
 
     .code {
-        font-family: monospace;
+        font-family: var(--mono);
     }
 
     .code pre {
@@ -756,6 +884,11 @@
         display: block;
     }
 
+    .hero > img {
+        min-height: 180px;
+        max-height: 300px;
+    }
+
 }
 
 @media (max-width: 800px) {
@@ -775,6 +908,32 @@
 
     .code {
         font-size: smaller;
+    }
+
+    .hero {
+        display: block; 
+        text-align: center;
+    }
+
+    .hero > img {
+        margin-bottom: 20px;
+    }
+
+    .hero > img {
+        max-width: 60%;
+        height: auto;
+        min-height: auto;
+        max-height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .lrglogo {
+        display: none;
+    }
+
+    .smllogo {
+        display: block;
     }
 }
 </style>
