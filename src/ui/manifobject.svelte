@@ -76,7 +76,7 @@
             <span on:click={() => obj.sel = !obj.sel}>
                 <i class="{setIcon(obj, 'ok')}"></i>
             </span>
-            <div class="prop">"{obj.label}": <span class="delim">&lbrace;</span></div>
+            <div class="prop">"{obj.label}": <span class="delim">&lbrace;</span>{#if !obj.sel}<span class="delim">&rbrace;</span>{/if}</div>
         </div>
 
         {#if obj.sel}
@@ -101,15 +101,6 @@
                                     
                                 {/if}
                             {/each}
-                         
-
-                            <div>
-<!--                                 {#if index == obj.val.length - 1}
-                                    <span class="delim">&rbrace;</span>
-                                {:else}
-                                    <span class="delim">&rbrace;, &lbrace;&nbsp;<span on:click={delItem.bind(this, index)}><i class="icon-trash-2"></i></span></span>
-                                {/if} -->
-                            </div>                            
           
                     {/if}
                 </ol>
