@@ -42,15 +42,20 @@
         gap: 10px;
         margin-bottom: 6px;
     }
+    
+    li > span:first-child {
+        cursor: pointer;
+    }
 
     select {
         background-color: transparent;
-        padding: 5px 0;
+        padding: 3px 0;
         height: auto;
         font-weight: bold;
         color: inherit;
         border: 1px dotted var(--manifborder);
         width: auto;
+        font-family: inherit;
     }
 
     select:focus {

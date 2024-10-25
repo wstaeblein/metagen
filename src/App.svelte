@@ -8,7 +8,7 @@
 	import Bots from './ui/bots.svelte';
 	import Social from './ui/social.svelte';
 	import Images from './ui/images.svelte';
-	import Manifest from './ui/manifest2.svelte';
+	import Manifest from './ui/manifest.svelte';
 	import Ctxmenu from './ui/ctxmenu.svelte';
 
     import hljs from 'highlight.js/lib/core';

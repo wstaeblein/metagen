@@ -10,8 +10,8 @@
     let inpContainer = null;
     let dupe = null;
 
-    $: isDisabled = !obj.req && !obj.sel && !obj.val;
-    $: readjust(obj.val)
+/*     $: isDisabled = !obj.req && !obj.sel && !obj.val; */
+/*     $: readjust(obj.val) */
 
     onMount(() => {
         readjust();
@@ -47,11 +47,16 @@
     function setAll() {
         dispatch('set', { type: 'alldown', size: data, data: obj });
     }
+
+    function toggle() {
+        obj.sel = !obj.sel;
+        obj = obj;
+    }
 </script>
 
 {#if obj}
-    <li class="ind1" class:disabled={isDisabled}>
-        <span on:click={() => obj.sel = !obj.sel}>
+    <li class="ind1" class:disabled={!obj.req && !obj.sel}>
+        <span on:click={toggle}>
             <i class="{setIcon(obj, 'ok')}"></i>
         </span>
         <span class="prop">"{obj.label}":</span>

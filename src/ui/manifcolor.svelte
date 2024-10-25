@@ -44,8 +44,8 @@
         <span class="prop">"{obj.label}":</span>
         
         <span class="val">
-            <span>"</span>
             <input type="color" bind:value={obj.val} on:input={readjust} class:hasval={obj.val} class="mono" />
+            <span>"</span>
             <span>{obj.val || ''}</span>
             <span>"</span>
 

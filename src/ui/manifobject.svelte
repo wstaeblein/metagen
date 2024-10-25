@@ -1,7 +1,9 @@
 <script>
     import Maniftext from './maniftext.svelte';
     import Maniflist from './maniflist.svelte';
+    import Manifobject from './manifobject.svelte';
     import Manifmulti from './manifmulti.svelte';
+    import Manifobjarray from './manifobjarray.svelte';
     import { lang, supportedLangs } from '../stores.js';
 
     export let obj = [];
@@ -19,14 +21,11 @@
                     newVal = newFn(oa.val, obj.actions);
                     
             }
-        })
-
-
-/*         let newItem = item || obj.default; console.log(newItem)
-        obj.val.push(newItem);
-        obj = obj;
-        console.log(obj) */
+        });
     }
+
+    
+    $: console.log('OBJECT: ', obj)
 
     function setIcon(obj, extra) {
         let cls = '';
@@ -77,49 +76,46 @@
             <span on:click={() => obj.sel = !obj.sel}>
                 <i class="{setIcon(obj, 'ok')}"></i>
             </span>
-            <div class="prop">"{obj.label}": <span class="delim">&lbrack;</span>{#if !obj.sel}<span class="delim">&rbrack;</span>{:else}&nbsp;<button on:click={addItem} class="small">{$lang.ui.add}</button>{/if}</div>
+            <div class="prop">"{obj.label}": <span class="delim">&lbrace;</span></div>
         </div>
 
         {#if obj.sel}
             <div class="val ind1">
-                <ol class="ind1">
-                    {#if obj.val && obj.val.length}
-                        {#each obj.val as arr, index}
-                            <li>
-                                {#if index == 0}
-                                    <div>
-                                        <span class="delim">&lbrace;</span>
-                                        <span class="delim" on:click={delItem.bind(this, index)}><i class="icon-trash-2"></i></span>
-                                    </div>
+                <ol>
+                    {#if obj.default && obj.default.length}
+                        {#each obj.default as item, index}
+                                {#if item.type == 'text'}
+                                    <Maniftext bind:obj={item}></Maniftext>
+
+                                {:else if item.type == 'list'}
+                                    <Maniflist bind:obj={item}></Maniflist>
+
+                                {:else if item.type == 'multi'}
+                                    <Manifmulti bind:obj={item}></Manifmulti>
+
+                                {:else if item.type == 'object'}
+                                    <Manifobject bind:obj={item}></Manifobject>        
+
+                                {:else if item.type == 'objarray'}
+                                    <Manifobjarray bind:obj={item}></Manifobjarray>                                         
+                                    
                                 {/if}
-                                
-                                <ul>
-                                    {#each arr as fld}
-                                        {#if fld.type == 'text'}
-                                            <Maniftext bind:obj={fld}></Maniftext>
+                            {/each}
+                         
 
-                                        {:else if fld.type == 'list'}
-                                            <Maniflist bind:obj={fld}></Maniflist>
-
-                                        {:else if fld.type == 'multi'}
-                                            <Manifmulti bind:obj={fld}></Manifmulti>
-                                        {/if}
-                                    {/each}
-                                </ul>
-                                <div>
-                                    {#if index == obj.val.length - 1}
-                                        <span class="delim">&rbrace;</span>
-                                    {:else}
-                                        <span class="delim">&rbrace;, &lbrace;&nbsp;<span on:click={delItem.bind(this, index)}><i class="icon-trash-2"></i></span></span>
-                                    {/if}
-                                </div>
-                            </li>
-                        {/each}
-                    {/if} 
+                            <div>
+<!--                                 {#if index == obj.val.length - 1}
+                                    <span class="delim">&rbrace;</span>
+                                {:else}
+                                    <span class="delim">&rbrace;, &lbrace;&nbsp;<span on:click={delItem.bind(this, index)}><i class="icon-trash-2"></i></span></span>
+                                {/if} -->
+                            </div>                            
+          
+                    {/if}
                 </ol>
             </div>
         
-            <div class="delim">&rbrack;</div>
+            <div class="delim">&rbrace;</div>
         {/if}
     </li>
 {/if}

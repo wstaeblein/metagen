@@ -74,7 +74,7 @@
         right: 0;
         left: 0;
         font-size: 16px;
-        padding: 5px 0;
+        padding: 3px 0;
         border-radius: 7px;
         color: #fff;
         display: none;
