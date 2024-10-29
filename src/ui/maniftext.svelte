@@ -1,5 +1,13 @@
+<script context="module">
+
+    // Permite que caixas de texto se expandam ao receber conteúdo de um dos botões de replicar conteúdo (setNext ou setAll)
+    export let readjustFlag = false;
+
+</script>
+
 <script>
     import { onMount, setContext, createEventDispatcher, tick } from 'svelte';
+    import { help } from '../stores.js';
 
     export let obj = null;
     export let data = null;
@@ -9,13 +17,15 @@
     let input = null;
     let inpContainer = null;
     let dupe = null;
+    let flag = false;
 
-/*     $: isDisabled = !obj.req && !obj.sel && !obj.val; */
-/*     $: readjust(obj.val) */
+
+    $: if (readjustFlag) { readjust(obj.val); }
 
     onMount(() => {
         readjust();
     });
+
 
     function setIcon(obj, extra) {
         let cls = '';
@@ -26,7 +36,7 @@
         }
         if (extra) { cls += ' ' + extra; }
         return cls.trim();
-    }
+    }    
 
     function readjust() { 
         if (input) {
@@ -38,19 +48,24 @@
             input.style.width = obj.val ? width + 'px' : '70px';
             obj.sel = !!obj.val;
         }
+        dispatch('update');
     }
 
     function setNext() {
+        readjustFlag = true;
         dispatch('set', { type: 'next', size: data, data: obj });
+        tick(() => readjustFlag = false);
     }
 
     function setAll() {
+        readjustFlag = true;
         dispatch('set', { type: 'alldown', size: data, data: obj });
+        tick(() => readjustFlag = false);
     }
 
-    function toggle() {
+    function toggle() { 
         obj.sel = !obj.sel;
-        obj = obj;
+        dispatch('update');
     }
 </script>
 
@@ -59,7 +74,9 @@
         <span on:click={toggle}>
             <i class="{setIcon(obj, 'ok')}"></i>
         </span>
-        <span class="prop">"{obj.label}":</span>
+
+        {#if $help}<a href="https://developer.mozilla.org/en-US/docs/Web/Manifest/{obj.label}" target="_blank"><i class="icon-help-circle"></i></a>{/if}
+        <span class="prop" on:click={toggle}>"{obj.label}":</span>
         <span class="dupe" bind:this={dupe}></span>
         <span class="val" bind:this={inpContainer}>
             <span>"</span>

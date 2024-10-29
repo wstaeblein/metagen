@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "highlight.js": "^11.10.0",
-    "puppeteer": "^23.4.1"
+    "puppeteer": "^23.4.1",
+    "svelte-routing": "^2.13.0"
   }
 }

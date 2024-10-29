@@ -1,5 +1,5 @@
 <script>
-    import { lang, supportedLangs } from '../stores.js';
+    import { lang, supportedLangs, help } from '../stores.js';
 
     import Maniftext from './maniftext.svelte';
     import Maniflist from './maniflist.svelte';
@@ -7,13 +7,15 @@
     import Manificons from './manificons.svelte';
     import Manifmulti from './manifmulti.svelte';
     import Manifobjarray from './manifobjarray.svelte';
-    import Manifshortcuts from './manifshortcuts.svelte';
     import Manifbool from './manifbool.svelte';
     import Manifobject from './manifobject.svelte';
 
-
+    export let data = [];
+    let exp = true;
     let catsList = ['books', 'business', 'education', 'entertainment', 'finance', 'fitness', 'food', 'games', 'government', 'health', 'kids', 'lifestyle', 'magazines', 'medical', 'music', 'navigation', 'news', 'personalization', 'photo', 'politics', 'productivity', 'security', 'shopping', 'social', 'sports', 'travel', 'utilities', 'weather'];
 
+    $: data = manif;
+    
     let screenShot = [
         { label: 'src', val: '', type: 'text', req: true },
         { label: 'sizes', val: '', type: 'text', list: ['1024x768', '1280 x 720', '1366 x 768', '1440 x 900', '1536 x 864', '1600 x 900', '1920 x 1080'] },
@@ -46,23 +48,37 @@
         }
     }
 
+    let shortcuts = [
+        { label: 'name', val: '', type: 'text', sel: true, req: true },
+        { label: 'url', val: '', type: 'text', sel: true, req: true },
+        { label: 'short_name', val: '', type: 'text', sel: false },
+        { label: 'description', val: '', type: 'text', sel: false },
+        { label: 'icons', val: [], type: 'icons', sel: false },
+    ];
+
     let share_targets_params_files = [
         { label: 'name', val: '', type: 'text' },
         { label: 'accept', val: [], type: 'multi' },
-    ]
+    ];
 
     let share_targets_params = [
         { label: 'title', val: '', type: 'text' },
         { label: 'text', val: '', type: 'text' },
         { label: 'url', val: '', type: 'text' },
         { label: 'files', val: [], type: 'objarray', default: share_targets_params_files },
-    ]
+    ];
 
     let share_targets = [
         { label: 'action', val: '', type: 'text', req: true },
         { label: 'enctype', val: '', type: 'text' },
         { label: 'method', val: '', type: 'list', list: ['GET', 'POST'] },
         { label: 'params', val: {}, type: 'object', default: share_targets_params }
+    ];
+
+    let ServWorker = [
+        { label: 'scope', val: '', type: 'text', req: true },
+        { label: 'src', val: '', type: 'text', req: true },
+        { label: 'use_cache', val: null, type: 'bool' },
     ]
 
     let manif = [
@@ -73,7 +89,7 @@
         { label: 'categories', val: [], type: 'multi', list: catsList },        
         { label: 'orientation', val: '', type: 'list', list: ['any', 'natural', 'portrait', 'portrait-primary', 'portrait-secondary', 'landscape', 'landscape-primary', 'landscape-secondary'] },
         { label: 'icons', val: [], type: 'icons' },
-        { label: 'shortcuts', val: [], type: 'shortcuts' },
+        { label: 'shortcuts', val: [], type: 'objarray', default: shortcuts },
         { label: 'start_url', val: '', type: 'text' },
         { label: 'display', val: '', type: 'list', list: ['fullscreen', 'standalone', 'minimal-ui', 'browser'] },
         { label: 'display_override', val: [], type: 'multi', list: ['fullscreen', 'standalone', 'minimal-ui', 'browser'], experimental: true },
@@ -81,7 +97,7 @@
         { label: 'background_color', val: '', type: 'color' },
         { label: 'start_url', val: '', type: 'text' },
         { label: 'scope', val: '', type: 'text' },
-        { label: 'serviceworker', val: {}, type: 'object', experimental: true },
+        { label: 'serviceworker', val: {}, type: 'object', default: ServWorker, experimental: true },
         { label: 'screenshots', val: [], type: 'objarray', default: screenShot, experimental: true },
         { label: 'prefer_related_applications', val: null, type: 'bool', experimental: true },
         { label: 'related_applications', val: [], type: 'objarray', default: relApps, experimental: true },
@@ -90,44 +106,45 @@
         { label: 'share_target', val: {}, type: 'object', default: share_targets, experimental: true },
     ];
 
+
 </script>
 
 <section>
-    <h2>{$lang.ui.manifest}</h2>
+    <h2>
+        <span>{$lang.ui.manifest}</span>
+    </h2>
     <ul>
         <li class="delim">&lbrace;</li>
         <li class="cmds">
-            <span class="icon-check-circle"></span>
-            <span class="icon-circle"></span>
-            <span class="icon-refresh-ccw"></span>
+            <span on:click={() => exp = !exp} class:sel={exp}><i class="icon-experimental"></i></span>
+            <span on:click={() => $help = !$help} class:sel={$help}><i class="icon-help-circle"></i></span>
         </li>
         {#each manif as man}
-            {#if man.type == 'text'}
-                <Maniftext bind:obj={man}></Maniftext>
+            {#if exp || !man.experimental} 
+                {#if man.type == 'text'}
+                    <Maniftext bind:obj={man}></Maniftext>
 
-            {:else if man.type == 'list'}
-                <Maniflist bind:obj={man}></Maniflist>
+                {:else if man.type == 'list'}
+                    <Maniflist bind:obj={man}></Maniflist>
 
-            {:else if man.type == 'color'}
-                <Manifcolor bind:obj={man}></Manifcolor>
+                {:else if man.type == 'color'}
+                    <Manifcolor bind:obj={man}></Manifcolor>
 
-            {:else if man.type == 'icons'}
-                <Manificons bind:obj={man}></Manificons>
+                {:else if man.type == 'icons'}
+                    <Manificons bind:obj={man}></Manificons>
 
-            {:else if man.type == 'multi'}
-                <Manifmulti bind:obj={man}></Manifmulti>
+                {:else if man.type == 'multi'}
+                    <Manifmulti bind:obj={man}></Manifmulti>
 
-            {:else if man.type == 'shortcuts'}
-                <Manifshortcuts bind:obj={man}></Manifshortcuts>
+                {:else if man.type == 'bool'}
+                    <Manifbool bind:obj={man}></Manifbool>                
 
-            {:else if man.type == 'bool'}
-                <Manifbool bind:obj={man}></Manifbool>                
+                {:else if man.type == 'object'}
+                    <Manifobject bind:obj={man}></Manifobject>        
 
-            {:else if man.type == 'object'}
-                <Manifobject bind:obj={man}></Manifobject>        
-
-            {:else if man.type == 'objarray'}
-                <Manifobjarray bind:obj={man}></Manifobjarray>                
+                {:else if man.type == 'objarray'}
+                    <Manifobjarray bind:obj={man}></Manifobjarray>                
+                {/if}
             {/if}
         {/each}
 
@@ -162,14 +179,38 @@
         color: var(--base);
     }
 
+    ul > li.cmds > span {
+        cursor: pointer;
+        filter: grayscale(1);
+        opacity: 0.6;
+        transition: all 0.3s ease;
 
+        padding: 4px 8px 3px;
+
+        border-radius: 50%;
+    
+    }
+
+    ul > li.cmds > span:hover {
+        background-color: var(--hilite);
+        opacity: 1;
+        filter: none;
+    }
+
+    ul > li.cmds > span.sel {
+        opacity: 1;
+        filter: none;
+        background: var(--base);
+        color: #fff;
+    }
 
     .delim {
         color: maroon
     }
 
     .prop {
-        color: #005cc5;;
+        color: #005cc5;
+
     }
 
     .val {

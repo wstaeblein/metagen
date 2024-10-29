@@ -7,6 +7,10 @@
     --text: #414850;
     --manifborder: #666;
     --mono: "Roboto Mono", monospace;
+
+
+    --balloon-color: #00FFCC;
+    --balloon-text-color: #16163F;
 }
 
 html {
@@ -75,6 +79,10 @@ ul {
     margin: 0;
 }
 
+.noclr {
+    color: inherit !important;
+}
+
 button {
     border-radius: 8px;
     padding: 5px 12px;
@@ -121,6 +129,7 @@ button.small {
 
 #app {
     height: 100%;
+    position: relative;
 }
 
 
@@ -187,6 +196,7 @@ input[type="checkbox"] {
     place-content: center;
     width: 21px;
     min-width: 21px;
+    cursor: pointer;
 }
 
 input[type="checkbox"]::before {
@@ -246,7 +256,9 @@ p {
 }
 
 .prop {
-    color: #005cc5;;
+    color: #005cc5;
+    cursor: pointer;
+    user-select: none;
 }
 
 .val {
@@ -275,7 +287,7 @@ span:has(.req) {
     pointer-events: none;
 }
 
-.disabled > *:not(:first-child), .disabled > div:first-child > .prop {
+.disabled > *:not(:first-child), .disabled > div:first-child > .prop, .disabled > div:first-child > a {
 /*     pointer-events: none; */
     opacity: 0.6;
     filter: grayscale(1);

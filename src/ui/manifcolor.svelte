@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte';
+    import { help } from '../stores.js';
 
     export let obj = null;
 
@@ -31,17 +32,23 @@
         obj.val = '';
         obj.sel = false;
     }
+
+    function toggle() {
+        obj.sel = !obj.sel;
+    }
 </script>
 
 {#if obj}
     <li class="ind1" class:disabled={isDisabled}>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <span on:click={() => obj.sel = !obj.sel}>
+        <span on:click={toggle}>
             <i class="{setIcon(obj, 'ok')}"></i>
         </span>
+        
+        {#if $help}<a href="https://developer.mozilla.org/en-US/docs/Web/Manifest/{obj.label}" target="_blank"><i class="icon-help-circle"></i></a>{/if}
 
-        <span class="prop">"{obj.label}":</span>
+        <span class="prop" on:click={toggle}>"{obj.label}":</span>
         
         <span class="val">
             <input type="color" bind:value={obj.val} on:input={readjust} class:hasval={obj.val} class="mono" />

@@ -2,6 +2,8 @@
 // @ts-nocheck
 
     import { onMount } from 'svelte';
+    import { fade } from "svelte/transition";
+
     // @ts-ignore
     import { langCode, lang, supportedLangs } from './stores.js';
 	import Metas from './ui/metas.svelte';
@@ -9,7 +11,10 @@
 	import Social from './ui/social.svelte';
 	import Images from './ui/images.svelte';
 	import Manifest from './ui/manifest.svelte';
+	import Home from './ui/home.svelte';
 	import Ctxmenu from './ui/ctxmenu.svelte';
+    import { Router, Link, Route, navigate } from 'svelte-routing';
+
 
     import hljs from 'highlight.js/lib/core';
     import 'highlight.js/styles/github.css';
@@ -18,17 +23,24 @@
 
     hljs.registerLanguage('xml', xml);
 
+    export let url = "";
+
     // https://developers.google.com/search/docs/crawling-indexing/special-tags?hl=pt-br
     let menuOpt = 0;
     let menuOpen = false;
     let respCode = '';
     let respCodeText = '';
+    let respManifestText = '';
     let cbCopyStatus = 0;
+    let cbCopyStatus2 = 0;
+    let infoDlg = null;
     let currLang = 'pt';
     let availableLangs = [
         { label: 'Português', value: 'pt', img: 'img/flags/pt.png' },
         { label: 'English', value: 'en', img: 'img/flags/en.png' },
-        { label: 'Español', value: 'es', img: 'img/flags/es.png' }
+        { label: 'Español', value: 'es', img: 'img/flags/es.png' },
+        { label: 'Français', value: 'fr', img: 'img/flags/fr.png' },
+        { label: 'Deutsch', value: 'de', img: 'img/flags/de.png' }
     ]
 
     let websoft = ['Dreamweaver', 'EditPlus', 'Frontpage', 'Ghost', 'Joomla', 'WordPress'];
@@ -67,6 +79,7 @@
             { id: 'view',   tagspec: '<meta name="viewport" content="width=device-width, initial-scale=1" />', value: true, type: 'bool', half: true },
             { id: 'nocac',  tag: 'meta',  httpequiv: 'Pragma', attr: 'content', value: false, type: 'bool', def: 'no-cache', half: true },
             { id: 'hhfri',  tag: 'meta',  name: 'HandheldFriendly', attr: 'content', value: false, type: 'bool', def: 'true', half: true },
+            { id: 'manif',  tag: 'link',  rel: 'manifest', attr: 'href', value: false, type: 'bool', half: true, def: 'manifest.json' },
             { id: 'spc1',   type: 'spacer' },
             { id: 'title',  tag: 'title', value: '', type: 'text', max: [60, 70] },
             { id: 'desc',   tag: 'meta',  name: 'description', attr: 'content', value: '', type: 'longtext', max: [150, 160] },
@@ -79,7 +92,7 @@
             { id: 'canon',  tag: 'link',  rel: 'canonical', attr: 'href', value: '', type: 'text' },
             { id: 'lang',   tag: 'meta',  httpequiv: 'content-language', attr: 'content', value: '', type: 'dbllist', list: 'langlist', auto: true },
             { id: 'chars',  tag: 'meta',  httpequiv: 'Content-Type', attr: 'content', value: 'utf-8', type: 'list', list: charsets, template: 'text/html; charset=$$$', auto: true },
-            { id: 'rate',    tag: 'meta',  name: 'rating', attr: 'content', value: '', type: 'objlist', list: 'ratelist', auto: true },
+            { id: 'rate',   tag: 'meta',  name: 'rating', attr: 'content', value: '', type: 'objlist', list: 'ratelist', auto: true },
             { id: 'refr',   tag: 'meta',  httpequiv: 'refresh', attr: 'content', value: '', type: 'txtnum', pl: ['secs', 'url'] }
             
         ],
@@ -153,34 +166,28 @@
             { id: 'gglver', tag: 'meta',  name: 'google-site-verification', attr: 'content', value: '', type: 'text' },
 
         ],
-        manifest: [
-            { id: 'name', value: '', type: 'text', req: true },
-            { id: 'short_name', value: '', type: 'text', req: true, half: true },
-            { id: 'id', value: '', type: 'text', req: true, half: true },
-            { id: 'description', value: '', type: 'longtext' },
-            { id: 'start_url', value: '', type: 'text', req: true },
-            { id: 'scope', value: '', type: 'text' },
-            { id: 'display', value: '', type: 'list', req: true, list: ['browser', 'fullscreen', 'minimal-ui', 'standalone'], auto: true },
-            { id: 'display_override', value: [], type: 'multichoice', list: ['browser', 'fullscreen', 'minimal-ui', 'standalone', 'tabbed', 'window-controls-overlay'], fill: true },
-            { id: 'orientation', value: '', type: 'list', list: ['any', 'natural', 'portrait', 'portrait-primary', 'portrait-secondary', 'landscape', 'landscape-primary', 'landscape-secondary'], auto: true },
-            { id: 'theme_color', value: '', type: 'color', auto: true },
-            { id: 'background_color', value: '', type: 'color', auto: true },
-            { id: 'icons', value: [], type: 'icons' },
-
-        ]
+        manifest: []
 
     }
     let debounceProcess = debounce(process, 300);
 
+    // Observa a mudança de URL
+    let currRoute = '';
+    const observer = new MutationObserver(function(mutations) {
+        if (location.href !== currRoute) { currRoute = location.pathname; }
+    });
+    observer.observe(document, {subtree: true, childList: true});
 
    // @ts-ignore
      $: debounceProcess(cats);
+ 
+
 
     onMount(() => {
         let ll = ''
         cats.manifest.forEach(m => { ll += '"' + m.id + '": "", \n' });
-        console.log(ll)
-    })
+    });
+
 
 // https://rockcontent.com/ferramentas/gerador-de-metatags/
 // https://webcode.tools/open-graph-generator/book
@@ -265,8 +272,6 @@
                                 
         if (lang.val) { lang = lang.val; } 
 
-        console.log(dataObj.bots)
-
         // METATAGS
         dataObj.metas.forEach((meta) => {
             let value = structuredClone(meta.value);
@@ -280,8 +285,8 @@
                             if (meta.tagspec) {
                                 metatags += indent + meta.tagspec + '\n';
                             } else {
-                                let tagAttr = meta.name ? 'name' : 'http-equiv';
-                                let tagAttrCtt = meta.name || meta.httpequiv;
+                                let tagAttr = meta.name ? 'name' : meta.rel ? 'rel' : 'http-equiv';
+                                let tagAttrCtt = meta.name || meta.httpequiv ||  meta.rel;
                                 metatags += indent + '<' + meta.tag + ' ' + tagAttr + '="' + tagAttrCtt + '" ' + meta.attr + '="' + meta.def + '" />\n';
                             }
                         }
@@ -446,16 +451,139 @@
 
         if (othertags) { othertags = '<!-- Other Tags -->\n' + othertags + '\n' }
         
-
-
-
+        [
+            {
+                "sel": true,
+                "size": 16,
+                "fields": [
+                    {
+                        "label": "src",
+                        "val": "",
+                        "type": "text",
+                        "sel": false,
+                        "req": true,
+                        "downbtn": true
+                    },
+                    {
+                        "label": "sizes",
+                        "val": "16x16",
+                        "type": "text",
+                        "sel": true,
+                        "readonly": true
+                    },
+                    {
+                        "label": "type",
+                        "val": "",
+                        "type": "list",
+                        "sel": false,
+                        "list": [
+                            "image/png",
+                            "image/jpeg",
+                            "image/gif",
+                            "image/",
+                            "image/bmp",
+                            "image/webp",
+                            "image/svg+xml"
+                        ]
+                    },
+                    {
+                        "label": "purpose",
+                        "val": "",
+                        "type": "list",
+                        "list": [
+                            "any",
+                            "monochrome",
+                            "maskable"
+                        ],
+                        "sel": false
+                    }
+                ]
+            },
+            {
+                "sel": true,
+                "size": 24,
+                "fields": [
+                    {
+                        "label": "src",
+                        "val": "",
+                        "type": "text",
+                        "sel": false,
+                        "req": true,
+                        "downbtn": true
+                    },
+                    {
+                        "label": "sizes",
+                        "val": "24x24",
+                        "type": "text",
+                        "sel": true,
+                        "readonly": true
+                    },
+                    {
+                        "label": "type",
+                        "val": "",
+                        "type": "list",
+                        "sel": false,
+                        "list": [
+                            "image/png",
+                            "image/jpeg",
+                            "image/gif",
+                            "image/",
+                            "image/bmp",
+                            "image/webp",
+                            "image/svg+xml"
+                        ]
+                    },
+                    {
+                        "label": "purpose",
+                        "val": "",
+                        "type": "list",
+                        "list": [
+                            "any",
+                            "monochrome",
+                            "maskable"
+                        ],
+                        "sel": false
+                    }
+                ]
+            }
+        ]
 
         // MANIFEST
+        let manifObj = {}, tmpIcons = []
+        dataObj.manifest.forEach(man => {
+            if (man.sel || man.req) {
+                switch (man.type) {
+                    case 'icons':
+                        manifObj.icons = man.val;                break;
+                    case 'object':
+                        manifObj[man.label] = man.val;           break;
+                    default:
+                        manifObj[man.label] = extractValue(man); break;                        
+                }
+            }
+        });
+        respManifestText = JSON.stringify(manifObj, null, 4);
 
         let finalContent = metatags + indent + bottags + indent + soctags + indent + imgtags + indent + othertags;
 
         respCodeText = html ? html.replace('$$$', finalContent) : finalContent;
         respCode = hljs.highlight(respCodeText, {language: 'xml'}).value;
+    }
+
+    function extractValue(item) {
+        let resp = null;
+        let obj = {};
+
+        switch (item.type) {
+            case 'objarray': 
+            case 'icons':
+                resp = item.val;               break;
+            case 'object':
+                resp = extractValue(item.val); break;
+            default:
+                resp = item.val || '';         break;
+        }
+        return resp;
     }
 
     function debounce(func, timeout = 300) {
@@ -466,7 +594,7 @@
         };
     }
 
-    function write2Clipboard() {
+    function code2Clipboard() {
         navigator.clipboard.writeText(respCodeText).then(() => {
                 /* clipboard successfully set */
                 cbCopyStatus = 1;
@@ -479,12 +607,28 @@
         );
     }
 
+
+    function manif2Clipboard() {
+        navigator.clipboard.writeText(respManifestText).then(() => {
+                /* clipboard successfully set */
+                cbCopyStatus2 = 1;
+                setTimeout(() => cbCopyStatus2 = 0, 1500);
+            }, () => {
+                /* clipboard write failed */
+                cbCopyStatus2 = 2;
+                setTimeout(() => cbCopyStatus2 = 0, 1500);
+            },
+        );
+    }
+
     function toggleMenu() {
         menuOpen = !menuOpen;
     }
 
+    // https://translate.i18next.com/
     function changeLang(evt) {
-        alert(evt.detail.label)
+        $langCode = evt.detail.value;
+        //alert(evt.detail.label)
     }
 </script>
 
@@ -503,9 +647,9 @@
             </div>
             
             <div>
-                <span><i class="icon-coffee"></i></span>
-                <span><i class="icon-info"></i></span>
-                <span><i class="icon-trash-2"></i></span>
+                <a href="https://buymeacoffee.com/wstaeblein" class="noclr" target="_blank" aria-label="{$lang.tips.coffee}" data-balloon-pos="down"><i class="icon-coffee"></i></a>
+                <span on:click={() => infoDlg.showModal()} aria-label="{$lang.tips.about}" data-balloon-pos="down"><i class="icon-info"></i></span>
+                <span on:click={() => location.reload()} aria-label="{$lang.tips.cls}" data-balloon-pos="down"><i class="icon-trash-2"></i></span>
                 <Ctxmenu items={availableLangs} bind:sel={currLang} align="right bottom" on:menuchoice={changeLang}></Ctxmenu>
                 
             </div>
@@ -513,121 +657,133 @@
     </header>
     
     <article>
-        <nav class="bkg" class:open={menuOpen}>
-            <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-            <ul class="menu">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <Router {url}>
+            <nav class="bkg" class:open={menuOpen}>
                 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-                <li class:sel={menuOpt == 0} on:click={() => menuOpt = 0}><i class="icon-home"></i><span>{$lang.ui.menu.home}</span></li>
-                <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 1} on:click={() => menuOpt = 1}><i class="icon-tag"></i><span>{$lang.ui.menu.meta}</span></li>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 2} on:click={() => menuOpt = 2}><i class="icon-bot"></i><span>{$lang.ui.menu.bots}</span></li>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 3} on:click={() => menuOpt = 3}><i class="icon-share-2"></i><span>{$lang.ui.menu.social}</span></li>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 4} on:click={() => menuOpt = 4}><i class="icon-image"></i><span>{$lang.ui.menu.icons}</span></li>
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 5} on:click={() => menuOpt = 5}><i class="icon-layers"></i><span>{$lang.ui.menu.other}</span></li>                        
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <li class:sel={menuOpt == 6} on:click={() => menuOpt = 6}><i class="icon-file-text"></i><span>{$lang.ui.menu.manifest}</span></li>
-
-                
-            </ul>
-        </nav>
-        <section >
-            <div class="bkg2 scroll">
-                {#if menuOpt == 0}
-                <div class="home">
-                    <h3>{$lang.hero.title}</h3>
-                    <h5>{$lang.hero.subtitle}</h5>
-                    <br>
-
-                    <div class="hero">
-                        <img src="/img/rocket.png" alt="SEO" />
-                        <div >
-                            <p>{$lang.hero.text1}</p>
-
-                            <p>{$lang.hero.text2}</p>
-                            <ol class="cards">
-                                {#each $lang.hero.cards as card}
-                                    <li>
-                                        <h6>{card.title}</h6>
-                                        <div><i class="{card.icon}"></i></div>
-                                        <div>{card.text}</div>
-                                    </li>
-                                {/each}                                                          
-                            </ol>
-                        </div>
-
-                    </div>
-  
+                <div class="menu">
+                    <Link to="/" let:active>
+                        <div class:sel={active}><i class="icon-home"></i><span>{$lang.ui.menu.home}</span></div>
+                    </Link>
+                    <Link to="/tags" let:active>
+                        <div class:sel={active}><i class="icon-tag"></i><span>{$lang.ui.menu.meta}</span></div>
+                    </Link>
+                    <Link to="/bots" let:active>
+                        <div class:sel={active}><i class="icon-bot"></i><span>{$lang.ui.menu.bots}</span></div>
+                    </Link>
+                    <Link to="/social" let:active>
+                        <div class:sel={active}><i class="icon-share-2"></i><span>{$lang.ui.menu.social}</span></div>
+                    </Link>
+                    <Link to="/images" let:active>
+                        <div class:sel={active}><i class="icon-image"></i><span>{$lang.ui.menu.icons}</span></div>
+                    </Link>
+                    <Link to="/other" let:active>
+                        <div class:sel={active}><i class="icon-layers"></i><span>{$lang.ui.menu.other}</span></div>                        
+                    </Link>
+                    <Link to="/manifest" let:active>
+                        <div class:sel={active}><i class="icon-file-text"></i><span>{$lang.ui.menu.manifest}</span></div>
+                    </Link>
                 </div>
-                    
-                
-                {:else if menuOpt == 1}
-                    <Metas bind:data={cats.metas}></Metas>
-
-                {:else if menuOpt == 2}
-                    <Bots bind:data={cats.bots}></Bots>
-
-                {:else if menuOpt == 3}
-                    <Social bind:data={cats.social} metas={cats.metas}></Social>
-
-                {:else if menuOpt == 4}
-                    <Images bind:data={cats.images}></Images>
-
-                {:else if menuOpt == 5}
-                    <Metas bind:data={cats.other}></Metas>
-
-                {:else if menuOpt == 6}
-                    <Manifest bind:data={cats.manifest}></Manifest>
-                {/if}
-
-            </div>
-
-            {#if menuOpt > 0}
-                <div class="code bkg2">
-                    <h2 class="between">
-                        <span>{$lang.ui.result}</span>
-                        {#if cbCopyStatus == 0}
-                        <button on:click={write2Clipboard} title="{$lang.ui.copy}"><i class="icon-copy"></i></button>
-                        {:else if cbCopyStatus == 1}
-                            <span class="msg copyok">{$lang.ui.ok}</span>
-                        {:else}
-                            <span class="msg copyerr">{$lang.ui.error}</span>
-                        {/if}
-                    </h2>
-                    
-                    <div>
-                        <pre><code>{@html respCode}</code></pre> 
-                    </div>
-                    {#if menuOpt == 6}
-
-                        <div class="code bkg2">
+            </nav>
+            <section >
+                <div class="bkg2 vert">
+                    <Route path="/">
+                        <Home></Home>
+                    </Route>
+                    <Route path="/tags">
+                        <Metas bind:data={cats.metas}></Metas>
+                    </Route>
+                    <Route path="/bots">
+                        <Bots bind:data={cats.bots}></Bots>
+                    </Route>
+                    <Route path="/social">
+                        <Social bind:data={cats.social} metas={cats.metas}></Social>
+                    </Route>
+                    <Route path="/images">
+                        <Images bind:data={cats.images}></Images>
+                    </Route>
+                    <Route path="/other">
+                        <Metas bind:data={cats.other}></Metas>
+                    </Route>
+                    <Route path="/manifest">
+<!--                         <div class="code">
                             <h2 class="between">
                                 <span>{$lang.ui.manifest}</span>
-                                {#if cbCopyStatus == 0}
-                                <button on:click={write2Clipboard} title="{$lang.ui.copy}"><i class="icon-copy"></i></button>
-                                {:else if cbCopyStatus == 1}
-                                    <span class="msg copyok">{$lang.ui.ok}</span>
+                                {#if cbCopyStatus2 == 0}
+                                    <button on:click={manif2Clipboard} title="{$lang.ui.copy}"><i class="icon-copy"></i></button>
+                                {:else if cbCopyStatus2 == 1}
+                                    <span class="msg copyok"><i class="icon-thumbs-up"></i></span>
                                 {:else}
-                                    <span class="msg copyerr">{$lang.ui.error}</span>
+                                    <span class="msg copyerr"><i class="icon-thumbs-down"></i></span>
                                 {/if}
                             </h2>                        
+                        </div> -->
+                        <div class="manifbody">
+                            <Manifest bind:data={cats.manifest}></Manifest>
                         </div>
-                    {/if}
+                    </Route>
                 </div>
-            {/if}
-        </section>
 
+                {#if currRoute != '/'}
+                
+                    <div class="code bkg2">
+                        <h2 class="between">
+                            <span>{$lang.ui.result}</span>
+                            {#if cbCopyStatus == 0}
+                                <button on:click={code2Clipboard} title="{$lang.ui.copy}"><i class="icon-copy"></i></button>
+                            {:else if cbCopyStatus == 1}
+                                <span class="msg copyok"><i class="icon-thumbs-up"></i></span>
+                            {:else}
+                                <span class="msg copyerr"><i class="icon-thumbs-down"></i></span>
+                            {/if}
+                        </h2>
+                        
+                        <div>
+                            <pre><code>{@html respCode}</code></pre> 
+                        </div>
+
+                    </div>
+                {/if}
+            </section>
+        </Router>
     </article>
+
 </main>
 
+<dialog bind:this={infoDlg}>
+    <h1>Teste</h1>
+    <p><button on:click={infoDlg.close()}>Close</button></p>
+</dialog>
 
 
 <style>
+    dialog {
+        position: fixed;
+        top: 50%;
+        left: 0;
+        z-index: 111;
+        transform: translateY(-50%);
+        box-shadow: 5px 5px 18px 2px #111;
+        border: none;
+        border-radius: 7px;
+
+
+    }
+
+    dialog::backdrop {
+        background-color: #001021cc;
+
+    }
+
+
+    .manifbody {
+        overflow-y: auto;
+    }
+
+    .vert {
+        display: flex;
+        flex-direction: column;
+    }
+
     .lrglogo {
         display: block;
     }
@@ -641,63 +797,7 @@
         overflow-x: hidden;
     }
 
-    ol.cards {
-        list-style: none;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 2em;
-        color: var(--text);
-        padding: 0;
-        margin: 0;
-        text-align: center;
-    }
 
-    ol.cards > li {
-        width: 28%;
-        background-color: #f9f9f9;
-        border-radius: 9px;
-        padding: 10px 5px;
-        box-shadow: 3px 3px 10px 2px #777;
-    }
-
-    ol.cards > li > h6 {
-        font-size: 20px;
-        margin: 0;
-        text-transform: uppercase;
-        color: var(--base);
-    }
-
-    ol.cards > li > div:has(i) {
-        margin: 10px 0 5px;
-    }
-
-    ol.cards > li > div:last-child {
-        font-size: smaller;
-    }
-
-    ol.cards > li > div > i {
-        font-size: 52px;
-        color: var(--hilite);
-        text-shadow: 2px 2px 0 #444;
-    }
-
-    .hero {
-        display: flex; 
-        gap: 3em;
-    }
-
-    .hero > img {
-        min-height: 260px;
-        max-height: 400px;
-        align-self: self-start;
-        height: auto;
-    }
-
-    .hero > div {
-        text-align: justify; 
-        max-width: 640px;
-    }
 
 
 
@@ -708,7 +808,7 @@
     .msg {
         display: inline-block;
         font-size: 16px;
-        width: 60px;
+/*         width: 60px; */
         text-align: center;
         padding: 3px 10px;
         border-radius: 7px;
@@ -723,41 +823,32 @@
     code {
         white-space: pre-wrap;
     }
-    .home {
-        padding: 20px;
-    }
 
-    h3 {
-        margin: 0;
-        color: var(--base);
-        text-transform: uppercase;
-    }
 
-    h5 {
-        margin: 0;
-        font-size: 16px;
-        color: var(--base);
-    }
-
-    ul.menu {
+    div.menu {
         text-transform: uppercase;
         font-size: 16px;
         font-weight: bold;
         padding: 10px 0;
     }
 
-    ul.menu > li {
+    div.menu div {
         padding: 5px 15px;
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
         gap: 8px;
         align-items: center;
+        font-weight: bold;
     }
 
-    ul.menu > li:hover, ul.menu > li.sel {
+    div.menu div:hover, div.menu div.sel {
         background-color: var(--hilite);
         color: var(--base);
+    }
+
+    :global(div.menu a) {
+        color: inherit;
     }
 
     .bkg {
@@ -771,8 +862,10 @@
         align-self: auto;
         padding: 0;
         border-radius: 9px;
-        overflow: hidden;
+        overflow: auto;
     }
+
+
 
     main {
         padding: 64px 0 0;

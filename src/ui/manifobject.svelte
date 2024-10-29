@@ -3,12 +3,15 @@
     import Maniflist from './maniflist.svelte';
     import Manifobject from './manifobject.svelte';
     import Manifmulti from './manifmulti.svelte';
+    import Manifbool from './manifbool.svelte';
     import Manifobjarray from './manifobjarray.svelte';
-    import { lang, supportedLangs } from '../stores.js';
+    import { lang, supportedLangs, help } from '../stores.js';
 
     export let obj = [];
 
-    function addIconItem(action) {
+    $: obj.val = Object.assign({}, ...obj.default.filter(d => d.sel).map(d => ({ [d.label]: d.val }))); 
+
+/*     function addIconItem(action) {
         let newItem = structuredClone(obj.default);
 
         obj.actions.forEach(oa => {
@@ -19,13 +22,11 @@
             switch(oa.type) {
                 case 'text':
                     newVal = newFn(oa.val, obj.actions);
-                    
+                    break;
             }
         });
-    }
+    } */
 
-    
-    $: console.log('OBJECT: ', obj)
 
     function setIcon(obj, extra) {
         let cls = '';
@@ -38,33 +39,8 @@
         return cls.trim();
     }    
 
-    function toggleListActionItem(action, item) {
-        let index = action.val.indexOf(item.value);
-
-        if (index == -1) {
-            action.val.push(item.value);
-            item.sel = true;
-        } else {
-            action.val.splice(index, 1);
-            item.sel = false;
-        }
-        obj = obj;
-    }
-
-    function addAllListActionItems(action) {
-        action.list.forEach(l => l.sel = true);
-        obj = obj;
-    }
-
-    function addItem() {
-        obj.val.push(structuredClone(obj.default));
-        obj = obj;
-        console.log(obj.val)
-    }
-
-    function delItem(ind) {
-        obj.val.splice(ind, 1);
-        obj = obj;
+    function toggle() {
+        obj.sel = !obj.sel;
     }
 </script>
 
@@ -73,10 +49,11 @@
         <div>
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <span on:click={() => obj.sel = !obj.sel}>
+            <span on:click={toggle}>
                 <i class="{setIcon(obj, 'ok')}"></i>
             </span>
-            <div class="prop">"{obj.label}": <span class="delim">&lbrace;</span>{#if !obj.sel}<span class="delim">&rbrace;</span>{/if}</div>
+            {#if $help}<a href="https://developer.mozilla.org/en-US/docs/Web/Manifest/{obj.label}" target="_blank"><i class="icon-help-circle"></i></a>{/if}
+            <div class="prop"><span on:click={toggle}>"{obj.label}":</span> <span class="delim">&lbrace;</span>{#if !obj.sel}<span class="delim">&rbrace;</span>{/if}</div>
         </div>
 
         {#if obj.sel}
@@ -92,6 +69,9 @@
 
                                 {:else if item.type == 'multi'}
                                     <Manifmulti bind:obj={item}></Manifmulti>
+
+                                {:else if item.type == 'bool'}
+                                    <Manifbool bind:obj={item}></Manifbool>        
 
                                 {:else if item.type == 'object'}
                                     <Manifobject bind:obj={item}></Manifobject>        

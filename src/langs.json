@@ -15,6 +15,11 @@
                 { "title": "Manifesto", "icon": "icon-file-text", "text": "Crie um web manifest para seus apps e PWAs com facilidade e rapidez"}
             ]
         },
+        "tips": {
+            "coffee": "Me paga um café",
+            "about": "Sobre este site",
+            "cls": "Zera tudo"
+        },
         "ui": {
             "result": "Resultado",
             "manifest": "Manifesto Web",
@@ -93,6 +98,7 @@
                 "base": "Diretório base",
                 "nocac": "Não armazenar em cache",
                 "hhfri": "Otimizado para apps móveis",
+                "manif": "Manifesto Web",
                 "url": "URL da página",
                 "image": "Imagem (URL)",
                 "imaget": "Tipo MIME da imagem",
@@ -1148,7 +1154,1484 @@
 
     },
     "en": {
-        "name": "English"
+        "name": "English",
+        "hero": {
+            "title": "Meta tag generator",
+            "subtitle": "Generate more traffic by creating meta tags correctly with this free and complete app",
+            "text1": "Meta tags are an essential tool in the world of Search Engine Optimization (SEO) and have a significant impact on the online visibility of web pages. ",
+            "text2": "Meta tags are additional labels in HTML (Hypertext Markup Language) that provide detailed information about a page, such as title, description and keywords. ",
+            "cards": [
+            {
+                "title": "Meta tags",
+                "icon": "icon-tag",
+                "text": "Complete list of the most common and most used Tags"
+            },
+            {
+                "title": "Bots",
+                "icon": "icon-bot",
+                "text": "Default tags for bots + Google and Bing bots"
+            },
+            {
+                "title": "Social",
+                "icon": "icon-share-2",
+                "text": "Open Graph tags and Twitter Cards for easy integration with social networks"
+            },
+            {
+                "title": "Images",
+                "icon": "icon-image",
+                "text": "Manage icons and images for websites, web apps and PWAs"
+            },
+            {
+                "title": "Others",
+                "icon": "icon-layers",
+                "text": "Plus a plethora of other less used but useful tags"
+            },
+            {
+                "title": "Manifest",
+                "icon": "icon-file-text",
+                "text": "Create a web manifest for your apps and PWAs quickly and easily"
+            }
+            ]
+        },
+        "tips": {
+            "coffee": "Buy me a coffee",
+            "about": "About this website",
+            "cls": "Reset everything"
+        },
+        "ui": {
+            "result": "Result",
+            "manifest": "Web Manifesto",
+            "mtgen": "Meta Tag Generator",
+            "botgen": "Bot Tag Generator",
+            "socialgen": "Social Tag Generator",
+            "imagegen": "Icon & Image Tags",
+            "googlegen": "Google Apps",
+            "copy": "Copy",
+            "add": "To add",
+            "ok": "OK",
+            "error": "Error!",
+            "all": "All",
+            "none": "None",
+            "definefolder": "Set the folder and file name first",
+            "choosesizes": "Choose sizes",
+            "nosize": "No Defined Size",
+            "autofill": "AutoFill",
+            "menu": {
+            "home": "Start",
+            "meta": "Page Tags",
+            "bots": "Bots",
+            "social": "Social",
+            "icons": "Icons & Images",
+            "other": "Others",
+            "manifest": "Web Manifesto"
+            }
+        },
+        "metas": {
+            "langlist": [
+            {
+                "name": "Portuguese",
+                "val": "PT",
+                "vars": [
+                {
+                    "name": "Brazil",
+                    "val": "BR"
+                },
+                {
+                    "name": "Portugal",
+                    "val": "PT"
+                },
+                {
+                    "name": "Angola",
+                    "val": "TO THE"
+                },
+                {
+                    "name": "Mozambique",
+                    "val": "MZ"
+                }
+                ]
+            },
+            {
+                "name": "English",
+                "val": "en",
+                "vars": [
+                {
+                    "name": "USA",
+                    "val": "US"
+                },
+                {
+                    "name": "United Kingdom",
+                    "val": "GB"
+                },
+                {
+                    "name": "Canada",
+                    "val": "HERE"
+                },
+                {
+                    "name": "Australia",
+                    "val": "AU"
+                },
+                {
+                    "name": "New Zealand",
+                    "val": "NZ"
+                },
+                {
+                    "name": "Kenya",
+                    "val": "KE"
+                },
+                {
+                    "name": "South Africa",
+                    "val": "ZA"
+                }
+                ]
+            },
+            {
+                "name": "French",
+                "val": "fr",
+                "vars": [
+                {
+                    "name": "France",
+                    "val": "FR"
+                },
+                {
+                    "name": "Belgium",
+                    "val": "BE"
+                },
+                {
+                    "name": "Canada",
+                    "val": "HERE"
+                },
+                {
+                    "name": "Morocco",
+                    "val": "BAD"
+                },
+                {
+                    "name": "Algeria",
+                    "val": "DZ"
+                },
+                {
+                    "name": "Switzerland",
+                    "val": "CH"
+                }
+                ]
+            },
+            {
+                "name": "Spanish",
+                "val": "is",
+                "vars": [
+                {
+                    "name": "Spain",
+                    "val": "ES"
+                },
+                {
+                    "name": "Mexico",
+                    "val": "MX"
+                },
+                {
+                    "name": "Argentina",
+                    "val": "AIR"
+                },
+                {
+                    "name": "Uruguay",
+                    "val": "UY"
+                },
+                {
+                    "name": "Chile",
+                    "val": "CL"
+                },
+                {
+                    "name": "Colombia",
+                    "val": "CO"
+                }
+                ]
+            },
+            {
+                "name": "Italian",
+                "val": "it",
+                "vars": [
+                {
+                    "name": "Italy",
+                    "val": "IT"
+                },
+                {
+                    "name": "Switzerland",
+                    "val": "CH"
+                }
+                ]
+            },
+            {
+                "name": "German",
+                "val": "of",
+                "vars": [
+                {
+                    "name": "Germany",
+                    "val": "OF"
+                },
+                {
+                    "name": "Austria",
+                    "val": "AT"
+                },
+                {
+                    "name": "Switzerland",
+                    "val": "CH"
+                }
+                ]
+            },
+            {
+                "name": "Dutch",
+                "val": "nl",
+                "vars": [
+                {
+                    "name": "Netherlands",
+                    "val": "NL"
+                }
+                ]
+            },
+            {
+                "name": "Hungarian",
+                "val": "Huh",
+                "vars": [
+                {
+                    "name": "Hungary",
+                    "val": "HU"
+                }
+                ]
+            },
+            {
+                "name": "Norwegian",
+                "val": "node",
+                "vars": [
+                {
+                    "name": "Norway",
+                    "val": "NODE"
+                }
+                ]
+            }
+            ],
+            "ratelist": [
+            {
+                "name": "General",
+                "val": "general"
+            },
+            {
+                "name": "Mature audience",
+                "val": "mature"
+            },
+            {
+                "name": "For adults",
+                "val": "adult"
+            },
+            {
+                "name": "Restricted",
+                "val": "restricted"
+            },
+            {
+                "name": "From 14 years old",
+                "val": "14 years"
+            },
+            {
+                "name": "Okay for kids",
+                "val": "safe for kids"
+            }
+            ],
+            "applestylelist": [
+            {
+                "name": "Standard",
+                "val": "default"
+            },
+            {
+                "name": "Black",
+                "val": "black"
+            },
+            {
+                "name": "Translucent Black",
+                "val": "black-translucent"
+            }
+            ],
+            "tags": {
+            "html": "Insert HTML skeleton",
+            "view": "Insert viewport tag",
+            "title": "Page title",
+            "desc": "Description",
+            "asbt": "Summary",
+            "keys": "Keywords",
+            "author": "Author",
+            "copy": "Copyright",
+            "gener": "Generator software",
+            "lang": "Language and culture",
+            "chars": "Charset",
+            "canon": " Canonical URL",
+            "gglver": "Google Site Check",
+            "refr": "Automatic reload",
+            "thclr": "Theme color",
+            "amwac": "Capable of being a mobile app - iOS",
+            "mwac": "Capable of being a mobile app - Android",
+            "wasbs": "Status Bar Style - iOS",
+            "amwat": "Mobile app title - iOS",
+            "appnm": "App Name",
+            "rate": "Classification",
+            "base": "Base directory",
+            "nocac": "Do not cache",
+            "hhfri": "Optimized for mobile apps",
+            "manif": "Web Manifesto",
+            "url": "Page URL",
+            "image": "Image (URL)",
+            "imaget": "MIME type of the image",
+            "imagealt": "Image explanatory text",
+            "imagew": "Image width",
+            "imageh": "Image height",
+            "type": "Content Type",
+            "locale": "Language and country",
+            "fbappid": "Facebook ID",
+            "twtsite": "Site ID",
+            "twtcreator": "Creator ID",
+            "autofill": "Populate from Open Graph",
+            "fav": "Favicon URL",
+            "short": "URL shortcut icon",
+            "mask": "URL maskicon",
+            "apple": "Icons - iOS",
+            "apple_0057": "Size 57 pixels",
+            "apple_0072": "Size 72 pixels",
+            "apple_0076": "Size 76 pixels",
+            "apple_0114": "Size 114 pixels",
+            "apple_0120": "Size 120 pixels",
+            "apple_0144": "Size 144 pixels",
+            "apple_0152": "Size 152 pixels",
+            "apple_0167": "Size 167 pixels",
+            "apple_0180": "Size 180 pixels",
+            "splash": "Launch screen images - iOS",
+            "pl_filename": "File name format",
+            "pl_folder": "Folder path",
+            "region": "Region (Country Code & State Code)",
+            "place": "Location",
+            "posit": "Coordinates",
+            "icbm": "ICBM address",
+            "fmtd1": "Not enabling links on phones - iOS",
+            "fmtd2": "Not enabling links in emails - iOS",
+            "name": "App name",
+            "short_name": "Short app name",
+            "id": "Unique Identifier",
+            "description": "Description",
+            "start_url": "Home URL",
+            "scope": "Scope",
+            "display": "Display type",
+            "display_override": "Display alternatives",
+            "orientation": "Guidance",
+            "theme_color": "Theme color",
+            "background_color": "Background color",
+            "icons": "Icons"
+            },
+            "pl": {
+            "LatLon": "Lat;Lon",
+            "city": "City, neighborhood, district",
+            "state": "State or province code",
+            "secs": "Mons",
+            "url": "URL (optional)",
+            "latitude": "Latitude",
+            "longitude": "Longitude"
+            },
+            "botlist": {
+            "all": "No restrictions on indexing and display. ",
+            "noindex": "Do not show this page, media or resource in search results",
+            "nofollow": "Do not follow the links on this page",
+            "none": "Equivalent to noindex, nofollow",
+            "noarchive": "Do not display a cached link in search results",
+            "notranslate": "Do not offer translation of this page in search results",
+            "noimageindex": "Do not index images on this page",
+            "indexifembedded": "Indexes the content of a page when it is embedded in another",
+            "nosnippet": "Do not display a text snippet or video preview in the search results for this page",
+            "max-snippet": "Maximum characters for the text of this search result",
+            "max-image-preview": "Maximum size of an image preview for this page in a search result",
+            "max-video-preview": "Maximum seconds for videos from this page in search results",
+            "unavailable_after": "Do not display this page in search results after a certain date and time"
+            }
+        },
+        "bots": {
+            "tags": {
+            "all": "No restrictions on indexing and displaying",
+            "noindex": "Do not show this page, media or resource in search results",
+            "nofollow": "Do not follow the links on this page",
+            "none": "Equivalent to the last 2 rules above",
+            "noarchive": "Do not display a cached link in search results",
+            "notranslate": "Do not offer translation of this page in search results",
+            "noimageindex": "Do not index images on this page",
+            "indexifembedded": "Index only if embedded on another page",
+            "nosnippet": "Don't display a text snippet or video preview in search results",
+            "max_snippet": "Maximum characters for a textual snippet",
+            "max_image_preview": "Maximum size of an image preview",
+            "max_video_preview": "Maximum seconds for a video view",
+            "unavailable_after": "Do not display after the specified date",
+            "nocache": "Do not cache the page",
+            "xtra_nosnippet": "Do not display",
+            "xtra_auto": "Auto Size",
+            "xtra_static": "Use Still Image",
+            "xtra_nolimit": "No Limits",
+            "ch_none": "No Preview",
+            "ch_standard": "Standard Size",
+            "ch_large": "Large Size"
+            }
+        },
+        "images": {
+            "applesizes": [
+            {
+                "size": 57,
+                "lbl": "Old iPhones"
+            },
+            {
+                "size": 72,
+                "lbl": "iPads 1 & 2g - iOS ≤ 6"
+            },
+            {
+                "size": 76,
+                "lbl": "iPads 1 & 2g - iOS ≥ 7"
+            },
+            {
+                "size": 114,
+                "lbl": "iPhone with Retina - iOS ≤ 6"
+            },
+            {
+                "size": 120,
+                "lbl": "iPhone with Retina - iOS ≥ 7"
+            },
+            {
+                "size": 144,
+                "lbl": "iPad with Retina - iOS ≤ 6"
+            },
+            {
+                "size": 152,
+                "lbl": "iPad with Retina- iOS ≥ 7"
+            },
+            {
+                "size": 167,
+                "lbl": "iPad Pro"
+            },
+            {
+                "size": 180,
+                "lbl": "iPhone 6+"
+            }
+            ],
+            "splashsizes": [
+            {
+                "size": "320x460",
+                "lbl": "Old iPhones",
+                "media": "(device-width: 320px)"
+            },
+            {
+                "size": "640x920",
+                "lbl": "iPhone Retina",
+                "media": "(device-width: 320px) and (device-height: 460px) and (-webkit-device-pixel-ratio: 2)"
+            },
+            {
+                "size": "640x1096",
+                "lbl": "iPhone 5 Retina",
+                "media": "(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+            },
+            {
+                "size": "768x1004",
+                "lbl": "iPad without Retina (Portrait)",
+                "media": "screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)"
+            },
+            {
+                "size": "1024x748",
+                "lbl": "iPad without Retina (Landscape)",
+                "media": "screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)"
+            },
+            {
+                "size": "1536x2008",
+                "lbl": "iPad Retina (Portrait)",
+                "media": "screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) and (-webkit-min-device-pixel-ratio: 2)"
+            },
+            {
+                "size": "2048x1496",
+                "lbl": "iPad Retina (Landscape)",
+                "media": "screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) and (-webkit-min-device-pixel-ratio: 2)"
+            }
+            ],
+            "folderSuggestions": [
+            "/",
+            "/images/",
+            "/icons/",
+            "/icones-apple/",
+            "/img/",
+            "/pic/",
+            "/apple/",
+            "/apple-icons/"
+            ],
+            "filesuggestions": [
+            "apple-touch-icon-#S.png",
+            "apple-touch-icon-#Sx#S.png",
+            "touch-icon-#S.png",
+            "touch-icon-#Sx#S.png",
+            "icon-#S.png",
+            "icon-#Sx#S.png",
+            "apple-touch-icon-#S#P.png",
+            "apple-touch-icon-#Sx#S#P.png",
+            "touch-icon-#S#P.png",
+            "touch-icon-#Sx#S#P.png",
+            "icon-#S#P.png",
+            "icon-#Sx#S#P.png"
+            ],
+            "splashfoldersuggestions": [
+            "/",
+            "/images/",
+            "/icons/",
+            "/apple-images/",
+            "/img/",
+            "/pic/",
+            "/apple/",
+            "/apple-startup/"
+            ],
+            "splashfilesuggestions": [
+            "apple-touch-startup-image-#S.png",
+            "apple-touch-startup-#S.png",
+            "apple-touch-#S.png",
+            "img-#S.png",
+            "image-#S.png",
+            "image-#S.png",
+            "pic-#S.png",
+            "picture-#S.png"
+            ]
+        },
+        "countries": [
+            {
+            "id": "BR",
+            "val": "Brazil"
+            },
+            {
+            "id": "AF",
+            "val": "Afghanistan"
+            },
+            {
+            "id": "ZA",
+            "val": "South Africa"
+            },
+            {
+            "id": "AL",
+            "val": "Albania"
+            },
+            {
+            "id": "OF",
+            "val": "Germany"
+            },
+            {
+            "id": "AD",
+            "val": "Andorra"
+            },
+            {
+            "id": "TO THE",
+            "val": "Angola"
+            },
+            {
+            "id": "THERE",
+            "val": "Anguilla"
+            },
+            {
+            "id": "AQ",
+            "val": "Antarctica"
+            },
+            {
+            "id": "AG",
+            "val": "Antigua and Barbuda"
+            },
+            {
+            "id": "AN",
+            "val": "Netherlands Antilles"
+            },
+            {
+            "id": "SA",
+            "val": "Saudi Arabia"
+            },
+            {
+            "id": "DZ",
+            "val": "Algeria"
+            },
+            {
+            "id": "AIR",
+            "val": "Argentina"
+            },
+            {
+            "id": "AM",
+            "val": "Armenia"
+            },
+            {
+            "id": "A.W.",
+            "val": "Aruba"
+            },
+            {
+            "id": "AU",
+            "val": "Australia"
+            },
+            {
+            "id": "AT",
+            "val": "Austria"
+            },
+            {
+            "id": "AZ",
+            "val": "Azerbaijan"
+            },
+            {
+            "id": "B.S.",
+            "val": "Bahamas"
+            },
+            {
+            "id": "BH",
+            "val": "Bahrain"
+            },
+            {
+            "id": "BD",
+            "val": "Bangladesh"
+            },
+            {
+            "id": "BB",
+            "val": "Barbados"
+            },
+            {
+            "id": "BY",
+            "val": "Belarus"
+            },
+            {
+            "id": "BE",
+            "val": "Belgium"
+            },
+            {
+            "id": "BZ",
+            "val": "Belize"
+            },
+            {
+            "id": "BJ",
+            "val": "Benin"
+            },
+            {
+            "id": "BM",
+            "val": "Bermuda"
+            },
+            {
+            "id": "BO",
+            "val": "Bolivia"
+            },
+            {
+            "id": "BA",
+            "val": "Bosnia and Herzegovina"
+            },
+            {
+            "id": "B.W.",
+            "val": "Botswana"
+            },
+            {
+            "id": "BR",
+            "val": "Brazil"
+            },
+            {
+            "id": "BN",
+            "val": "Brunei"
+            },
+            {
+            "id": "BG",
+            "val": "Bulgaria"
+            },
+            {
+            "id": "BF",
+            "val": "Burkina Faso"
+            },
+            {
+            "id": "BI",
+            "val": "Burundi"
+            },
+            {
+            "id": "BT",
+            "val": "Bhutan"
+            },
+            {
+            "id": "CV",
+            "val": "Cape Verde"
+            },
+            {
+            "id": "CM",
+            "val": "Cameroon"
+            },
+            {
+            "id": "KH",
+            "val": "Cambodia"
+            },
+            {
+            "id": "HERE",
+            "val": "Canada"
+            },
+            {
+            "id": "KZ",
+            "val": "Kazakhstan"
+            },
+            {
+            "id": "TD",
+            "val": "Chad"
+            },
+            {
+            "id": "CZ",
+            "val": "Czechia"
+            },
+            {
+            "id": "CL",
+            "val": "Chile"
+            },
+            {
+            "id": "CN",
+            "val": "China"
+            },
+            {
+            "id": "CY",
+            "val": "Cyprus"
+            },
+            {
+            "id": "SG",
+            "val": "Singapore"
+            },
+            {
+            "id": "CO",
+            "val": "Colombia"
+            },
+            {
+            "id": "CG",
+            "val": "Congo"
+            },
+            {
+            "id": "K.P.",
+            "val": "North Korea"
+            },
+            {
+            "id": "KR",
+            "val": "South Korea"
+            },
+            {
+            "id": "CI",
+            "val": "Ivory Coast"
+            },
+            {
+            "id": "CR",
+            "val": "Costa Rica"
+            },
+            {
+            "id": "HR",
+            "val": "Croatia (Hrvatska)"
+            },
+            {
+            "id": "ASS",
+            "val": "Cuba"
+            },
+            {
+            "id": "D.K.",
+            "val": "Denmark"
+            },
+            {
+            "id": "DJ",
+            "val": "Djibouti"
+            },
+            {
+            "id": "DM",
+            "val": "Dominica"
+            },
+            {
+            "id": "E.G.",
+            "val": "Egypt"
+            },
+            {
+            "id": "SV",
+            "val": "El Salvador"
+            },
+            {
+            "id": "AE",
+            "val": "United Arab Emirates"
+            },
+            {
+            "id": "EC",
+            "val": "Ecuador"
+            },
+            {
+            "id": "ER",
+            "val": "Eritrea"
+            },
+            {
+            "id": "S.K.",
+            "val": "Slovakia"
+            },
+            {
+            "id": "SI",
+            "val": "Slovenia"
+            },
+            {
+            "id": "ES",
+            "val": "Spain"
+            },
+            {
+            "id": "US",
+            "val": "United States"
+            },
+            {
+            "id": "EE",
+            "val": "Estonia"
+            },
+            {
+            "id": "ET",
+            "val": "Ethiopia"
+            },
+            {
+            "id": "F.J.",
+            "val": "Fiji"
+            },
+            {
+            "id": "PH",
+            "val": "Philippines"
+            },
+            {
+            "id": "FI",
+            "val": "Finland"
+            },
+            {
+            "id": "FR",
+            "val": "France"
+            },
+            {
+            "id": "GA",
+            "val": "Gabon"
+            },
+            {
+            "id": "GM",
+            "val": "Gambia"
+            },
+            {
+            "id": "G.H.",
+            "val": "Ghana"
+            },
+            {
+            "id": "GE",
+            "val": "Georgia"
+            },
+            {
+            "id": "GI",
+            "val": "Gibraltar"
+            },
+            {
+            "id": "GB",
+            "val": "Great Britain"
+            },
+            {
+            "id": "G.D.",
+            "val": "Grenade"
+            },
+            {
+            "id": "GR",
+            "val": "Greece"
+            },
+            {
+            "id": "GL",
+            "val": "Greenland"
+            },
+            {
+            "id": "GP",
+            "val": "Guadeloupe"
+            },
+            {
+            "id": "GT",
+            "val": "Guatemala"
+            },
+            {
+            "id": "G.Y.",
+            "val": "Guiana"
+            },
+            {
+            "id": "GF",
+            "val": "French Guiana"
+            },
+            {
+            "id": "GN",
+            "val": "Guinea"
+            },
+            {
+            "id": "GQ",
+            "val": "Equatorial Guinea"
+            },
+            {
+            "id": "G.W.",
+            "val": "Guinea-Bissau"
+            },
+            {
+            "id": "HT",
+            "val": "Haiti"
+            },
+            {
+            "id": "NL",
+            "val": "Netherlands"
+            },
+            {
+            "id": "HN",
+            "val": "Honduras"
+            },
+            {
+            "id": "H.K.",
+            "val": "Hong Kong"
+            },
+            {
+            "id": "HU",
+            "val": "Hungary"
+            },
+            {
+            "id": "YE",
+            "val": "Yemen"
+            },
+            {
+            "id": "CX",
+            "val": "Christmas Island"
+            },
+            {
+            "id": "KY",
+            "val": "Cayman Islands"
+            },
+            {
+            "id": "CC",
+            "val": "Cocos Islands"
+            },
+            {
+            "id": "km",
+            "val": "Comoros Islands"
+            },
+            {
+            "id": "C.K.",
+            "val": "Cook Islands"
+            },
+            {
+            "id": "FO",
+            "val": "Faroes Islands"
+            },
+            {
+            "id": "FK",
+            "val": "Falkland Islands"
+            },
+            {
+            "id": "MP",
+            "val": "Northern Mariana Islands"
+            },
+            {
+            "id": "MH",
+            "val": "Marshall Islands"
+            },
+            {
+            "id": "SC",
+            "val": "Seychelles Islands"
+            },
+            {
+            "id": "SB",
+            "val": "Solomon Islands"
+            },
+            {
+            "id": "T.K.",
+            "val": "Tokelau"
+            },
+            {
+            "id": "TC",
+            "val": "Turks and Caicos"
+            },
+            {
+            "id": "VI",
+            "val": "US Virgin Islands"
+            },
+            {
+            "id": "VG",
+            "val": "British Virgin Islands"
+            },
+            {
+            "id": "WF",
+            "val": "Wallis and Futuna"
+            },
+            {
+            "id": "IN",
+            "val": "India"
+            },
+            {
+            "id": "ID",
+            "val": "Indonesia"
+            },
+            {
+            "id": "GO",
+            "val": "Iran"
+            },
+            {
+            "id": "IQ",
+            "val": "Iraq"
+            },
+            {
+            "id": "IE",
+            "val": "Ireland"
+            },
+            {
+            "id": "IS",
+            "val": "Iceland"
+            },
+            {
+            "id": "IL",
+            "val": "Israel"
+            },
+            {
+            "id": "IT",
+            "val": "Italy"
+            },
+            {
+            "id": "J.M.",
+            "val": "Jamaica"
+            },
+            {
+            "id": "J.P.",
+            "val": "Japan"
+            },
+            {
+            "id": "JO",
+            "val": "Jordan"
+            },
+            {
+            "id": "KI",
+            "val": "Kiribati"
+            },
+            {
+            "id": "K.W.",
+            "val": "Kuwait"
+            },
+            {
+            "id": "THERE",
+            "val": "Laos"
+            },
+            {
+            "id": "LV",
+            "val": "Latvia"
+            },
+            {
+            "id": "LS",
+            "val": "Lesotho"
+            },
+            {
+            "id": "LB",
+            "val": "Lebanon"
+            },
+            {
+            "id": "LR",
+            "val": "Liberia"
+            },
+            {
+            "id": "LY",
+            "val": "Libya"
+            },
+            {
+            "id": "LI",
+            "val": "Liechtenstein"
+            },
+            {
+            "id": "LT",
+            "val": "Lithuania"
+            },
+            {
+            "id": "LU",
+            "val": "Luxembourg"
+            },
+            {
+            "id": "MO",
+            "val": "Macao"
+            },
+            {
+            "id": "MK",
+            "val": "Macedonia"
+            },
+            {
+            "id": "MG",
+            "val": "Madagascar"
+            },
+            {
+            "id": "MY",
+            "val": "Malaysia"
+            },
+            {
+            "id": "MW",
+            "val": "Malawi"
+            },
+            {
+            "id": "MV",
+            "val": "Maldives"
+            },
+            {
+            "id": "ML",
+            "val": "Mali"
+            },
+            {
+            "id": "MT",
+            "val": "Malta"
+            },
+            {
+            "id": "BAD",
+            "val": "Morocco"
+            },
+            {
+            "id": "MQ",
+            "val": "Martinique"
+            },
+            {
+            "id": "MU",
+            "val": "Mauritius"
+            },
+            {
+            "id": "MR",
+            "val": "Mauritania"
+            },
+            {
+            "id": "MX",
+            "val": "Mexico"
+            },
+            {
+            "id": "FM",
+            "val": "Micronesia"
+            },
+            {
+            "id": "MZ",
+            "val": "Mozambique"
+            },
+            {
+            "id": "MD",
+            "val": "Moldova"
+            },
+            {
+            "id": "MC",
+            "val": "Monaco"
+            },
+            {
+            "id": "MN",
+            "val": "Mongolia"
+            },
+            {
+            "id": "ME",
+            "val": "Montenegro"
+            },
+            {
+            "id": "MS",
+            "val": "Montserrat"
+            },
+            {
+            "id": "MM",
+            "val": "Myanmar"
+            },
+            {
+            "id": "NA",
+            "val": "Namibia"
+            },
+            {
+            "id": "NR",
+            "val": "Nauru"
+            },
+            {
+            "id": "NP",
+            "val": "Nepal"
+            },
+            {
+            "id": "NI",
+            "val": "Nicaragua"
+            },
+            {
+            "id": "NE",
+            "val": "Niger"
+            },
+            {
+            "id": "NG",
+            "val": "Nigeria"
+            },
+            {
+            "id": "NAKED",
+            "val": "Niue"
+            },
+            {
+            "id": "NODE",
+            "val": "Norway"
+            },
+            {
+            "id": "NC",
+            "val": "New Caledonia"
+            },
+            {
+            "id": "NZ",
+            "val": "New Zealand"
+            },
+            {
+            "id": "OM",
+            "val": "Oman"
+            },
+            {
+            "id": "P.W.",
+            "val": "Palau"
+            },
+            {
+            "id": "SHOVEL",
+            "val": "Panama"
+            },
+            {
+            "id": "PG",
+            "val": "Papua New Guinea"
+            },
+            {
+            "id": "P.K.",
+            "val": "Pakistan"
+            },
+            {
+            "id": "P.Y.",
+            "val": "Paraguay"
+            },
+            {
+            "id": "FOOT",
+            "val": "Peru"
+            },
+            {
+            "id": "PF",
+            "val": "French Polynesia"
+            },
+            {
+            "id": "PL",
+            "val": "Poland"
+            },
+            {
+            "id": "PR",
+            "val": "Puerto Rico"
+            },
+            {
+            "id": "PT",
+            "val": "Portugal"
+            },
+            {
+            "id": "QA",
+            "val": "Qatar"
+            },
+            {
+            "id": "KE",
+            "val": "Kenya"
+            },
+            {
+            "id": "KG",
+            "val": "Kyrgyzstan"
+            },
+            {
+            "id": "CF",
+            "val": "Central African Rep."
+            },
+            {
+            "id": "CD",
+            "val": "Democratic Rep. of Congo"
+            },
+            {
+            "id": "DO",
+            "val": "Dominican Republic"
+            },
+            {
+            "id": "RO",
+            "val": "Romania"
+            },
+            {
+            "id": "R.W.",
+            "val": "Rwanda"
+            },
+            {
+            "id": "UK",
+            "val": "Russia"
+            },
+            {
+            "id": "EH",
+            "val": "Western Sahara"
+            },
+            {
+            "id": "YOU",
+            "val": "Saint Vincent and the Grenadines"
+            },
+            {
+            "id": "TO THE",
+            "val": "American Samoa"
+            },
+            {
+            "id": "W.S.",
+            "val": "Western Samoa"
+            },
+            {
+            "id": "SM",
+            "val": "San Marino"
+            },
+            {
+            "id": "SH",
+            "val": "Saint Helena"
+            },
+            {
+            "id": "L.C.",
+            "val": "Saint Lucia"
+            },
+            {
+            "id": "BL",
+            "val": "Saint Bartholomew"
+            },
+            {
+            "id": "KN",
+            "val": "Saint Kitts and Nevis"
+            },
+            {
+            "id": "MF",
+            "val": "Saint Martin"
+            },
+            {
+            "id": "ST",
+            "val": "São Tomé and Príncipe"
+            },
+            {
+            "id": "SN",
+            "val": "Senegal"
+            },
+            {
+            "id": "SL",
+            "val": "Sierra Leone"
+            },
+            {
+            "id": "RS",
+            "val": "Serbia"
+            },
+            {
+            "id": "SY",
+            "val": "Syria"
+            },
+            {
+            "id": "ONLY",
+            "val": "Somalia"
+            },
+            {
+            "id": "L.K.",
+            "val": "Sri Lanka"
+            },
+            {
+            "id": "PM",
+            "val": "Saint Pierre and Miquelon"
+            },
+            {
+            "id": "SZ",
+            "val": "Swaziland"
+            },
+            {
+            "id": "S.D.",
+            "val": "Sudan"
+            },
+            {
+            "id": "IF",
+            "val": "Sweden"
+            },
+            {
+            "id": "CH",
+            "val": "Switzerland"
+            },
+            {
+            "id": "MR",
+            "val": "Suriname"
+            },
+            {
+            "id": "T.J.",
+            "val": "Tajikistan"
+            },
+            {
+            "id": "TH",
+            "val": "Thailand"
+            },
+            {
+            "id": "TW",
+            "val": "Taiwan"
+            },
+            {
+            "id": "TZ",
+            "val": "Tanzania"
+            },
+            {
+            "id": "TP",
+            "val": "East Timor"
+            },
+            {
+            "id": "TG",
+            "val": "Togo"
+            },
+            {
+            "id": "TO",
+            "val": "Tonga"
+            },
+            {
+            "id": "TT",
+            "val": "Trinidad and Tobago"
+            },
+            {
+            "id": "TN",
+            "val": "Tunisia"
+            },
+            {
+            "id": "TM",
+            "val": "Turkmenistan"
+            },
+            {
+            "id": "TR",
+            "val": "Türkiye"
+            },
+            {
+            "id": "TV",
+            "val": "Tuvalu"
+            },
+            {
+            "id": "UA",
+            "val": "Ukraine"
+            },
+            {
+            "id": "UG",
+            "val": "Uganda"
+            },
+            {
+            "id": "UY",
+            "val": "Uruguay"
+            },
+            {
+            "id": "UZ",
+            "val": "Uzbekistan"
+            },
+            {
+            "id": "VU",
+            "val": "Vanuatu"
+            },
+            {
+            "id": "VA",
+            "val": "Vatican"
+            },
+            {
+            "id": "VE",
+            "val": "Venezuela"
+            },
+            {
+            "id": "VN",
+            "val": "Vietnam"
+            },
+            {
+            "id": "ZM",
+            "val": "Zambia"
+            },
+            {
+            "id": "ZW",
+            "val": "Zimbabwe"
+            }
+        ]
+
+
+
+
+
+    },
+
+    "es": {
+
+
+    },
+    
+    "fr": {
+
+    },
+
+    "de": {
+
+
     }
 
 }

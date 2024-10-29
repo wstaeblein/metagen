@@ -1,4 +1,6 @@
 <script>
+    import { help } from '../stores.js';
+    
     export let obj = null;
 
     function setIcon(obj, extra) {
@@ -8,28 +10,37 @@
         } else {
             cls = 'icon' + (obj.sel ? '-check' : '') + '-circle';
         }
+
+        if (obj.sel && obj.val == null) { obj.val = false; }
+        
         if (extra) { cls += ' ' + extra; }
         return cls.trim();
-    }
-
-    function change() {
-        obj.sel = !!obj.val;
     }
 
     function toggle() {
         obj.sel = !obj.sel;
         if (!obj.sel) { obj.val = null; }
     }
+
+    function toggleCheck() {
+        obj.val = !obj.val;
+        obj.sel = true;
+    }
 </script>
 
 {#if obj}
     <li class="ind1" class:disabled={!obj.req && !obj.sel && obj.val == null}>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
         <span on:click={toggle}>
             <i class="{setIcon(obj, 'ok')}"></i>
         </span>
-        <span class="prop">"{obj.label}":</span>
+        {#if $help}<a href="https://developer.mozilla.org/en-US/docs/Web/Manifest/{obj.label}" target="_blank"><i class="icon-help-circle"></i></a>{/if}
+        <span class="prop" on:click={toggle}>"{obj.label}":</span>
         <span class="val choice">
-            <span class="check" class:sel={obj.val} on:click={() => obj.val = !obj.val}></span>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <span class="check" class:sel={obj.val} on:click={toggleCheck}></span>
             <span>{obj.val ? 'true' : obj.val == false ? 'false' : '--'}</span>
         </span>
     </li>

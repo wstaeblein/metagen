@@ -1,7 +1,11 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+    import { help } from '../stores.js';
 
     export let obj = null;
 
+    const dispatch = createEventDispatcher();
+    
     function setIcon(obj, extra) {
         let cls = '';
         if (obj.req) {
@@ -15,15 +19,22 @@
 
     function change() {
         obj.sel = !!obj.val;
+        dispatch('update');
+    }
+
+    function toggle() {
+        obj.sel = !obj.sel;
+        dispatch('update');
     }
 </script>
 
 {#if obj}
     <li class="ind1" class:disabled={!obj.req && !obj.sel && !obj.val}>
-        <span on:click={() => obj.sel = !obj.sel}>
+        <span on:click={toggle}>
             <i class="{setIcon(obj, 'ok')}"></i>
         </span>
-        <span class="prop">"{obj.label}":</span>
+        {#if $help}<a href="https://developer.mozilla.org/en-US/docs/Web/Manifest/{obj.label}" target="_blank"><i class="icon-help-circle"></i></a>{/if}
+        <span class="prop" on:click={toggle}>"{obj.label}":</span>
         <span class="val">
             "<select bind:value={obj.val} on:change={change} required>
                 <option value=""></option>

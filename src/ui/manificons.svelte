@@ -1,5 +1,5 @@
 <script>
-    import { lang, supportedLangs } from '../stores.js';
+    import { lang, supportedLangs, help } from '../stores.js';
 
     import Maniftext from './maniftext.svelte';
     import Maniflist from './maniflist.svelte';
@@ -18,14 +18,22 @@
         { label: 'type', val: '', type: 'list', sel: false, list: ['image/png', 'image/jpeg', 'image/gif', 'image/', 'image/bmp', 'image/webp', 'image/svg+xml'] },
         { label: 'purpose', val: '', type: 'list', list: ['any', 'monochrome', 'maskable'], sel: false },
     ];
+
+    let selIcons = [];
     let icons = sizes.map(sz => {
         let icn = structuredClone(icon);
         let szIcon = icn.find(i => i.label == 'sizes');
         szIcon.val = sz.value + 'x' + sz.value;
         return { sel: false, size: sz.value, fields: icn };
     });
-    let selIcons = [];
 
+
+/*     $: obj.val = icons.filter(i => i.sel).map(itm => { console.log(itm)
+        let _obj = {};
+        itm.fields.forEach(i => { _obj[i.label] = i.val; });
+        return _obj;
+    }); */
+    $: obj.val = selIcons.map(a => Object.assign({}, ...a.fields.filter(f => f.sel).map(d => ({ [d.label]: d.val })))); 
 
     function addIconItem(action) {
         let newItem = structuredClone(obj.default);
@@ -99,13 +107,20 @@
                     let newType = newText.indexOf('.') > -1 ? newText.split('.').pop().toLowerCase() : initialType; 
 
                     if (newType == 'jpg') { newType = 'jpeg'; }
-                    if (newType) { typeObj.val = typeObj.list.find(t => t == 'image/' + newType) || ''; }
+                    if (newType) { 
+                        let tmpType = typeObj.list.find(t => t == 'image/' + newType) || ''; 
+                        typeObj.val = tmpType;
+                        if (tmpType) { typeObj.sel = true; }
+                    }
                     purposeObj.val = purpose;
+                    if (purpose) { purposeObj.sel = true; }
+
+
                     return newText;
                 }
 
                 if (flag && !done) {
-                    // Matches the size number or $$ and replaces it by the new size
+                    // Matches the size number or $$ and replaces it with the new size
                     icnObj.val = setValues(icn);
                     if (evt.detail.type == 'next') { done = true; }
 
@@ -121,6 +136,16 @@
         obj = obj;
         selIcons = icons.filter(i => i.sel);
     }
+
+    function toggle() {
+        obj.sel = !obj.sel;
+        obj = obj;
+    }
+
+    function updateHandler() {
+        icons = icons;
+        obj = obj;
+    }
 </script>
 
 {#if obj}
@@ -128,10 +153,11 @@
         <div>
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <span on:click={() => obj.sel = !obj.sel}>
+            <span on:click={toggle}>
                 <i class="{setIcon(obj, 'ok')}"></i>
             </span>
-            <div class="prop">"{obj.label}": <span class="delim">&lbrack;</span>{#if !obj.sel}<span class="delim">&rbrack;</span>{/if}</div>
+            {#if $help}<a href="https://developer.mozilla.org/en-US/docs/Web/Manifest/{obj.label}" target="_blank"><i class="icon-help-circle"></i></a>{/if}
+            <div class="prop"><span on:click={toggle}>"{obj.label}":</span> <span class="delim">&lbrack;</span>{#if !obj.sel}<span class="delim">&rbrack;</span>{/if}</div>
         </div>
 
         {#if obj.sel}
@@ -165,7 +191,7 @@
                                     <Maniftext bind:obj={fld} data={icon.size} on:set={setEventHandler}></Maniftext>
 
                                 {:else if fld.type == 'list'}
-                                    <Maniflist bind:obj={fld}></Maniflist>
+                                    <Maniflist bind:obj={fld} on:update={updateHandler}></Maniflist>
 
                                 {/if}
 
@@ -182,30 +208,6 @@
                     {/each}
                 </ol>
 
-
-                <!-- <button class="small" on:click={addIconItem}>Add New</button> -->
-
-
-                <div class="ind1">
-                    {#if obj.val && obj.val.length}
-
-                        {#each obj.val as icon, ind}
-                            <span class="delim">&lbrace;</span>
-
-                            {#each icon as item}
-                                {#if item.type == 'text'}
-                                    <Maniftext bind:obj={item}></Maniftext>
-
-                                {:else if item.type == 'list'}
-                                    <Maniflist bind:obj={item}></Maniflist>
-
-                                {/if}
-                            {/each}
-
-                            <span class="delim">&rbrace;{ind != obj.val.length - 1 ? ',' : ''} </span>
-                        {/each}
-                    {/if}
-                </div>
             </div>
         
             <div class="delim">&rbrack;</div>

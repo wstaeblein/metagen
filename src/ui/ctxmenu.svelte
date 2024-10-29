@@ -23,7 +23,7 @@
         open = !open;
     }
 
-    function setItem(item) {
+    function setItem(item) { console.log(item)
         sel = item.value;
         selObj = item;
         dispatch('menuchoice', item);
@@ -64,7 +64,7 @@
             width: 26px;
             transform: translateY(3px);
             cursor: pointer;
-            border-radius: 3px;
+            border-radius: 50%;
         }
 
     ul {

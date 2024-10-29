@@ -1,4 +1,5 @@
 <script>
+    import { help } from '../stores.js';
 
     export let obj = null;
 
@@ -32,14 +33,19 @@
     function process(evt) {
         if (evt.key == 'Enter') { change(); }
     }
+
+    function toggle() {
+        obj.sel = !obj.sel;
+    }
 </script>
 
 {#if obj}
     <li class="ind1" class:disabled={!obj.req && !obj.sel && !obj.val.length}>
-        <span on:click={() => obj.sel = !obj.sel}>
+        <span on:click={toggle}>
             <i class="{setIcon(obj, 'ok')}"></i>
         </span>
-        <span class="prop">"{obj.label}": </span>
+        {#if $help}<a href="https://developer.mozilla.org/en-US/docs/Web/Manifest/{obj.label}" target="_blank"><i class="icon-help-circle"></i></a>{/if}
+        <span class="prop" on:click={toggle}>"{obj.label}": </span>
 
         <span class="val">
             {#if obj.list}

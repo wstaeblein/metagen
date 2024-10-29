@@ -2,31 +2,15 @@
     import Maniftext from './maniftext.svelte';
     import Maniflist from './maniflist.svelte';
     import Manifmulti from './manifmulti.svelte';
-    import { lang, supportedLangs } from '../stores.js';
+    import Manificons from './manificons.svelte';
+    import { lang, supportedLangs, help } from '../stores.js';
 
     export let obj = [];
 
-    function addIconItem(action) {
-        let newItem = structuredClone(obj.default);
+    let valArr = [];
 
-        obj.actions.forEach(oa => {
-            let defFn = (i) => i;
-            let newVal = '';
-            let newFn = oa.mutate || defFn;
-
-            switch(oa.type) {
-                case 'text':
-                    newVal = newFn(oa.val, obj.actions);
-                    
-            }
-        })
-
-
-/*         let newItem = item || obj.default; console.log(newItem)
-        obj.val.push(newItem);
-        obj = obj;
-        console.log(obj) */
-    }
+    // Sempre que valArr mudar, transforma o array no resultado esperado
+    $: obj.val = valArr.map(a => Object.assign({}, ...a.filter(f => f.sel).map(d => ({ [d.label]: d.val })))); 
 
     function setIcon(obj, extra) {
         let cls = '';
@@ -52,20 +36,24 @@
         obj = obj;
     }
 
-    function addAllListActionItems(action) {
+/*     function addAllListActionItems(action) {
         action.list.forEach(l => l.sel = true);
         obj = obj;
-    }
+    } */
 
     function addItem() {
-        obj.val.push(structuredClone(obj.default));
+        valArr.push(structuredClone(obj.default));
         obj = obj;
-        console.log(obj.val)
+        console.log(valArr)
     }
 
-    function delItem(ind) {
-        obj.val.splice(ind, 1);
+    function delItem(ind) { alert(ind)
+        valArr.splice(ind, 1);
         obj = obj;
+    }
+
+    function toggle() {
+        obj.sel = !obj.sel;
     }
 </script>
 
@@ -74,22 +62,23 @@
         <div>
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            <span on:click={() => obj.sel = !obj.sel}>
+            <span on:click={toggle}>
                 <i class="{setIcon(obj, 'ok')}"></i>
             </span>
-            <div class="prop">"{obj.label}": <span class="delim">&lbrack;</span>{#if !obj.sel}<span class="delim">&rbrack;</span>{:else}&nbsp;<button on:click={addItem} class="small">{$lang.ui.add}</button>{/if}</div>
+            {#if $help}<a href="https://developer.mozilla.org/en-US/docs/Web/Manifest/{obj.label}" target="_blank"><i class="icon-help-circle"></i></a>{/if}
+            <div class="prop"><span on:click={toggle}>"{obj.label}":</span> <span class="delim">&lbrack;</span>{#if !obj.sel}<span class="delim">&rbrack;</span>{:else}&nbsp;<button on:click={addItem} class="small">{$lang.ui.add}</button>{/if}</div>
         </div>
 
         {#if obj.sel}
             <div class="val ind1">
                 <ol class="ind1">
-                    {#if obj.val && obj.val.length}
-                        {#each obj.val as arr, index}
+                    {#if valArr && valArr.length}
+                        {#each valArr as arr, index}
                             <li>
                                 {#if index == 0}
                                     <div>
                                         <span class="delim">&lbrace;</span>
-                                        <span class="delim" on:click={delItem.bind(this, index)}><i class="icon-trash-2"></i></span>
+                                        <span class="delim" on:click={delItem.bind(this, 0)}><i class="icon-trash-2"></i></span>
                                     </div>
                                 {/if}
                                 
@@ -103,14 +92,18 @@
 
                                         {:else if fld.type == 'multi'}
                                             <Manifmulti bind:obj={fld}></Manifmulti>
+
+                                        {:else if fld.type == 'icons'}
+                                            <Manificons bind:obj={fld}></Manificons>
+                                            
                                         {/if}
                                     {/each}
                                 </ul>
                                 <div>
-                                    {#if index == obj.val.length - 1}
+                                    {#if index == valArr.length - 1}
                                         <span class="delim">&rbrace;</span>
                                     {:else}
-                                        <span class="delim">&rbrace;, &lbrace;&nbsp;<span on:click={delItem.bind(this, index)}><i class="icon-trash-2"></i></span></span>
+                                        <span class="delim">&rbrace;, &lbrace;&nbsp;<span on:click={delItem.bind(this, index + 1)}><i class="icon-trash-2"></i></span></span>
                                     {/if}
                                 </div>
                             </li>
