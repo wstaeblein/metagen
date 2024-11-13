@@ -190,8 +190,6 @@
     onMount(() => {
         let ll = ''
         cats.manifest.forEach(m => { ll += '"' + m.id + '": "", \n' });
-
-        helpDlg.showModal()
     });
 
 
