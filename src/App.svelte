@@ -54,6 +54,8 @@
     let tcTypes = ['summary', 'summary_large_image', 'app']
 
     let botlist = [
+        { id: 'index', type: 'bool' },
+        { id: 'follow', type: 'bool' },         
         { id: 'noindex', type: 'bool' },
         { id: 'nofollow', type: 'bool' }, 
         { id: 'none', type: 'bool' },
@@ -68,6 +70,7 @@
         { id: 'unavailable_after',  type: 'datetime' }
     ]
     let bingbotlist = [
+        { id: 'index', type: 'bool' },
         { id: 'noindex', type: 'bool' },
         { id: 'nocache', type: 'bool' }, 
         { id: 'noarchive', type: 'bool' }, 
@@ -75,6 +78,23 @@
         { id: 'max-snippet', type: 'int', xtras: [{ id: 'nosnippet', val: 0 }, { id: 'auto', val: -1 }], min: -1  }, 
         { id: 'max-video-preview',  type: 'intx', xtras: [{ id: 'static', val: 0 }, { id: 'nolimit', val: -1 }] },
         { id: 'max-image-preview',  type: 'list', list: ['none', 'standard', 'large'] }
+    ]
+
+    let exabotlist = [
+        { id: 'index', type: 'bool' },
+        { id: 'follow', type: 'bool' },
+        { id: 'noindex', type: 'bool' },
+        { id: 'nofollow', type: 'bool' }
+    ]
+
+    let yandexbotlist = [
+        { id: 'index', type: 'bool' },
+        { id: 'follow', type: 'bool' },
+        { id: 'noindex', type: 'bool' },
+        { id: 'nofollow', type: 'bool' },
+        { id: 'none', type: 'bool' },
+        { id: 'noarchive', type: 'bool' }, 
+        { id: 'noyaca', type: 'bool' }
     ]
 
     let cats = {
@@ -105,6 +125,11 @@
             { id: 'googlebot',     tag: 'meta', name: 'googlebot',      attr: 'content', value: '', type: 'multi', list: structuredClone(botlist) },
             { id: 'googlebotnews', tag: 'meta', name: 'googlebot-news', attr: 'content', value: '', type: 'multi', list: structuredClone(botlist) },
             { id: 'bingbot',       tag: 'meta', name: 'bingbot',        attr: 'content', value: '', type: 'multi', list: bingbotlist },
+            { id: 'baiduspider',   tag: 'meta', name: 'Baiduspider',    attr: 'content', value: '', type: 'multi', list: exabotlist },
+            { id: 'exabot',        tag: 'meta', name: 'ExaBot',         attr: 'content', value: '', type: 'multi', list: exabotlist },
+            { id: 'yandexbot',     tag: 'meta', name: 'yandex',         attr: 'content', value: '', type: 'multi', list: yandexbotlist }
+
+            
         ],
         social: [
             { 
