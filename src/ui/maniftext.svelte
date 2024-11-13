@@ -7,7 +7,7 @@
 
 <script>
     import { onMount, setContext, createEventDispatcher, tick } from 'svelte';
-    import { help } from '../stores.js';
+    import { help, lang } from '../stores.js';
 
     export let obj = null;
     export let data = null;
@@ -67,11 +67,19 @@
         obj.sel = !obj.sel;
         dispatch('update');
     }
+
+    function setTip(obj) {
+        if (obj.req) {
+            return $lang.tips.req;
+        } else {
+            return obj.sel ? $lang.tips.issel : $lang.tips.notsel;
+        }
+    }
 </script>
 
 {#if obj}
     <li class="ind1" class:disabled={!obj.req && !obj.sel}>
-        <span on:click={toggle}>
+        <span on:click={toggle} aria-label="{setTip(obj)}" data-balloon-pos="up-left">
             <i class="{setIcon(obj, 'ok')}"></i>
         </span>
 
@@ -85,8 +93,8 @@
 
             {#if obj.downbtn}
                 <b class="xtrabtns">
-                    <span on:click={setNext}><i class="icon-chevron-down"></i></span>
-                    <span on:click={setAll}><i class="icon-chevrons-down"></i></span>                    
+                    <button on:click={setNext} class="small" aria-label="{$lang.tips.repnext}" data-balloon-pos="up"><i class="icon-chevron-down"></i></button>
+                    <button on:click={setAll} class="small" aria-label="{$lang.tips.repall}" data-balloon-pos="up"><i class="icon-chevrons-down"></i></button>                    
                 </b>
 
             {/if}            

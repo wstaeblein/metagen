@@ -5,11 +5,13 @@ let supLangs = [];
 
 export let langCode = writable((localStorage.getItem('language') || (navigator.language || 'pt')).split('-').shift());
 
-export let lang = writable({});
+export let lang = writable(langs[langCode]);
 
 langCode.subscribe((value) => { console.log('LANGCODE: ', value)
-    lang.set(langs[value.toLowerCase()]);
+    let newLang = value.toLowerCase();
+    lang.set(langs[newLang]);
     supLangs = Object.keys(langs).map(key => ({ id: key, name: langs[key].name }));
+    localStorage.setItem('language', newLang);
 });
 
 export let supportedLangs = readable([], function start(set) {

@@ -7,10 +7,6 @@
     --text: #414850;
     --manifborder: #666;
     --mono: "Roboto Mono", monospace;
-
-
-    --balloon-color: #00FFCC;
-    --balloon-text-color: #16163F;
 }
 
 html {
@@ -126,6 +122,8 @@ button.small {
     display: flex;
     gap: 10px;
 }
+
+
 
 #app {
     height: 100%;
@@ -284,7 +282,7 @@ p {
 }
 
 span:has(.req) {
-    pointer-events: none;
+    /* pointer-events: none; */
 }
 
 .disabled > *:not(:first-child), .disabled > div:first-child > .prop, .disabled > div:first-child > a {
@@ -301,4 +299,18 @@ input.manif {
     color: inherit;
     border: 1px dotted #8f959b;
     border-radius: 3px;
+}
+
+.msg {
+    display: inline-block;
+    font-size: 16px;
+    text-align: center;
+    padding: 3px 10px;
+    border-radius: 7px;
+}
+.copyok {
+    background-color: forestgreen;
+}
+.copyerr {
+    background-color: crimson;
 }

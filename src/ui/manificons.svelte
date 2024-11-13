@@ -92,7 +92,7 @@
         let flag = false;
         let done = false;
 
-        let re = new RegExp(/\$\$/, 'g');
+        let re = new RegExp(/#S/, 'g');
         txt = txt.replace(re, size);
 
         icons.forEach(icn => { console.log(icn)

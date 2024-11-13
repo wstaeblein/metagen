@@ -155,6 +155,19 @@
                         <input type="text" bind:value={meta.value2} placeholder="{$lang.metas.pl[meta.pl] || ''}" />
                         
                     </div>           
+                    {:else if meta.type == 'base'}
+                        <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
+                        <div class="base">
+                            <input type="text" bind:value={meta.value} placeholder="{$lang.metas.pl[meta.pl] || ''}" />
+                            <select bind:value={meta.value2}>
+                                <option value=""></option>
+                                {#each ['_blank', '_parent', '_self', '_top'] as tgt}
+                                    <option value="{tgt}">{tgt}</option>
+                                {/each}
+                            </select>
+                            
+                            
+                        </div>                         
                 {:else if meta.type == 'latlon'}      
                     <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <div class="latlon">
@@ -305,6 +318,11 @@
         height: 12px;
     }
 
+    .item .base {
+        display: flex;
+        gap: 10px;
+    }
+    
     h2 {
         background: var(--bars);
         padding: 5px 15px;

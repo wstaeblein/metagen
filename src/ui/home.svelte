@@ -13,6 +13,9 @@
             <p>{$lang.hero.text1}</p>
 
             <p>{$lang.hero.text2}</p>
+            
+            <p>{$lang.hero.text3}</p>
+            
             <ol class="cards">
                 {#each $lang.hero.cards as card}
                     <li>
@@ -32,6 +35,8 @@
 <style>
     .home {
         padding: 20px;
+        height: 100%;
+        overflow: auto;
     }
 
     h3 {

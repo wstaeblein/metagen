@@ -1,4 +1,5 @@
 <script>
+    import { getContext } from 'svelte';
     import { lang, supportedLangs, help } from '../stores.js';
 
     import Maniftext from './maniftext.svelte';
@@ -13,8 +14,11 @@
     export let data = [];
     let exp = true;
     let catsList = ['books', 'business', 'education', 'entertainment', 'finance', 'fitness', 'food', 'games', 'government', 'health', 'kids', 'lifestyle', 'magazines', 'medical', 'music', 'navigation', 'news', 'personalization', 'photo', 'politics', 'productivity', 'security', 'shopping', 'social', 'sports', 'travel', 'utilities', 'weather'];
+    let copyStatus = 0;
 
     $: data = manif;
+
+    const copy2Clipboard = getContext('copy');
     
     let screenShot = [
         { label: 'src', val: '', type: 'text', req: true },
@@ -106,19 +110,38 @@
         { label: 'share_target', val: {}, type: 'object', default: share_targets, experimental: true },
     ];
 
-
+    function copyProxy() {
+        copyStatus = 1;
+        copy2Clipboard();
+        setTimeout(() => copyStatus = 0, 1500);
+    }
 </script>
 
-<section>
+<section class="manifest">
     <h2>
         <span>{$lang.ui.manifest}</span>
+        <span>
+            <button on:click={() => exp = !exp} class:checked={exp} aria-label="{$lang.tips.exper}" data-balloon-pos="down-right" data-balloon-length="medium">
+                <i class="icon-experimental"></i>
+            </button>
+            <button on:click={() => $help = !$help} class:checked={$help} aria-label="{$lang.tips.help}" data-balloon-pos="down-right" data-balloon-length="medium">
+                <i class="icon-help-circle aux"></i>
+            </button>
+        
+            {#if copyStatus == 0}
+                <button on:click={copyProxy} aria-label="{$lang.tips.copyman}" data-balloon-pos="down-right" data-balloon-length="medium">
+                    <i class="icon-copy"></i>
+                </button>   
+            {:else if copyStatus == 1}
+                <span class="msg copyok"><i class="icon-thumbs-up"></i></span>
+            {:else}
+                <span class="msg copyerr"><i class="icon-thumbs-down"></i></span>
+            {/if}             
+        </span>
+
     </h2>
     <ul>
         <li class="delim">&lbrace;</li>
-        <li class="cmds">
-            <span on:click={() => exp = !exp} class:sel={exp}><i class="icon-experimental"></i></span>
-            <span on:click={() => $help = !$help} class:sel={$help}><i class="icon-help-circle"></i></span>
-        </li>
         {#each manif as man}
             {#if exp || !man.experimental} 
                 {#if man.type == 'text'}
@@ -156,14 +179,22 @@
 </section>
 
 <style>
+    .aux {
+        transform: translateX(2px);
+        display: inline-block;
+    }
+
     section {
         padding: 0;
+        height: 100%;
     }
 
     ul {
         font-family: var(--mono);
         padding: 20px;
         position: relative;
+        height: calc(100% - 50px);
+        overflow: scroll;
     }
 
     ul > li {
@@ -179,7 +210,7 @@
         color: var(--base);
     }
 
-    ul > li.cmds > span {
+/*     ul > li.cmds > span {
         cursor: pointer;
         filter: grayscale(1);
         opacity: 0.6;
@@ -202,13 +233,13 @@
         filter: none;
         background: var(--base);
         color: #fff;
-    }
+    } */
 
     .delim {
         color: maroon
     }
 
-    .prop {
+/*     .prop {
         color: #005cc5;
 
     }
@@ -223,10 +254,24 @@
 
     .ind2 {
         margin-left: 60px;
-    }
+    } */
 
     h2 {
         background: var(--bars);
         padding: 5px 15px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+        font-size: 100%;
+    }
+
+    h2 > span:first-child {
+        font-size: 27px;
+    }
+
+    h2 > span:last-child {
+        display: flex;
+        gap: 5px;
     }
 </style>

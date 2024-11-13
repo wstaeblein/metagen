@@ -2,7 +2,7 @@
     // @ts-nocheck
     
     import { lang, supportedLangs } from '../stores.js';
-	import Accordion from './accordion.svelte';
+
 
 
     export let data = [];
@@ -14,7 +14,8 @@
 /*     $: if (noSize != null) { setAppleIcons(); } */
 
 
-
+    $: console.log(data)
+    
     // Set a clicked size label
     function setSize(sz, which) {
         sz.selected = !sz.selected;
@@ -88,12 +89,16 @@
                 let value = fullSplashPath.replace('#S', sss.size);
 
                 if (sss.selected) {
-                    appleIcons.push({ id, tag, rel: 'apple-touch-startup-image' , attr, value, type,  label: sss.size + ' - ' + sss.lbl, media: sss.media });
+                    splashImgs.push({ id, tag, rel: 'apple-touch-startup-image' , attr, value, type,  label: sss.size + ' - ' + sss.lbl, media: sss.media });
                 }
             });
         }
 
-        data = otherIcons.concat(appleIcons);
+
+        //data = otherIcons.concat(appleIcons);
+        console.log(appleIcons)
+        otherIcons.splice(otherIcons.length - 1, 0, ...appleIcons); console.log(otherIcons)
+        data = otherIcons.concat(splashImgs);
     }
 
 
@@ -166,7 +171,7 @@
                         <ul class="sizes">
                             <li><button class="small" on:click={setAll}>{$lang.ui.all}</button></li>
                             {#each $lang.images.applesizes as size}
-                                <li class:sel={size.selected} on:click={setSize.bind(this, size)}>{size.size}</li>
+                                <li class:sel={size.selected} on:click={setSize.bind(this, size)} aria-label="{size.lbl}" data-balloon-pos="up" data-balloon-length="medium">{size.size}</li>
                             {/each}
                         </ul>
                  
@@ -204,7 +209,7 @@
                             {#each $lang.images.splashsizes as size}
                                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                                 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-                                <li class:sel={size.selected} on:click={setSize.bind(this, size, 's')}>{size.size}</li>
+                                <li class:sel={size.selected} on:click={setSize.bind(this, size, 's')} aria-label="{size.lbl}" data-balloon-pos="up" data-balloon-length="medium">{size.size}</li>
                             {/each}
                         </ul>
                  
@@ -249,7 +254,11 @@
         flex-wrap: wrap;
     }
 
-    ul.sizes > li {
+    ul.sizes > li:first-child {
+        transform: translateY(-1px);
+    }
+
+    ul.sizes > li:not(:first-child) {
         width: 60px;
         padding: 2px 0 1px;
         background-color: #ccc;
@@ -263,7 +272,7 @@
         user-select: none;
     }
 
-    ul.sizes > li:hover  {
+    ul.sizes > li:not(:first-child):hover  {
         background-color: var(--hilite);
         color: var(--base);
     }

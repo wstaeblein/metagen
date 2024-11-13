@@ -1,7 +1,7 @@
 <script>
 // @ts-nocheck
 
-    import { onMount } from 'svelte';
+    import { onMount, setContext } from 'svelte';
     import { fade } from "svelte/transition";
 
     // @ts-ignore
@@ -25,6 +25,8 @@
 
     export let url = "";
 
+    setContext('copy', manif2Clipboard);
+
     // https://developers.google.com/search/docs/crawling-indexing/special-tags?hl=pt-br
     let menuOpt = 0;
     let menuOpen = false;
@@ -34,7 +36,9 @@
     let cbCopyStatus = 0;
     let cbCopyStatus2 = 0;
     let infoDlg = null;
-    let currLang = 'pt';
+    let helpDlg= null;
+    let helpTab = 'home';
+
     let availableLangs = [
         { label: 'Português', value: 'pt', img: 'img/flags/pt.png' },
         { label: 'English', value: 'en', img: 'img/flags/en.png' },
@@ -154,8 +158,8 @@
             { id: 'amwat',  tag: 'meta', name: 'apple-mobile-web-app-title', attr: 'content', value: '', type: 'text', half: true },
             { id: 'wasbs',  tag: 'meta', name: 'apple-mobile-web-app-status-bar-style', attr: 'content', value: '', type: 'objlist', list: 'applestylelist', half: true },
 
-            { id: 'appnm',  tag: 'meta', name: 'application-name', attr: 'content', value: '', type: 'text', half: true  },
-            { id: 'base', tag: 'base',  attr: 'href', value: '', type: 'text', half: true  },
+            { id: 'appnm',  tag: 'meta', name: 'application-name', attr: 'content', value: '', type: 'text' },
+            { id: 'base', tag: 'base',  attr: 'href', value: '', type: 'base' },
 
             { id: 'region', tag: 'meta', name: 'geo.region', attr: 'content', value: '', type: 'region', pl: 'state' },
             { id: 'place', tag: 'meta', name: 'geo.placename', attr: 'content', value: '', type: 'text', pl: 'city' },
@@ -186,6 +190,8 @@
     onMount(() => {
         let ll = ''
         cats.manifest.forEach(m => { ll += '"' + m.id + '": "", \n' });
+
+        helpDlg.showModal()
     });
 
 
@@ -444,8 +450,14 @@
                         let sep = other.type == 'region' ? '-' : ';';
                         othertags += indent + '<' + other.tag + ' name="' + other.name + '" ' + other.attr + '="' + (value + sep + other.value2).toUpperCase() + '" />\n';
                     }
+                    break;
+                case 'base':
+                    if (value || other.value2) {
+                        othertags += indent + '<base href="' + value + '"' + (other.value2 ? ' target="' + other.value2 + '"' : '') + ' />\n';
+                    }
+            }
                 
-                }
+
 
         });
 
@@ -619,7 +631,7 @@
                 setTimeout(() => cbCopyStatus2 = 0, 1500);
             },
         );
-    }
+    } 
 
     function toggleMenu() {
         menuOpen = !menuOpen;
@@ -647,10 +659,12 @@
             </div>
             
             <div>
-                <a href="https://buymeacoffee.com/wstaeblein" class="noclr" target="_blank" aria-label="{$lang.tips.coffee}" data-balloon-pos="down"><i class="icon-coffee"></i></a>
+
                 <span on:click={() => infoDlg.showModal()} aria-label="{$lang.tips.about}" data-balloon-pos="down"><i class="icon-info"></i></span>
+                <span on:click={() => helpDlg.showModal()} aria-label="{$lang.tips.help2}" data-balloon-pos="down"><i class="icon-help-circle"></i></span>
+                <a href="https://buymeacoffee.com/wstaeblein" class="noclr" target="_blank" aria-label="{$lang.tips.coffee}" data-balloon-pos="down"><i class="icon-coffee"></i></a>
                 <span on:click={() => location.reload()} aria-label="{$lang.tips.cls}" data-balloon-pos="down"><i class="icon-trash-2"></i></span>
-                <Ctxmenu items={availableLangs} bind:sel={currLang} align="right bottom" on:menuchoice={changeLang}></Ctxmenu>
+                <Ctxmenu items={availableLangs} bind:sel={$langCode} align="right bottom" on:menuchoice={changeLang}></Ctxmenu>
                 
             </div>
         </nav>
@@ -705,18 +719,6 @@
                         <Metas bind:data={cats.other}></Metas>
                     </Route>
                     <Route path="/manifest">
-<!--                         <div class="code">
-                            <h2 class="between">
-                                <span>{$lang.ui.manifest}</span>
-                                {#if cbCopyStatus2 == 0}
-                                    <button on:click={manif2Clipboard} title="{$lang.ui.copy}"><i class="icon-copy"></i></button>
-                                {:else if cbCopyStatus2 == 1}
-                                    <span class="msg copyok"><i class="icon-thumbs-up"></i></span>
-                                {:else}
-                                    <span class="msg copyerr"><i class="icon-thumbs-down"></i></span>
-                                {/if}
-                            </h2>                        
-                        </div> -->
                         <div class="manifbody">
                             <Manifest bind:data={cats.manifest}></Manifest>
                         </div>
@@ -729,7 +731,7 @@
                         <h2 class="between">
                             <span>{$lang.ui.result}</span>
                             {#if cbCopyStatus == 0}
-                                <button on:click={code2Clipboard} title="{$lang.ui.copy}"><i class="icon-copy"></i></button>
+                                <button on:click={code2Clipboard}  aria-label="{$lang.tips.copy}" data-balloon-pos="down-right"><i class="icon-copy"></i></button>
                             {:else if cbCopyStatus == 1}
                                 <span class="msg copyok"><i class="icon-thumbs-up"></i></span>
                             {:else}
@@ -750,23 +752,160 @@
 </main>
 
 <dialog bind:this={infoDlg}>
-    <h1>Teste</h1>
-    <p><button on:click={infoDlg.close()}>Close</button></p>
+    <div><img src="/img/logo.png" alt="Metagen" /></div>
+    <div class="subtitle">{$lang.dialog.title}</div>
+
+    <div class="free">{$lang.dialog.msg}</div>
+
+    <p>{$lang.dialog.by} Walter Staeblein - 2024</p>
+    <ul>
+        <li>
+            <a href="mailto:contato@synergys.com.br"><i class="icon-at-sign"></i><span>Email</span></a>
+        </li>
+        <li>
+            <a href="https://synergys.com.br" target="_blank"><i class="icon-globe"></i><span>Site</span></a>
+        </li>    
+        <li>
+            <a href="https://github.com/wstaeblein" target="_blank"><i class="icon-github"></i><span>Github</span></a>
+        </li>             
+        <li>
+            <a href="https://www.linkedin.com/in/wstaeblein/" target="_blank"><i class="icon-linkedin"></i><span>Linkedin</span></a>
+        </li>            
+        <li>
+            <a href="https://buymeacoffee.com/wstaeblein" target="_blank"><i class="icon-coffee"></i><span>{$lang.dialog.coffee}</span></a>
+        </li>                   
+    </ul>
+
+    <span class="close" on:click={infoDlg.close()}><i class="icon-x-circle"></i></span>
+</dialog>
+
+
+<dialog bind:this={helpDlg} class="howto" >
+    <aside>
+        <div>
+            <div><img src="/img/logo.png" alt="Metagen" /></div>
+            <div class="subtitle">{$lang.dialog.title}</div>        
+        </div>
+
+        <div>
+            <ul>
+                <li class:sel={helpTab == 'home'} on:click={() => helpTab = 'home'}><i class="icon-home smaller"></i></li>
+                <li class:sel={helpTab == 'meta'} on:click={() => helpTab = 'meta'}>Metatags</li>
+                <li class:sel={helpTab == 'mani'} on:click={() => helpTab = 'mani'}>Manifesto</li>            
+            </ul>
+        </div>
+        <div>
+            {#if helpTab == 'home'}
+                <div>
+                    <p>{@html $lang.howto.home.p1}</p>
+                    <p>{@html $lang.howto.home.p2}</p>
+                    <p>{@html $lang.howto.home.p3.replace('$$', '<b><i class="icon-copy"></i></b>')}</p>
+
+                    <ol>
+                        <li>{@html $lang.howto.home.l1.replace('$$', '<b><i class="icon-info"></i></b>')}</li>
+                        <li>{@html $lang.howto.home.l2.replace('$$', '<b><i class="icon-help-circle"></i></b>')}</li>
+                        <li>{@html $lang.howto.home.l3.replace('$$', '<b><i class="icon-coffee"></i></b>')}</li>
+                        <li>{@html $lang.howto.home.l4.replace('$$', '<b><i class="icon-trash-2"></i></b>')}</li>
+                        <li>{@html $lang.howto.home.l5.replace('$$', '<b><i class="icon-globe"></i></b>')}</li>
+
+                    </ol>
+                </div>
+            {:else if helpTab == 'meta'}
+                <div>
+                    <p>{@html $lang.howto.meta.p1}</p>
+                    <p>{@html $lang.howto.meta.p2}</p>
+                    <p>{@html $lang.howto.meta.p3.replace('$$', '<b>#S</b>').replace('$$', '<b>#P</b>').replace('$$', '<b>precomposed</b>')}</p>
+                </div>
+
+            {:else}
+            <div>
+                <p>{@html $lang.howto.mani.p1.replace('$$', '<b><i class="icon-copy"></i></b>').replace('$$', '<b>icons</b>')}</p>
+                <p>{@html $lang.howto.mani.p2.replace('$$', '<b><i class="icon-chevron-down"></i></b>').replace('$$', '<b><i class="icon-chevrons-down"></i></b>')}</p>
+                <p>{@html $lang.howto.mani.p3.replace('$$', '<b>categories</b>').replace('$$', '<b>display_override</b>')}</p>
+                <p>{@html $lang.howto.mani.p4.replace('$$', '<b>shortcuts</b>').replace('$$', '<b>screenshots</b>').replace('$$', '<b><i class="icon-trash-2"></i></b>')}</p>
+                <p>{@html $lang.howto.mani.p5}</p>
+
+            </div>
+            {/if}        
+        </div>        
+    </aside>
+
+
+
+    <span class="close" on:click={helpDlg.close()}><i class="icon-x-circle"></i></span>
 </dialog>
 
 
 <style>
     dialog {
         position: fixed;
-        top: 50%;
-        left: 0;
         z-index: 111;
-        transform: translateY(-50%);
         box-shadow: 5px 5px 18px 2px #111;
         border: none;
         border-radius: 7px;
+        background-image: url(/img/bg.png);
+    }
+
+    dialog > aside {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    dialog > aside > div:first-child {
+        margin-bottom: 15px;
+    }
+
+    dialog > aside > div:last-child {
+        flex-grow: 1;
+        overflow-y: scroll;
+    }
+
+    dialog.howto {
+        max-width: 600px;
+        height: 600px;
+        font-size: 18px;
+        width: 90%;
+    }
+
+    dialog.howto ol {
+        list-style: none;
+        padding: 0;
+    }
 
 
+    dialog.howto ul {
+        display: flex;
+        justify-content: start;
+        gap: 5px;
+        border-bottom: 1px solid var(--color);
+
+        margin-bottom: 10px;
+    }
+
+    dialog.howto > div:first-child {
+        margin-bottom: 15px;
+    }
+
+    dialog.howto ul > li {
+        padding: 2px 15px 5px;
+    }
+
+    dialog.howto ul > li i {
+        font-size: 18px !important;
+        display: inline-block;
+        transform: translateY(2px);
+    }
+
+    dialog.howto ul > li.sel {
+        background-color: var(--color);
+        color: #fff;
+        border-top-left-radius: 7px;
+        border-top-right-radius: 7px;
+    }
+
+    dialog.howto ul > li:not(.sel) {
+        cursor: pointer;
     }
 
     dialog::backdrop {
@@ -774,9 +913,73 @@
 
     }
 
+    dialog > div:first-child > img,  dialog.howto > aside > div:first-child img {
+        width: 240px;
+    }
+
+    dialog .close {
+        position: absolute;
+        top: 5px;
+        right: 8px;
+        font-size: 25px;
+        color: var(--base);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-shadow: 1px 1px 0 transparent;
+    }
+
+    dialog .close:hover {
+        color: var(--hilite);
+        text-shadow: 1px 1px 0 var(--base);
+    }
+
+    dialog .subtitle {
+        color: var(--base);
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 13px;
+        min-width: 300px;
+    }
+
+    dialog .free {
+        margin: 15px 0;
+        font-size: smaller;
+    }
+
+    dialog ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: space-evenly;
+    }
+
+    dialog ul > li a {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: var(--base);
+        transition: all 0.4s ease;
+        text-shadow: 1px 1px 0 transparent;
+        outline: none;
+    }
+
+    dialog ul > li a:hover {
+        color: var(--hilite);
+        text-shadow: 1px 1px 0 var(--base);
+    }
+
+    dialog ul > li a > span {
+        font-size: smaller;
+    }
+    
+    dialog ul > li i {
+        font-size: 32px;
+    }
 
     .manifbody {
-        overflow-y: auto;
+       /*  overflow-y: auto; */
+       height: 100%;
     }
 
     .vert {
@@ -792,32 +995,17 @@
         display: none;
     }
 
-    .scroll {
+/*     .scroll {
         overflow-y: auto !important;
         overflow-x: hidden;
     }
-
+ */
 
 
 
 
     .hamburguer {
         display: none;
-    }
-
-    .msg {
-        display: inline-block;
-        font-size: 16px;
-/*         width: 60px; */
-        text-align: center;
-        padding: 3px 10px;
-        border-radius: 7px;
-    }
-    .copyok {
-        background-color: forestgreen;
-    }
-    .copyerr {
-        background-color: crimson;
     }
 
     code {
@@ -840,12 +1028,19 @@
         gap: 8px;
         align-items: center;
         font-weight: bold;
+        white-space: nowrap;
     }
 
-    div.menu div:hover, div.menu div.sel {
+    div.menu div:hover {
+        color: var(--hilite);
+        text-shadow: 1px 1px 0 var(--base);
+    }
+
+    div.menu div.sel {
         background-color: var(--hilite);
         color: var(--base);
-    }
+        text-shadow: 1px 1px 0 transparent;
+    }    
 
     :global(div.menu a) {
         color: inherit;
@@ -862,7 +1057,7 @@
         align-self: auto;
         padding: 0;
         border-radius: 9px;
-        overflow: auto;
+        overflow: hidden;
     }
 
 
@@ -890,8 +1085,8 @@
     }
 
     article > nav {
-        width: 200px;
-        min-width: 200px;
+        width: 210px;
+        min-width: 210px;
         flex-grow: 0;
         transition: all 0.3s ease;
         z-index: 111;
@@ -951,7 +1146,7 @@
 
     .code > div {
         padding: 20px;
-        overflow: auto;
+        overflow: scroll;
         height: calc(100% - 50px);
         color:  #6e1809;
     }

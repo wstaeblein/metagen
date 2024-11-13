@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
-    import { help } from '../stores.js';
+    import { help, lang } from '../stores.js';
 
     export let obj = null;
 
@@ -26,11 +26,20 @@
         obj.sel = !obj.sel;
         dispatch('update');
     }
+
+    
+    function setTip(obj) {
+        if (obj.req) {
+            return $lang.tips.req;
+        } else {
+            return obj.sel ? $lang.tips.issel : $lang.tips.notsel;
+        }
+    }
 </script>
 
 {#if obj}
     <li class="ind1" class:disabled={!obj.req && !obj.sel && !obj.val}>
-        <span on:click={toggle}>
+        <span on:click={toggle} aria-label="{setTip(obj)}" data-balloon-pos="up-left">
             <i class="{setIcon(obj, 'ok')}"></i>
         </span>
         {#if $help}<a href="https://developer.mozilla.org/en-US/docs/Web/Manifest/{obj.label}" target="_blank"><i class="icon-help-circle"></i></a>{/if}
