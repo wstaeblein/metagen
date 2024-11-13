@@ -3019,32 +3019,32 @@
             "cards": [
                 {
                     "title": "metaetiquetas",
-                    "icon": "etiqueta de icono",
+                    "icon": "icon-tag",
                     "text": "Lista completa de los Tags más comunes y utilizados"
                 },
                 {
                     "title": "robots",
-                    "icon": "icono-bot",
+                    "icon": "icon-bot",
                     "text": "Etiquetas predeterminadas para bots + bots de Google y Bing"
                 },
                 {
                     "title": "Social",
-                    "icon": "icono-compartir-2",
+                    "icon": "icon-share-2",
                     "text": "Etiquetas Open Graph y Twitter Cards para una fácil integración con las redes sociales"
                 },
                 {
                     "title": "Imágenes",
-                    "icon": "imagen-icono",
+                    "icon": "icon-image",
                     "text": "Administre íconos e imágenes para sitios web, aplicaciones web y PWA"
                 },
                 {
                     "title": "Otros",
-                    "icon": "capas de iconos",
+                    "icon": "icon-layers",
                     "text": "Además de una gran cantidad de otras etiquetas menos utilizadas pero útiles"
                 },
                 {
                     "title": "Manifiesto",
-                    "icon": "icono-archivo-texto",
+                    "icon": "icon-file-text",
                     "text": "Cree un manifiesto web para sus aplicaciones y PWA de forma rápida y sencilla"
                 }
             ]
@@ -4522,32 +4522,32 @@
             "cards": [
                 {
                     "title": "Balises méta",
-                    "icon": "icône-tag",
+                    "icon": "icon-tag",
                     "text": "Liste complète des tags les plus courants et les plus utilisés"
                 },
                 {
                     "title": "Bots",
-                    "icon": "icône-bot",
+                    "icon": "icon-bot",
                     "text": "Balises par défaut pour les robots + robots Google et Bing"
                 },
                 {
                     "title": "Sociale",
-                    "icon": "icône-partage-2",
+                    "icon": "icon-share-2",
                     "text": "Balises Open Graph et Twitter Cards pour une intégration facile avec les réseaux sociaux"
                 },
                 {
                     "title": "Images",
-                    "icon": "icône-image",
+                    "icon": "icon-image",
                     "text": "Gérer les icônes et les images des sites Web, des applications Web et des PWA"
                 },
                 {
                     "title": "Autres",
-                    "icon": "calques d'icônes",
+                    "icon": "icon-layers",
                     "text": "Plus une pléthore d'autres balises moins utilisées mais utiles"
                 },
                 {
                     "title": "Manifeste",
-                    "icon": "icône-fichier-texte",
+                    "icon": "icon-file-text",
                     "text": "Créez rapidement et facilement un manifeste Web pour vos applications et PWA"
                 }
             ]
@@ -6024,12 +6024,12 @@
             "cards": [
                 {
                     "title": "Meta-Tags",
-                    "icon": "Icon-Tag",
+                    "icon": "icon-tag",
                     "text": "Vollständige Liste der häufigsten und am häufigsten verwendeten Tags"
                 },
                 {
                     "title": "Bots",
-                    "icon": "Icon-Bot",
+                    "icon": "icon-bot",
                     "text": "Standard-Tags für Bots + Google- und Bing-Bots"
                 },
                 {
@@ -6039,17 +6039,17 @@
                 },
                 {
                     "title": "Bilder",
-                    "icon": "Symbolbild",
-                    "text": "Verwalten Sie Symbole und Bilder für Websites, Web-Apps und PWAs"
+                    "icon": "icon-image",
+                    "text": "Verwalten Sie ikone und Bilder für Websites, Web-Apps und PWAs"
                 },
                 {
                     "title": "Andere",
-                    "icon": "Symbolebenen",
+                    "icon": "icon-layers",
                     "text": "Plus eine Vielzahl anderer weniger verwendeter, aber nützlicher Tags"
                 },
                 {
                     "title": "Manifest",
-                    "icon": "Symboldateitext",
+                    "icon": "icon-file-text",
                     "text": "Erstellen Sie schnell und einfach ein Webmanifest für Ihre Apps und PWAs"
                 }
             ]
@@ -6122,7 +6122,7 @@
                 "meta": "Seiten-Tags",
                 "bots": "Bots",
                 "social": "Sozial",
-                "icons": "Symbole und Bilder",
+                "icons": "Ikon und Bilder",
                 "other": "Andere",
                 "manifest": "Web-Manifest"
             }
@@ -6390,7 +6390,7 @@
                 "fav": "Favicon-URL",
                 "short": "URL-Verknüpfungssymbol",
                 "mask": "URL-Maskensymbol",
-                "apple": "Symbole – iOS",
+                "apple": "Ikon – iOS",
                 "apple_0057": "Größe 57 Pixel",
                 "apple_0072": "Größe 72 Pixel",
                 "apple_0076": "Größe 76 Pixel",
