@@ -175,16 +175,24 @@
         other: [
             { id: 'mwac',  tag: 'meta',  name: 'mobile-web-app-capable', attr: 'content', value: false, type: 'bool', def: 'yes', half: true },
             { id: 'amwac',  tag: 'meta', name: 'apple-mobile-web-app-capable', attr: 'content', value: false, type: 'bool', def: 'yes', half: true },
-            { id: 'fmtd1',  tag: 'meta',  name: 'format-detection', attr: 'content', value: false, type: 'bool', def: 'telephone=no', half: true },
+            { id: 'fmtd1',  tag: 'meta', name: 'format-detection', attr: 'content', value: false, type: 'bool', def: 'telephone=no', half: true },
             { id: 'fmtd2',  tag: 'meta', name: 'format-detection', attr: 'content', value: false, type: 'bool', def: 'email=no', half: true },
+            { id: 'fmtd3',  tag: 'meta', name: 'format-detection', attr: 'content', value: false, type: 'bool', def: 'date=no', half: true },
+            { id: 'fmtd4',  tag: 'meta', name: 'format-detection', attr: 'content', value: false, type: 'bool', def: 'address=no', half: true },
+
+            { id: 'gglsb',  tag: 'meta', name: 'google', attr: 'content', value: false, type: 'bool', def: 'nositelinkssearchbox', half: true },
+            { id: 'gglra',  tag: 'meta', name: 'google', attr: 'content', value: false, type: 'bool', def: 'nopagereadaloud', half: true },
 
             { id: 'spc1',   type: 'spacer' },
 
             { id: 'amwat',  tag: 'meta', name: 'apple-mobile-web-app-title', attr: 'content', value: '', type: 'text', half: true },
             { id: 'wasbs',  tag: 'meta', name: 'apple-mobile-web-app-status-bar-style', attr: 'content', value: '', type: 'objlist', list: 'applestylelist', half: true },
 
-            { id: 'appnm',  tag: 'meta', name: 'application-name', attr: 'content', value: '', type: 'text' },
+            { id: 'appnm',  tag: 'meta', name: 'application-name', attr: 'content', value: '', type: 'text', half: true },
+            { id: 'revaft', tag: 'meta', name: 'revisit-after', attr: 'content', value: '', type: 'rev', min: new Date().toISOString().slice(0, 10), half: true },
             { id: 'base', tag: 'base',  attr: 'href', value: '', type: 'base' },
+
+
 
             { id: 'region', tag: 'meta', name: 'geo.region', attr: 'content', value: '', type: 'region', pl: 'state' },
             { id: 'place', tag: 'meta', name: 'geo.placename', attr: 'content', value: '', type: 'text', pl: 'city' },
@@ -298,6 +306,7 @@
         let imgtags = '';
         let othertags = '';
         let manifest = '';
+        let fmtDetection = '';
                                 
         if (lang.val) { lang = lang.val; } 
 
@@ -438,13 +447,17 @@
                         html = value ? other.tagspec.replace('##', lang) : '';
                     } else {
                         if (value) {
-                            if (other.tagspec) {
-                                othertags += indent + other.tagspec + '\n';
-                            } else {
-                                let tagAttr = other.name ? 'name' : 'http-equiv';
-                                let tagAttrCtt = other.name || other.httpequiv;
-                                othertags += indent + '<' + other.tag + ' ' + tagAttr + '="' + tagAttrCtt + '" ' + other.attr + '="' + other.def + '" />\n';
-                            }
+                            if (other.name == 'format-detection') {
+                                fmtDetection += other.def + ', ';
+                            } else {                                
+                                if (other.tagspec) {
+                                    othertags += indent + other.tagspec + '\n';
+                                } else {
+                                    let tagAttr = other.name ? 'name' : 'http-equiv';
+                                    let tagAttrCtt = other.name || other.httpequiv;
+                                    othertags += indent + '<' + other.tag + ' ' + tagAttr + '="' + tagAttrCtt + '" ' + other.attr + '="' + other.def + '" />\n';
+                                }
+                            }                            
                         }
                     }
                     break;
@@ -478,11 +491,22 @@
                     if (value || other.value2) {
                         othertags += indent + '<base href="' + value + '"' + (other.value2 ? ' target="' + other.value2 + '"' : '') + ' />\n';
                     }
+                    break;
+                case 'rev':
+                    if (value) {
+                        if (/\d{4}-[01]\d-[0-3]\d/.test(value)) {
+                            othertags += indent + '<base name="revisit-after"' + ' content="' + other.value + '" />\n';
+                        } else {
+                            othertags += indent + '<base name="revisit-after"' + ' content="' + other.value + other.value2 + '" />\n';
+                        }
+                    }
+                    break;
             }
-                
-
-
         });
+
+        if (fmtDetection) {
+            othertags += indent + '<meta name="format-detection" content="' + fmtDetection.slice(0, -2) + '" />\n';
+        }
 
         if (othertags) { othertags = '<!-- Other Tags -->\n' + othertags + '\n' }
         
@@ -603,6 +627,11 @@
 
         respCodeText = html ? html.replace('$$$', finalContent) : finalContent;
         respCode = hljs.highlight(respCodeText, {language: 'xml'}).value;
+    }
+
+    function isDate(dt) {
+        let d = new Date(dt);
+        return d instanceof Date && !isNaN(d.valueOf());
     }
 
     function extractValue(item) {

@@ -165,9 +165,26 @@
                                     <option value="{tgt}">{tgt}</option>
                                 {/each}
                             </select>
+                        </div>     
+                    {:else if meta.type == 'rev'}
+                        <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
+                        <div class="base">
+                            {#if meta.value2 == '*'}
+                                <input type="date" bind:value={meta.value} min="{meta.min}" placeholder="Entre a data" style="width: 100%" />
+                            {:else}
+                                <input type="number" bind:value={meta.value} min="0" placeholder="{$lang.metas.pl[meta.pl] || ''}" />
+                            {/if}
                             
-                            
-                        </div>                         
+                            <select bind:value={meta.value2}>
+                                <option value=" days">{$lang.metas.tags.days}</option>
+                                <option value=" weeks">{$lang.metas.tags.weeks}</option>
+                                <option value=" months">{$lang.metas.tags.months}</option>
+                                <option value="*">{$lang.metas.tags.specdate}</option>
+
+                            </select>
+                        </div>                             
+                        
+
                 {:else if meta.type == 'latlon'}      
                     <div class="itemtitle">{$lang.metas.tags[meta.id]}</div>
                     <div class="latlon">
@@ -300,7 +317,7 @@
     .item > label {
         display: flex;
         gap: 12px;
-        align-items: center;
+        align-items: baseline;
         font-size: 16px;
     }
 
