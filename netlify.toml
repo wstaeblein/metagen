@@ -3,7 +3,37 @@ command = "npm run build"
 publish = "/dist"
 base = "/"
 
-[redirects]
-from = "/*"
+[[redirects]]
+from = "/"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/tags"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/bots"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/social"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/images"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/other"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/manifest"
 to = "/index.html"
 status = 200
