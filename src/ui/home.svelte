@@ -53,10 +53,9 @@
     
     ol.cards {
         list-style: none;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 2em;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1em;
         color: var(--text);
         padding: 0;
         margin: 0;
@@ -64,10 +63,9 @@
     }
 
     ol.cards > li {
-        width: 28%;
         background-color: #f9f9f9;
         border-radius: 9px;
-        padding: 10px 5px;
+        padding: 10px;
         box-shadow: 3px 3px 10px 2px #777;
     }
 
@@ -107,5 +105,27 @@
     .hero > div {
         text-align: justify; 
         max-width: 640px;
+    }
+
+    @media (max-width: 1250px) {
+        ol.cards {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2em;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .home h3, .home h5 {
+            text-align: center;
+        }
+        
+        .hero {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero > img {
+            margin: auto;
+        }
     }
 </style>

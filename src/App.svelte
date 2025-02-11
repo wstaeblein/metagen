@@ -38,6 +38,7 @@
     let infoDlg = null;
     let helpDlg= null;
     let helpTab = 'home';
+    let year = new Date().getFullYear();
 
     let availableLangs = [
         { label: 'Português', value: 'pt', img: 'img/flags/pt.png' },
@@ -200,7 +201,8 @@
             { id: 'icbm', tag: 'meta', name: 'ICBM', attr: 'content', value: '', type: 'latlon', half: true },
 
             
-            { id: 'gglver', tag: 'meta',  name: 'google-site-verification', attr: 'content', value: '', type: 'text' },
+            { id: 'gglver', tag: 'meta',  name: 'google-site-verification', attr: 'content', value: '', type: 'text' }
+
 
         ],
         manifest: []
@@ -809,7 +811,7 @@
 
     <div class="free">{$lang.dialog.msg}</div>
 
-    <p>{$lang.dialog.by} Walter Staeblein - 2024</p>
+    <p>{$lang.dialog.by} Walter Staeblein © 2024 - {year}</p>
     <ul>
         <li>
             <a href="mailto:contato@synergys.com.br"><i class="icon-at-sign"></i><span>Email</span></a>
