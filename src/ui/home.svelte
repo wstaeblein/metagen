@@ -3,29 +3,34 @@
 </script>
 
 <div class="home">
-    <h3>{$lang.hero.title}</h3>
-    <h5>{$lang.hero.subtitle}</h5>
-    <br>
+    <div>
+        <h3>{$lang.hero.title}</h3>
+        <h5>{$lang.hero.subtitle}</h5>
+        <br>
 
-    <div class="hero">
-        <img src="/img/rocket.png" alt="SEO" />
-        <div >
-            <p>{$lang.hero.text1}</p>
+        <div class="hero">
+            <img src="/img/rocket.png" alt="SEO" />
+            <div >
+                <p>{$lang.hero.text1}</p>
 
-            <p>{$lang.hero.text2}</p>
-            
-            <p>{$lang.hero.text3}</p>
-            
-            <ol class="cards">
-                {#each $lang.hero.cards as card}
-                    <li>
-                        <h6>{card.title}</h6>
-                        <div><i class="{card.icon}"></i></div>
-                        <div>{card.text}</div>
-                    </li>
-                {/each}                                                          
-            </ol>
+                <p>{$lang.hero.text2}</p>
+                
+                <p>{$lang.hero.text3}</p>
+                
+                <ol class="cards">
+                    {#each $lang.hero.cards as card}
+                        <li>
+                            <h6>{card.title}</h6>
+                            <div><i class="{card.icon}"></i></div>
+                            <div>{card.text}</div>
+                        </li>
+                    {/each}                                                          
+                </ol>
+            </div>        
         </div>
+    </div>
+
+    <div>
 
     </div>
 
@@ -118,7 +123,7 @@
         .home h3, .home h5 {
             text-align: center;
         }
-        
+
         .hero {
             flex-direction: column;
             align-items: center;

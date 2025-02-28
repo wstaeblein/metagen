@@ -1518,7 +1518,7 @@
     "en": {
         "name": "English",
         "hero": {
-            "title": "Meta Tag & Manifesto Generator",
+            "title": "Meta Tag & Manifest Generator",
             "subtitle": "Generate more traffic by creating meta tags correctly with this free and complete app",
             "text1": "Meta tags are an essential tool in the world of Search Engine Optimization (SEO) and have a significant impact on the online visibility of web pages. ",
             "text2": "Meta tags are additional labels in HTML (Hypertext Markup Language) that provide detailed information about a page, such as title, description and keywords. ",
@@ -1604,7 +1604,7 @@
         },
         "ui": {
             "result": "Result",
-            "manifest": "Web Manifesto",
+            "manifest": "Web Manifest",
             "mtgen": "Meta Tag Generator",
             "botgen": "Bot Tag Generator",
             "socialgen": "Social Tag Generator",
@@ -1626,7 +1626,7 @@
                 "social": "Social",
                 "icons": "Icons & Images",
                 "other": "Others",
-                "manifest": "Web Manifesto"
+                "manifest": "Web Manifest"
             }
         },
         "metas": {
@@ -1875,7 +1875,7 @@
                 "base": "Base directory",
                 "nocac": "Do not cache",
                 "hhfri": "Optimized for mobile apps",
-                "manif": "Web Manifesto",
+                "manif": "Web Manifest",
                 "url": "Page URL",
                 "image": "Image (URL)",
                 "imaget": "MIME type of the image",
@@ -6132,7 +6132,7 @@
         },
         "dialog": {
             "by": "Von",
-            "title": "Metatag & Web Manifesto Generator",
+            "title": "Metatag & Web Manifest Generator",
             "msg": "Uneingeschränkte Nutzung und 100 % kostenlos",
             "coffee": "Kaffee"
         },
