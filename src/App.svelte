@@ -140,7 +140,7 @@
                 items: [
                     { id: 'title', prop: 'og:title', value: '', max: [60, 70] },
                     { id: 'desc', prop: 'og:description', value: '', type: 'longtext', max: [160, 200] },
-                    { id: 'url', prop: 'og:url', value: '' },
+                    { id: 'url', prop: 'og:url', value: '', btn: { icon: 'icon-arrow-down', action: fillUrl} },
                     { id: 'image', prop: 'og:image', value: '' , action: getMime.bind(this, 'og', 'image', 'imaget') },
                     { id: 'imaget', prop: 'og:image:type', value: '', type: 'list', list: mimes, half: true  },
                     { id: 'imagealt', prop: 'og:image:alt', value: '', half: true  },
@@ -233,6 +233,20 @@
 // https://www.ciawebsites.com.br/ferramentas-de-seo/gerador-de-meta-tags/
 // https://easyretro.io/tools/meta-tag-generator/
 
+
+    function fillUrl() { console.log(cats.social)
+        let url = cats.social.find(s => s.id == 'og').items.find(s => s.id == 'url').value;
+        let img = cats.social.find(s => s.id == 'og').items.find(s => s.id == 'image');
+
+        if (!url.endsWith('/')) { url += '/'; }
+
+        if (!img.value.toLowerCase().startsWith('http')) {
+            let imgUrl = (url + img.value).replace('//', '/');
+            cats.social.find(s => s.id == 'og').items.find(s => s.id == 'image').value = imgUrl;
+            cats = cats;
+        }
+
+    }
 
     function getMime(socid, id, targetid) {
         let socItem = cats.social[socid == 'og' ? 0 : 1].items;

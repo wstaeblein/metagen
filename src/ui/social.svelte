@@ -143,8 +143,14 @@
                                     <div class="itemtitle">
                                         <div>{$lang.metas.tags[meta.id]}</div>
                                         {#if meta.max}<b>{meta.value.length}</b>{/if}
-                                    </div>                                    
-                                    <input type="text" list="{meta.id}" bind:value={meta.value} on:blur={meta.action || null} />
+                                    </div>       
+                                    <div class:txtbtn={meta.btn}>
+                                        <input type="text" list="{meta.id}" bind:value={meta.value} on:blur={meta.action || null} />
+                                        {#if meta.btn}
+                                            <span on:click={meta.btn.action.bind(this, meta)}><i class={meta.btn.icon}></i></span>
+                                        {/if}
+                                    </div>                             
+                                    
                                     {#if meta.max}
                                         <div>
                                             <meter min={0} max={meta.max[1] * 2} low={meta.max[0]} high={meta.max[1]} value={meta.value.length}></meter>
@@ -169,6 +175,21 @@
     
     
     <style>
+        .txtbtn {
+            position: relative;
+        }
+
+        .txtbtn > input {
+            padding-right: 36px;
+        }
+
+        .txtbtn > span {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            color: navy;
+            cursor: pointer;
+        }
 
         meter {
             width: 100%;
