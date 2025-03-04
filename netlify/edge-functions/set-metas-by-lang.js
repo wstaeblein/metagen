@@ -8,6 +8,8 @@ export default async (request, context) => {
     const langTag = request.headers.get('accept-language').split(';').shift();
     const lang = langTag.split('-').shift().toLowerCase();
 
+    console.log('LANG: ', langTag, lang)
+
     // If language isn't matched, return in english
     let title = 'Metatags, sitemaps and manifest generator';
     let desc = 'Generate more traffic by creating meta tags, sitemaps and web manifests correctly with this free and complete app';
@@ -35,7 +37,7 @@ export default async (request, context) => {
     }
 
     const response = await context.next();
-    const html = await response.text();
+    let html = await response.text();
   
     html = html.replace(/\$\$\$LANG\$\$\$/g, lang).replace(/\$\$\$TITLE\$\$\$/g, title).replace(/\$\$\$DESC\$\$\$/g, desc).replace(/\$\$\$LANGTAG\$\$\$/g, langTag);
   
