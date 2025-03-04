@@ -4,8 +4,8 @@
     const dispatch = createEventDispatcher();
 
     let data = {
-        baseUrl: 'https://passwordcat.top',
-        urlText: 'about\ncontact\nprivacy',
+        baseUrl: '',
+        urlText: '',
         urlArr: []
     }
 
