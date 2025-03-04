@@ -12,6 +12,7 @@
 	import Images from './ui/images.svelte';
 	import Manifest from './ui/manifest.svelte';
 	import Home from './ui/home.svelte';
+	import Sitemap from './ui/sitemap.svelte';
 	import Ctxmenu from './ui/ctxmenu.svelte';
     import { Router, Link, Route, navigate } from 'svelte-routing';
 
@@ -31,6 +32,8 @@
     let menuOpt = 0;
     let menuOpen = false;
     let respCode = '';
+    let siteMapCode = '';
+    let siteMapText = '';
     let respCodeText = '';
     let respManifestText = '';
     let cbCopyStatus = 0;
@@ -205,7 +208,8 @@
 
 
         ],
-        manifest: []
+        manifest: [],
+        sitemap: []
 
     }
     let debounceProcess = debounce(process, 300);
@@ -675,7 +679,8 @@
     }
 
     function code2Clipboard() {
-        navigator.clipboard.writeText(respCodeText).then(() => {
+        let txt = currRoute == '/sitemap' ? siteMapText : respCodeText;
+        navigator.clipboard.writeText(txt).then(() => {
                 /* clipboard successfully set */
                 cbCopyStatus = 1;
                 setTimeout(() => cbCopyStatus = 0, 1500);
@@ -709,6 +714,30 @@
     function changeLang(evt) {
         $langCode = evt.detail.value;
         //alert(evt.detail.label)
+    }
+
+    function processSiteMap(evt) { 
+        let sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+        let list = evt.detail;
+        console.log('EVT.DETAIL: ', list)
+        list.forEach(item => {
+            sm += makeItem(item);
+        });
+
+        sm += '</urlset>';
+        siteMapText = sm;
+        siteMapCode = hljs.highlight(siteMapText, {language: 'xml'}).value;
+        
+    }
+
+    
+    function makeItem(item) { console.log(item)
+        return '\t<url>\n' +
+            '\t\t<loc>' + item.url + '</loc>\n' + 
+            (item.lm     ? '\t\t<lastmod>'     + item.lm     + '</lastmod>\n'    : '') +  
+            (item.change ? '\t\t<changefreq>'  + item.change + '</changefreq>\n' : '') + 
+            (item.prio   ? '\t\t<priority>'    + item.prio   + '</priority>\n'   : '') + 
+            '\t</url>\n'
     }
 </script>
 
@@ -764,6 +793,10 @@
                     <Link to="/manifest" let:active>
                         <div class:sel={active}><i class="icon-file-text"></i><span>{$lang.ui.menu.manifest}</span></div>
                     </Link>
+                    <Link to="/sitemap" let:active>
+                        <div class:sel={active}><i class="icon-embed"></i><span>Sitemap.xml</span></div>
+                    </Link>
+                    
                 </div>
             </nav>
             <section >
@@ -791,11 +824,16 @@
                             <Manifest bind:data={cats.manifest}></Manifest>
                         </div>
                     </Route>
+                    <Route path="/sitemap">
+                        <Sitemap bind:data={cats.sitemap} on:change={processSiteMap}></Sitemap>
+                    </Route>                    
+                    
                 </div>
 
                 {#if currRoute != '/'}
                 
                     <div class="code bkg2">
+
                         <h2 class="between">
                             <span>{$lang.ui.result}</span>
                             {#if cbCopyStatus == 0}
@@ -808,9 +846,8 @@
                         </h2>
                         
                         <div>
-                            <pre><code>{@html respCode}</code></pre> 
+                            <pre><code>{@html currRoute == '/sitemap' ? siteMapCode : respCode}</code></pre> 
                         </div>
-
                     </div>
                 {/if}
             </section>
@@ -1244,10 +1281,9 @@
         min-height: 180px;
         max-height: 300px;
     }
-
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
 
     header {
         box-shadow: 0 2px 6px 0px #b3b3b3;

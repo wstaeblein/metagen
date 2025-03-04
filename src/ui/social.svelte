@@ -147,7 +147,7 @@
                                     <div class:txtbtn={meta.btn}>
                                         <input type="text" list="{meta.id}" bind:value={meta.value} on:blur={meta.action || null} />
                                         {#if meta.btn}
-                                            <span on:click={meta.btn.action.bind(this, meta)}><i class={meta.btn.icon}></i></span>
+                                            <span on:click={meta.btn.action.bind(this, meta)} aria-label="{$lang.tips.copybelow}" data-balloon-pos="up" data-balloon-length="medium"><i class={meta.btn.icon}></i></span>
                                         {/if}
                                     </div>                             
                                     

@@ -37,3 +37,8 @@ status = 200
 from = "/manifest"
 to = "/index.html"
 status = 200
+
+[[redirects]]
+from = "/sitemap"
+to = "/index.html"
+status = 200

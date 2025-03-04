@@ -78,7 +78,8 @@
             "notsel": "Item não selecionado",
             "issel": "Item selecionado",
             "repnext": "Repetir para o próximo",
-            "repall": "Repetir para todos"
+            "repall": "Repetir para todos",
+            "copybelow": "Copia url para item abaixo"
         },
         "dialog": {
             "by": "Por",
@@ -1594,7 +1595,8 @@
             "notsel": "Item not selected",
             "issel": "Selected item",
             "repnext": "Repeat for next",
-            "repall": "Repeat for everyone"
+            "repall": "Repeat for everyone",
+            "copybelow": "Copy url to item below"
         },
         "dialog": {
             "by": "By",
@@ -3105,7 +3107,8 @@
             "notsel": "Artículo no seleccionado",
             "issel": "Artículo seleccionado",
             "repnext": "repetir para el siguiente",
-            "repall": "Repetir para todos"
+            "repall": "Repetir para todos",
+            "copybelow": "Copie la URL al elemento siguiente"
         },
         "dialog": {
             "by": "Por",
@@ -4617,7 +4620,8 @@
             "notsel": "Article non sélectionné",
             "issel": "Article sélectionné",
             "repnext": "Répétez pour le suivant",
-            "repall": "Répétez pour tout le monde"
+            "repall": "Répétez pour tout le monde",
+            "copybelow": "Copier l'URL dans le champ ci-dessous"
         },
         "dialog": {
             "by": "Par",
@@ -6128,7 +6132,8 @@
             "notsel": "Element nicht ausgewählt",
             "issel": "Ausgewählter Artikel",
             "repnext": "Wiederholen Sie dies für den nächsten Schritt",
-            "repall": "Wiederholen Sie dies für alle"
+            "repall": "Wiederholen Sie dies für alle",
+            "copybelow": "URL in das Feld unten kopieren"
         },
         "dialog": {
             "by": "Von",
