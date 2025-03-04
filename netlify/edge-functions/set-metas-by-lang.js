@@ -1,8 +1,11 @@
 export default async (request, context) => {
     const url = new URL(request.url);
   
-    // Look for the home page
-    if (url.pathname != '/') { return; }
+/*     // Look for the home page
+    if (url.pathname != '/') { return; } */
+
+    console.log('URL: ', url.href)
+    console.log('accept-language: ', request.headers.get('accept-language'))
   
     // Get lang
     const langTag = request.headers.get('accept-language').split(';').shift();
@@ -42,5 +45,5 @@ export default async (request, context) => {
     html = html.replace(/\$\$\$LANG\$\$\$/g, lang).replace(/\$\$\$TITLE\$\$\$/g, title).replace(/\$\$\$DESC\$\$\$/g, desc).replace(/\$\$\$LANGTAG\$\$\$/g, langTag);
   
     // Return the response
-    return new Response(updatedPage, response);
+    return new Response(html, response);
 };
