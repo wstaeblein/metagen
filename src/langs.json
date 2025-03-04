@@ -7,6 +7,7 @@
             "text1": "Os meta tags são uma ferramenta essencial no universo da Otimização para Mecanismos de Busca (SEO) e têm um impacto significativo na visibilidade online das páginas web. Embora muitas pessoas não estejam cientes da sua importância, os meta tags desempenham um papel crucial ao ajudar os mecanismos de busca a indexarem corretamente as páginas web.",
             "text2": "Os meta tags são etiquetas adicionais em HTML (Hypertext Markup Language) que fornecem informações detalhadas sobre uma página, como título, descrição e palavras-chave. Essas tags são \"metadados\" ou dados que não visuais para o usuário final, mas que são fundamentais para os mecanismos de busca.",
             "text3": "Crie também um manifesto web para facilmente transformar seu website num app pronto para mobile que pode ser instalado e está preparado para rodar em qualquer dispositivo.",
+            "text4": "Um sitemap também pode ser criado apenas colando as urls numa caixa de texto. Com ele os mecanismos de busca poderão facilmente indexar todas as páginas do seu site e saber quando é melhor voltar a visita-las.",
             "cardstitle": "O Que Este App Pode Fazer Por Você",
             "cardsdesc": "E tudo isso é 100% gratuito e anônimo!",
             "cards": [
@@ -124,7 +125,7 @@
         },
         "dialog": {
             "by": "Por",
-            "title": "Gerador de Metatags & Manifesto Web",
+            "title": "Gerador de Metatags, Manifesto Web & Sitemaps",
             "msg": "De uso irrestrito e 100% gratuito",
             "coffee": "Café"
         },
@@ -1579,9 +1580,10 @@
         "hero": {
             "title": "Meta Tag & Manifest Generator",
             "subtitle": "Generate more traffic by creating meta tags correctly with this free and complete app",
-            "text1": "Meta tags are an essential tool in the world of Search Engine Optimization (SEO) and have a significant impact on the online visibility of web pages. ",
-            "text2": "Meta tags are additional labels in HTML (Hypertext Markup Language) that provide detailed information about a page, such as title, description and keywords. ",
+            "text1": "Meta tags are an essential tool in the world of Search Engine Optimization (SEO) and have a significant impact on the online visibility of web pages. Although many people are not aware of their importance, meta tags play a crucial role in helping search engines index web pages correctly.",
+            "text2": "Meta tags are additional tags in HTML (Hypertext Markup Language) that provide detailed information about a page, such as the title, description, and keywords. These tags are \"metadata,\" or data that is not visible to the end user but is essential to search engines.",
             "text3": "Also create a web manifest to easily transform your website into a mobile-ready app that can be installed and ready to run on any device.",
+            "text4": "A sitemap can also be created by simply pasting the URLs into a text box. With it, search engines can easily index all the pages on your site and know when it is best to revisit them.",
             "cardstitle": "What This App Can Do For You",
             "cardsdesc": "And all this is 100% free and anonymous!",            
             "cards": [
@@ -1682,7 +1684,7 @@
         },
         "dialog": {
             "by": "By",
-            "title": "Metatags & Web Manifest Generator",
+            "title": "Metatags, Web Manifest Generator & Sitemaps",
             "msg": "100% unlimited and free use",
             "coffee": "Coffee"
         },
@@ -3135,6 +3137,7 @@
             "text1": "Las metaetiquetas son una herramienta esencial en el mundo de la optimización de motores de búsqueda (SEO) y tienen un impacto significativo en la visibilidad en línea de las páginas web. ",
             "text2": "Las metaetiquetas son etiquetas adicionales en HTML (lenguaje de marcado de hipertexto) que proporcionan información detallada sobre una página, como título, descripción y palabras clave. ",
             "text3": "Cree también un manifiesto web para transformar fácilmente su sitio web en una aplicación lista para dispositivos móviles que pueda instalarse y estar lista para ejecutarse en cualquier dispositivo.",
+            "text4": "Se puede crear fácilmente un sitemap simplemente pegando las URL en un cuadro de texto. Con él, los motores de búsqueda podrán indexar fácilmente todas las páginas de tu sitio web y saber cuándo es mejor volver a visitarlas.",
             "cardstitle": "Lo que esta aplicación puede hacer por usted",
             "cardsdesc": "¡Y todo esto es 100% gratis y anónimo!",      
             "cards": [
@@ -3235,7 +3238,7 @@
         },
         "dialog": {
             "by": "Por",
-            "title": "Generador de metaetiquetas y manifiesto web",
+            "title": "Generador de metaetiquetas, manifiesto web y sitemaps",
             "msg": "Uso ilimitado y 100% gratuito",
             "coffee": "Café"
         },
@@ -4689,6 +4692,7 @@
             "text1": "Les balises méta sont un outil essentiel dans le monde de l’optimisation des moteurs de recherche (SEO) et ont un impact significatif sur la visibilité en ligne des pages Web. ",
             "text2": "Les balises méta sont des étiquettes supplémentaires en HTML (Hypertext Markup Language) qui fournissent des informations détaillées sur une page, telles que le titre, la description et les mots-clés. ",
             "text3": "Créez également un manifeste Web pour transformer facilement votre site Web en une application prête pour les mobiles qui peut être installée et prête à être exécutée sur n'importe quel appareil.",
+            "text4": "Un sitemap peut être facilement créé en collant simplement les URL dans une zone de texte. Grâce à cela, les moteurs de recherche pourront facilement indexer toutes les pages de votre site Web et savoir quand il est préférable de les visiter à nouveau.",
             "cardstitle": "Ce que cette application peut faire pour vous",
             "cardsdesc": "Et tout cela est 100% gratuit et anonyme !",   
             "cards": [
@@ -4783,7 +4787,7 @@
         },
         "dialog": {
             "by": "Par",
-            "title": "Générateur de balises méta et manifeste Web",
+            "title": "Générateur de balises méta, manifeste Web et Sitemaps",
             "msg": "Utilisation illimitée et 100% gratuite",
             "coffee": "Café"
         },
@@ -6236,6 +6240,7 @@
             "text1": "Meta-Tags sind ein wesentliches Werkzeug in der Welt der Suchmaschinenoptimierung (SEO) und haben einen erheblichen Einfluss auf die Online-Sichtbarkeit von Webseiten. ",
             "text2": "Meta-Tags sind zusätzliche Beschriftungen in HTML (Hypertext Markup Language), die detaillierte Informationen zu einer Seite bereitstellen, beispielsweise Titel, Beschreibung und Schlüsselwörter. ",
             "text3": "Erstellen Sie außerdem ein Webmanifest, um Ihre Website ganz einfach in eine für Mobilgeräte geeignete App umzuwandeln, die auf jedem Gerät installiert und ausgeführt werden kann.",
+            "text4": "Eine Sitemap kann ganz einfach erstellt werden, indem Sie die URLs einfach in ein Textfeld einfügen. Damit können Suchmaschinen alle Seiten Ihrer Website problemlos indizieren und wissen, wann der beste Zeitpunkt für einen erneuten Besuch ist.",
             "cardstitle": "Was diese App für Sie tun kann",
             "cardsdesc": "Und das alles ist 100 % kostenlos und anonym!",   
             "cards": [
@@ -6330,7 +6335,7 @@
         },
         "dialog": {
             "by": "Von",
-            "title": "Metatag & Web Manifest Generator",
+            "title": "Metatag, Web Manifest & Sitemap Generator",
             "msg": "Uneingeschränkte Nutzung und 100 % kostenlos",
             "coffee": "Kaffee"
         },

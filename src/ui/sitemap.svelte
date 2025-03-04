@@ -1,5 +1,5 @@
 <script>
-    import { createEventDispatcher, tick } from 'svelte';
+    import { createEventDispatcher, tick, onMount } from 'svelte';
     import { lang } from '../stores.js';
 
     const dispatch = createEventDispatcher();
@@ -9,15 +9,18 @@
         urlText: '',
         urlArr: []
     }
+    let isUrlFlag = true;
+
+    onMount(() => {
+        
+    });
 
 
     function processURLs() {
 
-        let sm = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-
         data.urlArr = [];
 
-        if (data.baseUrl) {
+        if (data.baseUrl && isUrl(data.baseUrl)) {
             data.urlArr.push(newItem(data.baseUrl));
         }
 
@@ -73,6 +76,22 @@
     function changeMe() { 
         setTimeout(() => dispatch('change', data.urlArr), 0);
     }
+
+    function checkUrl() {
+        if (data.baseUrl) {
+            isUrlFlag = isUrl(data.baseUrl);
+        }
+    }
+
+    function isUrl(url) {
+        try {
+            let x = new URL(data.baseUrl);
+            return true;
+
+        } catch (error) {
+            return false;
+        }   
+    }
 </script>
 
 <section>
@@ -81,12 +100,15 @@
         
         <div>
             <div class="itemtitle">{$lang.sitemap.baseurl}</div>
-            <input type="url" bind:value={data.baseUrl} on:blur={processURLs} />
+            <div class:error={!isUrlFlag} class="baseurl">
+                <input type="url" bind:value={data.baseUrl} on:blur={processURLs} on:input={checkUrl} />
+                <i class="icon-bug"></i>
+            </div>
         </div>
         <br>
         <div>
             <div class="itemtitle">{$lang.sitemap.otherurls}</div>
-            <div class="itemsubtitle">{$lang.sitemap.otherurlsdesc}</div>
+            <div class="subtitle">{$lang.sitemap.otherurlsdesc}</div>
             <textarea rows="10" on:blur={processURLs} bind:value={data.urlText}></textarea>
         </div>
 
@@ -137,13 +159,25 @@
 
 
 <style>
-
-    .itemsubtitle {
-        font-size: 14px;
-        color: #fff;
-        text-shadow: 1px 1px 0 #39348a;
-        padding-bottom: 5px;
+    .error {
+        position: relative;
     }
+
+    .error > input {
+        border-right: 40px solid crimson;
+    }
+    .error > i {
+        position: absolute;
+        right: 12px;
+        top: 11px;
+        display: inline-block !important;
+        color: #fff;
+    }
+
+    .baseurl > i {
+        display: none;
+    }
+
 
     .ctt {
         overflow-y: auto;

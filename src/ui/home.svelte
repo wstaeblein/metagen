@@ -16,6 +16,8 @@
                 <p>{$lang.hero.text2}</p>
                 
                 <p>{$lang.hero.text3}</p>
+
+                <p>{$lang.hero.text4}</p>
             </div>
         </div>  
         <div class="cards">

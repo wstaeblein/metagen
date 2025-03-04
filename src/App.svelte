@@ -20,9 +20,11 @@
     import hljs from 'highlight.js/lib/core';
     import 'highlight.js/styles/github.css';
     // @ts-ignore
-    import xml from 'highlight.js/lib/languages/xml';
+    import lang_xml from 'highlight.js/lib/languages/xml';
+    import lang_json from 'highlight.js/lib/languages/json';
 
-    hljs.registerLanguage('xml', xml);
+    hljs.registerLanguage('xml', lang_xml);
+    hljs.registerLanguage('json', lang_json);
 
     export let url = "";
 
@@ -34,8 +36,10 @@
     let respCode = '';
     let siteMapCode = '';
     let siteMapText = '';
+    let manifestCode = '';
+    let manifestText = '';    
     let respCodeText = '';
-    let respManifestText = '';
+    //let respManifestText = '';
     let cbCopyStatus = 0;
     let cbCopyStatus2 = 0;
     let infoDlg = null;
@@ -221,9 +225,8 @@
     });
     observer.observe(document, {subtree: true, childList: true});
 
-   // @ts-ignore
-     $: debounceProcess(cats);
- 
+    // @ts-ignore
+    $: debounceProcess(cats);
 
 
     onMount(() => {
@@ -627,7 +630,7 @@
             }
         ]
 
-        // MANIFEST
+/*         // MANIFEST
         let manifObj = {}, tmpIcons = []
         dataObj.manifest.forEach(man => {
             if (man.sel || man.req) {
@@ -641,7 +644,8 @@
                 }
             }
         });
-        respManifestText = JSON.stringify(manifObj, null, 4);
+        respManifestText = JSON.stringify(manifObj, null, 4); */
+        processManifest();
 
         let finalContent = metatags + indent + bottags + indent + soctags + indent + imgtags + indent + othertags;
 
@@ -679,7 +683,14 @@
     }
 
     function code2Clipboard() {
-        let txt = currRoute == '/sitemap' ? siteMapText : respCodeText;
+        let txt = '';
+
+        switch(currRoute) {
+            case '/sitemap': txt = siteMapText; break;
+            case '/manifest': txt = manifestText; break;
+            default:  txt = respCodeText; break;
+        }
+
         navigator.clipboard.writeText(txt).then(() => {
                 /* clipboard successfully set */
                 cbCopyStatus = 1;
@@ -716,10 +727,31 @@
         //alert(evt.detail.label)
     }
 
+
+    function processManifest() {
+        // MANIFEST
+        let manifObj = {}, tmpIcons = []
+        cats.manifest.forEach(man => {
+            if (man.sel || man.req) {
+                switch (man.type) {
+                    case 'icons':
+                        manifObj.icons = man.val;                break;
+                    case 'object':
+                        manifObj[man.label] = man.val;           break;
+                    default:
+                        manifObj[man.label] = extractValue(man); break;                        
+                }
+            }
+        });
+        manifestText = JSON.stringify(manifObj, null, 4);;    
+        manifestCode = hljs.highlight(manifestText, {language: 'json'}).value;
+
+    }
+
     function processSiteMap(evt) { 
         let sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
         let list = evt.detail;
-        console.log('EVT.DETAIL: ', list)
+
         list.forEach(item => {
             sm += makeItem(item);
         });
@@ -760,7 +792,7 @@
                 <span on:click={() => infoDlg.showModal()} aria-label="{$lang.tips.about}" data-balloon-pos="down"><i class="icon-info"></i></span>
                 <span on:click={() => helpDlg.showModal()} aria-label="{$lang.tips.help2}" data-balloon-pos="down"><i class="icon-help-circle"></i></span>
                 <a href="https://buymeacoffee.com/wstaeblein" class="noclr" target="_blank" aria-label="{$lang.tips.coffee}" data-balloon-pos="down"><i class="icon-coffee"></i></a>
-                <span on:click={() => location.reload()} aria-label="{$lang.tips.cls}" data-balloon-pos="down"><i class="icon-trash-2"></i></span>
+                <span on:click={() => location.reload()} aria-label="{$lang.tips.cls}" data-balloon-pos="down"><i class="icon-rotate-ccw"></i></span>
                 <Ctxmenu items={availableLangs} bind:sel={$langCode} align="right bottom" on:menuchoice={changeLang}></Ctxmenu>
                 
             </div>
@@ -794,7 +826,7 @@
                         <div class:sel={active}><i class="icon-file-text"></i><span>{$lang.ui.menu.manifest}</span></div>
                     </Link>
                     <Link to="/sitemap" let:active>
-                        <div class:sel={active}><i class="icon-embed"></i><span>Sitemap.xml</span></div>
+                        <div class:sel={active}><i class="icon-embed"></i><span>Sitemap</span></div>
                     </Link>
                     
                 </div>
@@ -846,7 +878,7 @@
                         </h2>
                         
                         <div>
-                            <pre><code>{@html currRoute == '/sitemap' ? siteMapCode : respCode}</code></pre> 
+                            <pre><code>{@html currRoute == '/sitemap' ? siteMapCode : currRoute == '/manifest' ? manifestCode : respCode}</code></pre> 
                         </div>
                     </div>
                 {/if}
@@ -897,6 +929,7 @@
                 <li class:sel={helpTab == 'home'} on:click={() => helpTab = 'home'}><i class="icon-home smaller"></i></li>
                 <li class:sel={helpTab == 'meta'} on:click={() => helpTab = 'meta'}>Metatags</li>
                 <li class:sel={helpTab == 'mani'} on:click={() => helpTab = 'mani'}>Manifesto</li>            
+                <li class:sel={helpTab == 'sima'} on:click={() => helpTab = 'sima'}>Sitemap</li>            
             </ul>
         </div>
         <div>
@@ -922,15 +955,47 @@
                     <p>{@html $lang.howto.meta.p3.replace('$$', '<b>#S</b>').replace('$$', '<b>#P</b>').replace('$$', '<b>precomposed</b>')}</p>
                 </div>
 
-            {:else}
-            <div>
-                <p>{@html $lang.howto.mani.p1.replace('$$', '<b><i class="icon-copy"></i></b>').replace('$$', '<b>icons</b>')}</p>
-                <p>{@html $lang.howto.mani.p2.replace('$$', '<b><i class="icon-chevron-down"></i></b>').replace('$$', '<b><i class="icon-chevrons-down"></i></b>')}</p>
-                <p>{@html $lang.howto.mani.p3.replace('$$', '<b>categories</b>').replace('$$', '<b>display_override</b>')}</p>
-                <p>{@html $lang.howto.mani.p4.replace('$$', '<b>shortcuts</b>').replace('$$', '<b>screenshots</b>').replace('$$', '<b><i class="icon-trash-2"></i></b>')}</p>
-                <p>{@html $lang.howto.mani.p5}</p>
+            {:else if helpTab == 'mani'}
+                <div>
+                    <p>{@html $lang.howto.mani.p1.replace('$$', '<b><i class="icon-copy"></i></b>').replace('$$', '<b>icons</b>')}</p>
+                    <p>{@html $lang.howto.mani.p2.replace('$$', '<b><i class="icon-chevron-down"></i></b>').replace('$$', '<b><i class="icon-chevrons-down"></i></b>')}</p>
+                    <p>{@html $lang.howto.mani.p3.replace('$$', '<b>categories</b>').replace('$$', '<b>display_override</b>')}</p>
+                    <p>{@html $lang.howto.mani.p4.replace('$$', '<b>shortcuts</b>').replace('$$', '<b>screenshots</b>').replace('$$', '<b><i class="icon-trash-2"></i></b>')}</p>
+                    <p>{@html $lang.howto.mani.p5}</p>
 
-            </div>
+                </div>
+            {:else}
+                <div>
+                    <p>Para criar um sitemap, entre a url base do seu site na caixa de texto e depois as outras (das páginas) na próxima caixa de texto.</p>
+                    <p>As urls das páginas podem ser entradas separadas por um dos seguintes separadores: vírgula, ponto e vírgula, TAB ou um por linha (ENTER).</p>
+                    <p>Abaixo estão alguns exemplos de entradas usando a url https://site.com como primária</p>
+
+                    <ol>
+                        <li style="display: flex; gap: 10px; flex-wrap: wrap">
+                            <code>
+                                /sobre, /contato, /news
+                            </code>
+                            <code>
+                                /sobre; /contato; /news
+                            </code>     
+                            <code>
+                                /sobre  /contato    /news
+                            </code>                                                      
+                        </li>
+                        <li>
+                            <pre>
+/sobre
+/contato
+/news</pre>
+                            <pre>
+https://site.com/sobre
+https://site.com/contato
+https://site.com/news</pre>                    
+                        </li>                        
+                    </ol>
+                    <p>Uma vez digitadas as urls, uma lista com elas aparecerá mais abaixo. Ali você poderá configurar os campos extras do sitemap como última modificação, frequência e prioridade para cada url.</p>
+                    <p>Quando estiver tudo ok, clique no botão de copiar no topo dos resultados para copiar seu sitemap para a área de transferência.</p>
+                </div>
             {/if}        
         </div>        
     </aside>
@@ -988,9 +1053,9 @@
         margin-bottom: 10px;
     }
 
-    dialog.howto > div:first-child {
+/*     dialog.howto > div:first-child {
         margin-bottom: 15px;
-    }
+    } */
 
     dialog.howto ul > li {
         padding: 2px 15px 5px;
@@ -1012,6 +1077,21 @@
     dialog.howto ul > li:not(.sel) {
         cursor: pointer;
     }
+
+    dialog.howto code, dialog.howto pre {
+        padding: 10px;
+        border: 1px dotted navy;
+
+    }
+
+    dialog.howto pre {
+        padding: 10px;
+        border: 1px dotted navy;
+        display: inline-block;
+        width: min-content;
+        white-space: pre-wrap;
+    }
+
 
     dialog::backdrop {
         background-color: #001021cc;

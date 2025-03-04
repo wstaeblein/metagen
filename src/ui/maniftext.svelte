@@ -1,5 +1,4 @@
 <script context="module">
-
     // Permite que caixas de texto se expandam ao receber conteúdo de um dos botões de replicar conteúdo (setNext ou setAll)
     export let readjustFlag = false;
 

@@ -17,12 +17,14 @@
     }
 
     function change() {
-        obj.sel = !!obj.val.length;
         if (newItem) { 
-            if (!obj.val.includes(newItem)) { obj.val.push(newItem); }
+            obj.sel = true;
+            if (!obj.val.includes(newItem)) { 
+                obj.val.push(newItem); 
+                obj = obj;                    
+            }
             newItem = '';
-            obj = obj;
-        }
+        }            
     }
 
     function delItem(index) {

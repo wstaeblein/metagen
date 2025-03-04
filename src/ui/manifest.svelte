@@ -128,7 +128,7 @@
                 <i class="icon-help-circle aux"></i>
             </button>
         
-            {#if copyStatus == 0}
+<!--             {#if copyStatus == 0}
                 <button on:click={copyProxy} aria-label="{$lang.tips.copyman}" data-balloon-pos="down-right" data-balloon-length="medium">
                     <i class="icon-copy"></i>
                 </button>   
@@ -136,7 +136,7 @@
                 <span class="msg copyok"><i class="icon-thumbs-up"></i></span>
             {:else}
                 <span class="msg copyerr"><i class="icon-thumbs-down"></i></span>
-            {/if}             
+            {/if}     -->         
         </span>
 
     </h2>

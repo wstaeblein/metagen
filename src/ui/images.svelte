@@ -239,15 +239,7 @@
         width: 50%;
         flex-grow: 1;
     }
-
-
-    .subtitle {
-        font-weight: bold;
-        font-size: 16px;
-        text-shadow: 1px 1px 0 #000;
-        margin-bottom: 5px;
-    }
-    
+   
     ul.sizes {
         display: flex;
         gap: 8px;

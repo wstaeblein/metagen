@@ -114,6 +114,14 @@ button.small {
     border: 1px solid rgba(255, 255, 255, 0.45);
 }
 
+
+.subtitle {
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: 1px 1px 0 #000;
+    margin-bottom: 5px;
+}
+
 .upper {
     text-transform: uppercase;
 }
