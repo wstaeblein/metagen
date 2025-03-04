@@ -178,7 +178,7 @@
         justify-content: space-between;
         gap: 20px;
         align-items: center;
-        text-transform: uppercase;
+
     }
 
     textarea {
