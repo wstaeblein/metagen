@@ -86,7 +86,7 @@
     div.cards > ol, div.sites > ol {
         list-style: none;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
         gap: 1em;
         color: var(--text);
         padding: 0;
@@ -156,11 +156,6 @@
         font-size: smaller;
     }
 
-    div.sites > ol > li > a > div > i {
-        font-size: 52px;
-        color: var(--hilite);
-        text-shadow: 2px 2px 0 #444;
-    }
 
 
 

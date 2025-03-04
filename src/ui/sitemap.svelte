@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher, tick } from 'svelte';
+    import { lang } from '../stores.js';
 
     const dispatch = createEventDispatcher();
 
@@ -26,7 +27,6 @@
             [
                 { char: ',',   len: howMany(data.urlText, ',') },
                 { char: ';',   len: howMany(data.urlText, ';') },
-                { char: ' ',   len: howMany(data.urlText, ' ') },
                 { char: '\\t', len: howMany(data.urlText, '\\t') },
                 { char: '\\n', len: howMany(data.urlText, '\\n') },
             ].forEach(h => {
@@ -36,24 +36,26 @@
                 }
             });
 
-            if (higher) {
-                let arr = data.urlText.split(new RegExp(higher.char));
-                console.log(arr)
-
-                if (arr && arr.length) {
-                    arr.forEach(itm => {
-                        try {
-                            if (!itm.startsWith('http')) { itm = new URL(itm, data.baseUrl).href; }
-                            data.urlArr.push(newItem(itm));
-
-                        } catch (error) {
-                            console.log('ERROR on: ' + itm)
-                        }
-                    });
-                }
-            } else {
-                // No valid separators found
+            console.log('HIGHER: ', higher)
+            if (!higher) {
+                higher = { char: '\\n', len: howMany(data.urlText, '\\n') }
             }
+            let arr = data.urlText.split(new RegExp(higher.char)).filter((a => !!a.trim()));
+            console.log(arr)
+
+            if (arr && arr.length) {
+                arr.forEach(itm => {
+                    try {
+                        if (!itm.startsWith('http')) { itm = new URL(itm, data.baseUrl).href; }
+                        data.urlArr.push(newItem(itm));
+
+                    } catch (error) {
+
+                        console.log('ERROR on: ' + itm)
+                    }
+                });
+            }
+
         }
         dispatch('change', data.urlArr);
     }
@@ -78,12 +80,13 @@
     <div class="ctt">
         
         <div>
-            <div class="itemtitle">Insira a url base do site</div>
+            <div class="itemtitle">{$lang.sitemap.baseurl}</div>
             <input type="url" bind:value={data.baseUrl} on:blur={processURLs} />
         </div>
         <br>
         <div>
-            <div class="itemtitle">Insira as demais urls do site (absolutas ou relativas)</div>
+            <div class="itemtitle">{$lang.sitemap.otherurls}</div>
+            <div class="itemsubtitle">{$lang.sitemap.otherurlsdesc}</div>
             <textarea rows="10" on:blur={processURLs} bind:value={data.urlText}></textarea>
         </div>
 
@@ -95,24 +98,20 @@
                 </div>
                 <div class="divide">
                     <div>
-                        <div class="itemtitle">Last Mod</div>
+                        <div class="itemtitle">{$lang.sitemap.lastmod}</div>
                         <input type="date" bind:value={item.lm} on:input={changeMe} />
                     </div>
                     <div>
-                        <div class="itemtitle">Frequency</div>
+                        <div class="itemtitle">{$lang.sitemap.freq}</div>
                         <select bind:value={item.change} on:input={changeMe}>
                             <option></option>
-                            <option>always</option>
-                            <option>hourly</option>
-                            <option>daily</option>
-                            <option>weekly</option>
-                            <option>monthly</option>
-                            <option>yearly</option>
-                            <option>never</option>
+                            {#each Object.entries($lang.sitemap.freqlist) as [val, lbl]}
+                                <option value="{val}">{lbl}</option>
+                            {/each}
                         </select>
                     </div>     
                     <div>
-                        <div class="itemtitle">Priority</div>
+                        <div class="itemtitle">{$lang.sitemap.prio}</div>
                         <select bind:value={item.prio} on:input={changeMe}>
                             <option></option>
                             <option>0</option>
@@ -138,6 +137,13 @@
 
 
 <style>
+
+    .itemsubtitle {
+        font-size: 14px;
+        color: #fff;
+        text-shadow: 1px 1px 0 #39348a;
+        padding-bottom: 5px;
+    }
 
     .ctt {
         overflow-y: auto;

@@ -1555,7 +1555,24 @@
                 "id": "ZW",
                 "val": "Zimbábue"
             }
-        ]
+        ],
+        "sitemap": {
+            "baseurl": "Insira a url base do site",
+            "otherurls": "Insira as demais urls do site (absolutas ou relativas)",
+            "otherurlsdesc": "Podem ser separadas por vírgula, ponto e vírgula, TAB ou um por linha.",
+            "lastmod": "Última Modificação",
+            "freq": "Frequência",
+            "prio": "Prioridade",
+            "freqlist": {
+                "always": "Sempre",
+                "hourly": "Horariamente",
+                "daily": "Diariamente",
+                "weekly": "Semanalmente",
+                "monthly": "Mensalmente",
+                "yearly": "Anualmente",
+                "never": "Nunca"
+            }
+        }
     },
     "en": {
         "name": "English",
@@ -1565,6 +1582,8 @@
             "text1": "Meta tags are an essential tool in the world of Search Engine Optimization (SEO) and have a significant impact on the online visibility of web pages. ",
             "text2": "Meta tags are additional labels in HTML (Hypertext Markup Language) that provide detailed information about a page, such as title, description and keywords. ",
             "text3": "Also create a web manifest to easily transform your website into a mobile-ready app that can be installed and ready to run on any device.",
+            "cardstitle": "What This App Can Do For You",
+            "cardsdesc": "And all this is 100% free and anonymous!",            
             "cards": [
                 {
                     "title": "Meta tags",
@@ -1595,6 +1614,28 @@
                     "title": "Manifest",
                     "icon": "icon-file-text",
                     "text": "Create a web manifest for your apps and PWAs quickly and easily"
+                }
+            ],
+            "sitestitle": "Other Interesting Sites",
+            "sitesdesc": "Visit our other sites and discover free services and entertainment",
+            "sites": [
+                {
+                    "name": "Panda Cub App",
+                    "desc": "Application to easily reduce the size and even dimensions of images in JPG, PNG and WEBP formats.",
+                    "id": "pandacub",
+                    "link": "https://pandacub.app/"
+                },
+                {
+                    "name": "Password Cat",
+                    "desc": "Is your password easy to hack? Is it strong enough? Find out using this password strength meter",
+                    "id": "passcat",
+                    "link": "https://passwordcat.top/"
+                },
+                {
+                    "name": "Game of Life",
+                    "desc": "Implementation of the cellular automaton known as the game of life. Shows how simple rules can generate great complexity.",
+                    "id": "gol",
+                    "link": "https://g-o-l.netlify.app/"
                 }
             ]
         },
@@ -3067,7 +3108,24 @@
                 "id": "ZW",
                 "val": "Zimbabwe"
             }
-        ]
+        ],
+        "sitemap": {
+            "baseurl": "Enter the site's base url",
+            "otherurls": "Enter the site's other URLs (absolute or relative)",
+            "otherurlsdesc": "They can be separated by comma, semicolon, TAB or one per line.",
+            "lastmod": "Last Modified",
+            "freq": "Frequency",
+            "prio": "Priority",
+            "freqlist": {
+                "always": "Always",
+                "hourly": "Hourly",
+                "daily": "Daily",
+                "weekly": "Weekly",
+                "monthly": "Monthly",
+                "yearly": "Yearly",
+                "never": "Never"
+            }
+        }
     },
     "es": {
         "name": "Español",
@@ -3077,6 +3135,8 @@
             "text1": "Las metaetiquetas son una herramienta esencial en el mundo de la optimización de motores de búsqueda (SEO) y tienen un impacto significativo en la visibilidad en línea de las páginas web. ",
             "text2": "Las metaetiquetas son etiquetas adicionales en HTML (lenguaje de marcado de hipertexto) que proporcionan información detallada sobre una página, como título, descripción y palabras clave. ",
             "text3": "Cree también un manifiesto web para transformar fácilmente su sitio web en una aplicación lista para dispositivos móviles que pueda instalarse y estar lista para ejecutarse en cualquier dispositivo.",
+            "cardstitle": "Lo que esta aplicación puede hacer por usted",
+            "cardsdesc": "¡Y todo esto es 100% gratis y anónimo!",      
             "cards": [
                 {
                     "title": "metaetiquetas",
@@ -3108,7 +3168,29 @@
                     "icon": "icon-file-text",
                     "text": "Cree un manifiesto web para sus aplicaciones y PWA de forma rápida y sencilla"
                 }
-            ]
+            ],
+            "sitestitle": "Otros sitios interesantes",
+            "sitesdesc": "Visita nuestros otros sitios y descubre servicios y entretenimiento gratuitos",
+            "sites": [
+                {
+                    "name": "Panda Cub App",
+                    "desc": "Aplicación para reducir fácilmente el tamaño y las dimensiones de imágenes en formatos JPG, PNG y WEBP.",
+                    "id": "pandacub",
+                    "link": "https://pandacub.app/"
+                },
+                {
+                    "name": "Password Cat",
+                    "desc": "¿Es fácil hackear tu contraseña? ¿Es lo suficientemente segura? Descúbrelo con este medidor de seguridad de contraseñas",
+                    "id": "passcat",
+                    "link": "https://passwordcat.top/"
+                },
+                {
+                    "name": "Game of Life",
+                    "desc": "Implementación de la automatización celular conocida como el juego de la vida. Muestra cómo reglas simples pueden generar una gran complejidad.",
+                    "id": "gol",
+                    "link": "https://g-o-l.netlify.app/"
+                }
+            ]            
         },
         "howto": {
             "home": {
@@ -4580,7 +4662,24 @@
                 "id": "ZW",
                 "val": "Zimbabue"
             }
-        ]
+        ],
+        "sitemap": {
+            "baseurl": "Introduzca la URL base del sitio",
+            "otherurls": "Introduzca las otras URL del sitio (absolutas o relativas)",
+            "otherurlsdesc": "Pueden separarse por coma, punto y coma, TAB o una por línea.",
+            "lastmod": "Última Modificación",
+            "freq": "Frecuencia",
+            "prio": "Prioridad",
+            "freqlist": {
+                "always": "Siempre",
+                "hourly": "Cada hora",
+                "daily": "Cada día",
+                "weekly": "Cada semana",
+                "monthly": "Cada mes",
+                "yearly": "Cada año",
+                "never": "Nunca"
+            }
+        }
     },
     "fr": {
         "name": "Français",
@@ -4590,6 +4689,8 @@
             "text1": "Les balises méta sont un outil essentiel dans le monde de l’optimisation des moteurs de recherche (SEO) et ont un impact significatif sur la visibilité en ligne des pages Web. ",
             "text2": "Les balises méta sont des étiquettes supplémentaires en HTML (Hypertext Markup Language) qui fournissent des informations détaillées sur une page, telles que le titre, la description et les mots-clés. ",
             "text3": "Créez également un manifeste Web pour transformer facilement votre site Web en une application prête pour les mobiles qui peut être installée et prête à être exécutée sur n'importe quel appareil.",
+            "cardstitle": "Ce que cette application peut faire pour vous",
+            "cardsdesc": "Et tout cela est 100% gratuit et anonyme !",   
             "cards": [
                 {
                     "title": "Balises méta",
@@ -4620,6 +4721,22 @@
                     "title": "Manifeste",
                     "icon": "icon-file-text",
                     "text": "Créez rapidement et facilement un manifeste Web pour vos applications et PWA"
+                }
+            ],
+            "sitestitle": "Autres sites intéressants",
+            "sitesdesc": "Visitez nos autres sites et découvrez des services et divertissements gratuits",
+            "sites": [
+                {
+                    "name": "Panda Cub App",
+                    "desc": "Application permettant de réduire facilement la taille et les dimensions des images aux formats JPG, PNG et WEBP.",
+                    "id": "pandacub",
+                    "link": "https://pandacub.app/"
+                },
+                {
+                    "name": "Game of Life",
+                    "desc": "Mise en œuvre de l'automate cellulaire connu sous le nom de jeu de la vie. Montre comment des règles simples peuvent générer une grande complexité.",
+                    "id": "gol",
+                    "link": "https://g-o-l.netlify.app/"
                 }
             ]
         },
@@ -6092,7 +6209,24 @@
               "id": "ZW",
               "val": "Zimbabwe"
             }
-          ]
+        ],
+        "sitemap": {
+            "baseurl": "Entrez l'URL de base du site",
+            "otherurls": "Entrez les autres URL du site (absolues ou relatives)",
+            "otherurlsdesc": "Ils peuvent être séparés par une virgule, un point-virgule, une tabulation ou un par ligne.",
+            "lastmod": "Dernière Modification",
+            "freq": "Fréquence",
+            "prio": "Priorité",
+            "freqlist": {
+                "always": "Toujours",
+                "hourly": "Horaire",
+                "daily": "Tous les jours",
+                "weekly": "Hebdomadaire",
+                "monthly": "Mensuelle",
+                "yearly": "Annuelle",
+                "never": "Jamais"
+            }
+        }
     },
     "de": {
         "name": "Deutsch",
@@ -6102,6 +6236,8 @@
             "text1": "Meta-Tags sind ein wesentliches Werkzeug in der Welt der Suchmaschinenoptimierung (SEO) und haben einen erheblichen Einfluss auf die Online-Sichtbarkeit von Webseiten. ",
             "text2": "Meta-Tags sind zusätzliche Beschriftungen in HTML (Hypertext Markup Language), die detaillierte Informationen zu einer Seite bereitstellen, beispielsweise Titel, Beschreibung und Schlüsselwörter. ",
             "text3": "Erstellen Sie außerdem ein Webmanifest, um Ihre Website ganz einfach in eine für Mobilgeräte geeignete App umzuwandeln, die auf jedem Gerät installiert und ausgeführt werden kann.",
+            "cardstitle": "Was diese App für Sie tun kann",
+            "cardsdesc": "Und das alles ist 100 % kostenlos und anonym!",   
             "cards": [
                 {
                     "title": "Meta-Tags",
@@ -6133,7 +6269,23 @@
                     "icon": "icon-file-text",
                     "text": "Erstellen Sie schnell und einfach ein Webmanifest für Ihre Apps und PWAs"
                 }
-            ]
+            ],
+            "sitestitle": "Andere interessante Seiten",
+            "sitesdesc": "Besuchen Sie unsere anderen Websites und entdecken Sie kostenlose Dienste und Unterhaltung",
+            "sites": [
+                {
+                    "name": "Panda Cub App",
+                    "desc": "Anwendung zum einfachen Reduzieren der Größe und Abmessungen von Bildern in den Formaten JPG, PNG und WEBP.",
+                    "id": "pandacub",
+                    "link": "https://pandacub.app/"
+                },
+                {
+                    "name": "Game of Life",
+                    "desc": "Implementierung des zellulären Automaten, der als Spiel des Lebens bekannt ist. Zeigt, wie einfache Regeln große Komplexität erzeugen können.",
+                    "id": "gol",
+                    "link": "https://g-o-l.netlify.app/"
+                }
+            ]            
         },
         "howto": {
             "home": {
@@ -7605,6 +7757,23 @@
               "id": "ZW",
               "val": "Simbabwe"
             }
-          ]        
+        ],
+        "sitemap": {
+            "baseurl": "Geben Sie die Basis-URL der Site ein",
+            "otherurls": "Geben Sie die anderen URLs der Site ein (absolut oder relativ).",
+            "otherurlsdesc": "Sie können durch Komma, Semikolon, TAB oder jeweils eins pro Zeile getrennt werden.",
+            "lastmod": "Zuletzt geändert",
+            "freq": "Frequenz",
+            "prio": "Priorität",
+            "freqlist": {
+                "always": "Immer",
+                "hourly": "Stündlich",
+                "daily": "Täglich",
+                "weekly": "Wöchentlich",
+                "monthly": "Monatlich",
+                "yearly": "Jährlich",
+                "never": "Niemals"
+            }
+        }    
     }
 }
