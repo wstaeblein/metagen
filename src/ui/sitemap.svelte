@@ -79,7 +79,7 @@
         
         <div>
             <div class="itemtitle">Insira a url base do site</div>
-            <input type="text" bind:value={data.baseUrl} on:blur={processURLs} />
+            <input type="url" bind:value={data.baseUrl} on:blur={processURLs} />
         </div>
         <br>
         <div>
@@ -91,7 +91,7 @@
             <div>
                 <div class="full">
                     <div class="itemtitle">URL</div>
-                    <input type="text" bind:value={item.url} on:input={changeMe} />                
+                    <input type="url" bind:value={item.url} on:input={changeMe} />                
                 </div>
                 <div class="divide">
                     <div>

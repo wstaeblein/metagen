@@ -149,7 +149,7 @@ h2 {
     align-items: center;
 }
 
-input[type=text], input[type=number], input[type=datetime-local], input[type=color], input[type=date], textarea, select, .box {
+input[type=text], input[type=number], input[type=datetime-local], input[type=color], input[type=date], input[type=url], textarea, select, .box {
     padding: 8px 15px;
     font-size: 16px;
     border-radius: 7px;
