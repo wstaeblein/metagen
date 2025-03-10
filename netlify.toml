@@ -43,6 +43,9 @@ from = "/sitemap"
 to = "/index.html"
 status = 200
 
+[[edge_functions]]
+  path = "/"
+  function = "set-metas-by-lang"
 
 [[edge_functions]]
   path = "/(tags|bots|social|images|other|manifest|sitemap)"
