@@ -45,5 +45,5 @@ status = 200
 
 
 [[edge_functions]]
-  path = "/"
+  path = "/(tags|bots|social|images|other|manifest|sitemap)"
   function = "set-metas-by-lang"

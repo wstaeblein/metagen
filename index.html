@@ -55,6 +55,8 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./balloon.min.css">
 
+
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WTCZYGSE0B"></script>
     <script>
@@ -66,6 +68,13 @@
     </script>
 </head>
 <body>
+    <noscript>
+        <div style="font-family: sans-serif; display: flex; justify-content: center; align-items: center; flex-direction: column; height: 100dvh;">
+            <img src="/img/logo.png" style="width: clamp(200px, 25vw, 400px);" />
+            <h2 style=" text-transform: uppercase;">This app needs Javascript to run!</h2>
+            <p style="font-size: 24px; color: #333">Please enable it to continue.</p>
+        </div>
+    </noscript>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
 </body>
