@@ -966,35 +966,35 @@
                 </div>
             {:else}
                 <div>
-                    <p>Para criar um sitemap, entre a url base do seu site na caixa de texto e depois as outras (das páginas) na próxima caixa de texto.</p>
-                    <p>As urls das páginas podem ser entradas separadas por um dos seguintes separadores: vírgula, ponto e vírgula, TAB ou um por linha (ENTER).</p>
-                    <p>Abaixo estão alguns exemplos de entradas usando a url https://site.com como primária</p>
+                    <p>{$lang.howto.sitemap.t1}</p>
+                    <p>{$lang.howto.sitemap.t2}</p>
+                    <p>{@html $lang.howto.sitemap.t3}</p>
 
                     <ol>
                         <li style="display: flex; gap: 10px; flex-wrap: wrap">
                             <code>
-                                /sobre, /contato, /news
+                                /{$lang.howto.sitemap.w1}, /{$lang.howto.sitemap.w2}, /{$lang.howto.sitemap.w3}
                             </code>
                             <code>
-                                /sobre; /contato; /news
+                                /{$lang.howto.sitemap.w1}; /{$lang.howto.sitemap.w2}; /{$lang.howto.sitemap.w3}
                             </code>     
                             <code>
-                                /sobre  /contato    /news
+                                {$lang.howto.sitemap.w1}    /{$lang.howto.sitemap.w2}   /{$lang.howto.sitemap.w3}
                             </code>                                                      
                         </li>
                         <li>
                             <pre>
-/sobre
-/contato
-/news</pre>
+/{$lang.howto.sitemap.w1}
+/{$lang.howto.sitemap.w2}
+/{$lang.howto.sitemap.w3}</pre>
                             <pre>
-https://site.com/sobre
-https://site.com/contato
-https://site.com/news</pre>                    
+https://site.com/{$lang.howto.sitemap.w1}
+https://site.com/{$lang.howto.sitemap.w2}
+https://site.com/{$lang.howto.sitemap.w3}</pre>                    
                         </li>                        
                     </ol>
-                    <p>Uma vez digitadas as urls, uma lista com elas aparecerá mais abaixo. Ali você poderá configurar os campos extras do sitemap como última modificação, frequência e prioridade para cada url.</p>
-                    <p>Quando estiver tudo ok, clique no botão de copiar no topo dos resultados para copiar seu sitemap para a área de transferência.</p>
+                    <p>{$lang.howto.sitemap.f1}</p>
+                    <p>{$lang.howto.sitemap.f2}</p>
                 </div>
             {/if}        
         </div>        

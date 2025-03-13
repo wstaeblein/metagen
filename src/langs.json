@@ -105,6 +105,17 @@
                 "p3": "Em itens que são listas simples como $$ ou $$, escolha o conteúdo do dropdown, quantos quiser, e para apagar, clique no item da lista.",
                 "p4": "Em itens que são listas compostas, como $$ ou $$, clique em Adicionar para criar quantos subitens precisar. Cada subitem tem um botão $$ no topo para apaga-lo.",
                 "p5": "Em ttens de texto, a caixa parece pequena mas ela expandirá a medida que o texto for entrado."
+            },
+            "sitemap": {
+                "t1": "Para criar um sitemap, entre a url base do seu site na caixa de texto e depois as outras (das páginas) na próxima caixa de texto.",
+                "t2": "As urls das páginas podem ser entradas separadas por um dos seguintes separadores: vírgula, ponto e vírgula, TAB ou um por linha (ENTER).",
+                "t3": "Abaixo estão alguns exemplos de entradas usando a url <b><code>https://site.com</code></b> como base:",
+                "w1": "sobre",
+                "w2": "contato",
+                "w3": "noticias",
+                "f1": "Uma vez digitadas as urls, uma lista com elas aparecerá mais abaixo. Ali você poderá configurar os campos extras do sitemap como última modificação, frequência e prioridade para cada url.",
+                "f2": "Quando estiver tudo ok, clique no botão de copiar no topo dos resultados para copiar seu sitemap para a área de transferência."
+                
             }
         },
         "tips": {
@@ -1616,6 +1627,11 @@
                     "title": "Manifest",
                     "icon": "icon-file-text",
                     "text": "Create a web manifest for your apps and PWAs quickly and easily"
+                },
+                {
+                    "title": "Sitemap",
+                    "icon": "icon-embed",
+                    "text": "Make sure all pages on your site are indexed by generating a sitemap"
                 }
             ],
             "sitestitle": "Other Interesting Sites",
@@ -1664,6 +1680,16 @@
                 "p3": "In items that are simple lists like $$ or $$, choose the contents of the dropdown, as many as you want, and to delete, click on the list item.",
                 "p4": "For items that are compound lists, such as $$ or $$, click Add to create as many subitems as you need. ",
                 "p5": "In text templates, the box appears small but it will expand as text is entered."
+            },
+            "sitemap": {
+                "t1": "To create a sitemap, enter the base URL of your site in the text box and then the other URLs (of the pages) in the next text box.",
+                "t2": "Page URLs can be entries separated by one of the following separators: comma, semicolon, TAB or one per line (ENTER).",
+                "t3": "Below are some example entries using the url <b><code>https://site.com</code></b> as base:",
+                "w1": "about",
+                "w2": "contact",
+                "w3": "news",
+                "f1": "Once you have entered the URLs, a list of them will appear below. There you can configure the extra sitemap fields such as last modified, frequency and priority for each URL.",
+                "f2": "Once everything looks good, click the copy button at the top of the results to copy your sitemap to the clipboard."
             }
         },
         "tips": {
@@ -3170,6 +3196,11 @@
                     "title": "Manifiesto",
                     "icon": "icon-file-text",
                     "text": "Cree un manifiesto web para sus aplicaciones y PWA de forma rápida y sencilla"
+                },
+                {
+                    "title": "Sitemap",
+                    "icon": "icon-embed",
+                    "text": "Asegúrate de que todas las páginas de tu sitio estén indexadas generando un sitemap"
                 }
             ],
             "sitestitle": "Otros sitios interesantes",
@@ -3218,6 +3249,17 @@
                 "p3": "En elementos que son listas simples como $$ o $$, elija el contenido del menú desplegable, tantos como desee, y para eliminarlos, haga clic en el elemento de la lista.",
                 "p4": "Para elementos que son listas compuestas, como $$ o $$, haga clic en Agregar para crear tantos subelementos como necesite. ",
                 "p5": "En las plantillas de texto, el cuadro parece pequeño pero se expandirá a medida que se ingresa texto."
+            },
+            "sitemap": {
+                "t1": "Para crear un sitemap, ingrese la URL base de su sitio en el cuadro de texto y luego las otras URL (de las páginas) en el siguiente cuadro de texto.",
+                "t2": "Las URL de las páginas pueden ser entradas separadas por uno de los siguientes separadores: coma, punto y coma, TAB o uno por línea (ENTER).",
+                "t3": "A continuación se muestran algunas entradas de ejemplo que utilizan la URL <b><code>https://site.com</code></b> como base:",
+                "w1": "sobre",
+                "w2": "contacto",
+                "w3": "noticias",
+                "f1": "Una vez introducidas las URL, aparecerá una lista a continuación. Allí podrá configurar los campos adicionales del sitemap, como la última modificación, la frecuencia y la prioridad de cada URL.",
+                "f2": "Una vez que todo se vea bien, haga clic en el botón Copiar en la parte superior de los resultados para copiar su sitemap al portapapeles."
+                
             }
         },
         "tips": {
@@ -4725,6 +4767,11 @@
                     "title": "Manifeste",
                     "icon": "icon-file-text",
                     "text": "Créez rapidement et facilement un manifeste Web pour vos applications et PWA"
+                },
+                {
+                    "title": "Sitemap",
+                    "icon": "icon-embed",
+                    "text": "Assurez-vous que toutes les pages de votre site sont indexées en générant un plan de site"
                 }
             ],
             "sitestitle": "Autres sites intéressants",
@@ -4767,6 +4814,16 @@
                 "p3": "Dans les éléments qui sont de simples listes comme $$ ou $$, choisissez le contenu de la liste déroulante, autant que vous le souhaitez, et pour supprimer, cliquez sur l'élément de la liste.",
                 "p4": "Pour les éléments qui sont des listes composées, tels que $$ ou $$, cliquez sur Ajouter pour créer autant de sous-éléments que nécessaire.",
                 "p5": "Dans les modèles de texte, la zone apparaît petite mais elle s'agrandit au fur et à mesure de la saisie du texte."
+            },
+            "sitemap": {
+                "t1": "Pour créer un plan de site, saisissez l'URL de base de votre site dans la zone de texte, puis les autres URL (des pages) dans la zone de texte suivante.",
+                "t2": "Les URL de page peuvent être des entrées séparées par l'un des séparateurs suivants : virgule, point-virgule, TAB ou une par ligne (ENTRÉE).",
+                "t3": "Vous trouverez ci-dessous quelques exemples d'entrées utilisant l'URL <b><code>https://site.com</code></b> comme base :",
+                "w1": "sur",
+                "w2": "contact",
+                "w3": "nouvelles",
+                "f1": "Une fois les URL saisies, une liste apparaîtra ci-dessous. Vous pourrez y configurer les champs supplémentaires du plan de site, tels que la dernière modification, la fréquence et la priorité de chaque URL.",
+                "f2": "Une fois que tout semble correct, cliquez sur le bouton Copier en haut des résultats pour copier votre plan de site dans le presse-papiers."
             }
         },
         "tips": {
@@ -6273,6 +6330,11 @@
                     "title": "Manifest",
                     "icon": "icon-file-text",
                     "text": "Erstellen Sie schnell und einfach ein Webmanifest für Ihre Apps und PWAs"
+                },
+                {
+                    "title": "Sitemap",
+                    "icon": "icon-embed",
+                    "text": "Stellen Sie sicher, dass alle Seiten Ihrer Website indexiert sind, indem Sie eine Sitemap erstellen."
                 }
             ],
             "sitestitle": "Andere interessante Seiten",
@@ -6315,6 +6377,16 @@
                 "p3": "Wählen Sie bei Elementen, bei denen es sich um einfache Listen wie $$ oder $$ handelt, den Inhalt des Dropdown-Menüs aus, so viele Sie möchten, und klicken Sie zum Löschen auf das Listenelement.",
                 "p4": "Klicken Sie für Elemente, bei denen es sich um zusammengesetzte Listen handelt, z. B. $$ oder $$, auf „Hinzufügen“, um so viele Unterelemente zu erstellen, wie Sie benötigen. ",
                 "p5": "In Textvorlagen erscheint das Feld klein, es wird jedoch erweitert, wenn Text eingegeben wird."
+            },
+            "sitemap": {
+                "t1": "Um eine Sitemap zu erstellen, geben Sie die Basis-URL Ihrer Site in das Textfeld und dann die anderen URLs (der Seiten) in das nächste Textfeld ein.",
+                "t2": "Seiten-URLs können Einträge sein, die durch eines der folgenden Trennzeichen getrennt sind: Komma, Semikolon, TAB oder eines pro Zeile (ENTER).",
+                "t3": "Nachfolgend finden Sie einige Beispieleinträge, die auf der URL <b><code>https://site.com</code></b> basieren:",
+                "w1": "uber",
+                "w2": "kontakt",
+                "w3": "nachricht",
+                "f1": "Sobald Sie die URLs eingegeben haben, wird unten eine Liste angezeigt. Dort können Sie zusätzliche Sitemap-Felder wie letzte Änderung, Häufigkeit und Priorität für jede URL konfigurieren.",
+                "f2": "Wenn alles gut aussieht, klicken Sie oben in den Ergebnissen auf die Schaltfläche „Kopieren“, um Ihre Sitemap in die Zwischenablage zu kopieren."           
             }
         },
         "tips": {
