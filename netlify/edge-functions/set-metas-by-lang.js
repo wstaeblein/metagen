@@ -1,7 +1,7 @@
 export default async (request, context) => {
  
     // Get lang
-    const langTag = request.headers.get('accept-language').split(',').shift().trim().split(';').shift();
+    const langTag = (request.headers.get('accept-language') || 'en').split(',').shift().trim().split(';').shift();
     const lang = langTag.split('-').shift().toLowerCase();
 
     // If language isn't matched, return in english
@@ -28,6 +28,9 @@ export default async (request, context) => {
             title = 'Generieren Sie Metatags, Sitemaps und Webmanifeste';
             desc = 'Generieren Sie mehr Verkehr, indem Sie Meta-Tags, Sitemaps und Web-Manifeste mit dieser 100 % kostenlosen und vollständigen App richtig erstellen';
             break;
+
+        default:
+            // English
     }
 
     const response = await context.next();
